@@ -5,4 +5,3 @@ node_js:
  - "9.3.0"
 before_script:
  - npm install -g grunt-cli
- - redis-cli config set notify-keyspace-events Ex
