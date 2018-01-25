@@ -18,14 +18,7 @@
  */
 
 
-//Important!: ensure 2dsphere index before any geo queries
-
-//TODO add service inverse relation mapping & use restrictive population
-//TODO add service group inverse relation mapping & use restrictive population
-//TODO add physical address
-//TODO update jurisdiction ui to support color updates
-//TODO se unique key(jurisdiction, account)
-//TODO add push notification details
+//TODO add push notification(apns, fcm) details
 //TODO add device details
 
 //global dependencies(or imports)
