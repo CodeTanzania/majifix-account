@@ -15,7 +15,7 @@
  * 
  */
 
-
+//TODO refactor as module
 
 //global dependencies(or imports)
 const _ = require('lodash');
