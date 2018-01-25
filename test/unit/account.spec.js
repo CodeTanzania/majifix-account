@@ -58,6 +58,48 @@ describe('Account', function () {
 
     });
 
+
+    it('should have phones field', function () {
+
+      const phones = Account.schema.tree.phones;
+
+      expect(phones).to.exist;
+      expect(phones).to.be.an('object');
+      expect(phones.type[0]).to.be.a('function');
+      expect(phones.type[0].name).to.be.equal('String');
+      expect(phones.required).to.be.true;
+      expect(phones.index).to.be.true;
+      expect(phones.searchable).to.be.true;
+
+    });
+
+
+    it('should have emails field', function () {
+
+      const emails = Account.schema.tree.emails;
+
+      expect(emails).to.exist;
+      expect(emails).to.be.an('object');
+      expect(emails.type[0]).to.be.a('function');
+      expect(emails.type[0].name).to.be.equal('String');
+      expect(emails.index).to.be.true;
+      expect(emails.searchable).to.be.true;
+
+    });
+
+    it('should have address field', function () {
+
+      const address = Account.schema.tree.address;
+
+      expect(address).to.exist;
+      expect(address).to.be.an('object');
+      expect(address.type).to.be.a('function');
+      expect(address.type.name).to.be.equal('String');
+      expect(address.trim).to.be.true;
+      expect(address.searchable).to.be.true;
+
+    });
+
   });
 
 

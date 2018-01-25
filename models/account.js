@@ -37,11 +37,8 @@ const Schema = mongoose.Schema;
 const ObjectId = Schema.Types.ObjectId;
 
 
-
 //local constants
 const GEO_POINT = 'Point';
-const STRING_DEFAULT_VALUE = 'N/A';
-
 
 
 const GeoPoint = require(path.join(__dirname, 'geopoint'));
@@ -129,7 +126,7 @@ const AccountSchema = new Schema({
 
 
   /**
-   * @name phone
+   * @name phones
    * @description Primary mobile phone number(s) used to contact an account 
    *              direct by a jurisdiction.
    *              
@@ -144,15 +141,15 @@ const AccountSchema = new Schema({
   phones: {
     type: [String],
     index: true,
-    searchable: true,
     required: true,
+    searchable: true
   },
 
 
 
 
   /**
-   * @name email
+   * @name emails
    * @description Primary email address(s) used to contact an account direct 
    *              by a jurisdiction.
    *              
@@ -167,7 +164,6 @@ const AccountSchema = new Schema({
   emails: {
     type: [String],
     index: true,
-    trim: true,
     searchable: true
   },
 
@@ -189,7 +185,7 @@ const AccountSchema = new Schema({
   address: {
     type: String,
     trim: true,
-    default: STRING_DEFAULT_VALUE
+    searchable: true
   },
 
 
