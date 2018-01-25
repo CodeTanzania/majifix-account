@@ -44,7 +44,8 @@ const STRING_DEFAULT_VALUE = 'N/A';
 
 
 
-const GeoPoint = path.join(__dirname, 'geopoint');
+const GeoPoint = require(path.join(__dirname, 'geopoint'));
+const Bill = require(path.join(__dirname, 'bill'));
 
 
 
@@ -98,7 +99,6 @@ const AccountSchema = new Schema({
     trim: true,
     uppercase: true,
     searchable: true,
-    // unique: true TODO use unique(jurisdiction, number)
   },
 
 
@@ -209,6 +209,21 @@ const AccountSchema = new Schema({
 
 
   /**
+   * @name bills
+   * @description Latest account bills of the account from the jurisdiction.
+   *
+   * 			  This is optional as to some of jurisdiction(s) 
+   * 			  is not applicable.
+   *              
+   * @type {Object}
+   * @private
+   * @since 0.1.0
+   * @version 0.1.0
+   */
+  bills: [Bill],
+
+
+  /**
    * @name active
    * @description state whether the account is active as per contract with
    *              a jurisdiction.
@@ -237,6 +252,7 @@ const AccountSchema = new Schema({
  * @type {Number}
  * @since 0.1.0
  * @version 0.1.0
+ * @private
  */
 AccountSchema.virtual('longitude').get(function () {
   return this.location && this.location.coordinates ?
@@ -251,6 +267,7 @@ AccountSchema.virtual('longitude').get(function () {
  * @type {Number}
  * @since 0.1.0
  * @version 0.1.0
+ * @private
  */
 AccountSchema.virtual('latitude').get(function () {
   return this.location && this.location.coordinates ?
