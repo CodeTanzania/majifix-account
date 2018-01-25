@@ -24,7 +24,9 @@
 //TODO add service group inverse relation mapping & use restrictive population
 //TODO add physical address
 //TODO update jurisdiction ui to support color updates
-//TODO sen unique key(jurisdiction, account)
+//TODO se unique key(jurisdiction, account)
+//TODO add push notification details
+//TODO add device details
 
 //global dependencies(or imports)
 const path = require('path');
@@ -247,6 +249,7 @@ AccountSchema.virtual('latitude').get(function () {
 
 //ensure `2dsphere` on jurisdiction location and boundaries
 AccountSchema.index({ location: '2dsphere' });
+AccountSchema.index({ jurisdiction: 1, number: 1 }, { unique: true });
 
 
 

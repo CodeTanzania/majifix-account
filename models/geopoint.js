@@ -25,8 +25,6 @@ const Schema = mongoose.Schema;
 
 //local constants
 const GEO_POINT = 'Point';
-const STRING_DEFAULT_VALUE = 'N/A';
-
 
 
 const GeoPointSchema = new Schema({
