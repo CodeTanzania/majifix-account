@@ -24,6 +24,216 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 
+//local constants
+const SUB_DOCUMENT_OPTIONS =
+  ({ _id: false, id: false, timestamps: false, emitIndexErrors: true });
+
+
+/**
+ * @name Period
+ * @description bill(or invoice) period 
+ * @type {Schema}
+ * @since 0.1.0
+ * @version 0.1.0
+ * @private
+ */
+const Period = new Schema({
+  /**
+   * @name startedAt
+   * @description A bill period start date(or time)
+   * @type {Object}
+   * @private
+   * @since 0.1.0
+   * @version 0.1.0
+   * @example
+   * 2018-01-01
+   */
+  startedAt: {
+    type: Date
+  },
+
+
+  /**
+   * @name endedAt
+   * @description A bill period end date(or time)
+   * @type {Object}
+   * @private
+   * @since 0.1.0
+   * @version 0.1.0
+   * @example
+   * 2018-01-20
+   */
+  endedAt: {
+    type: Date
+  },
+
+
+  /**
+   * @name due
+   * @description A bill period due date(or time). Mostly used by jurisdiction
+   *              to refer the date when an account should have already pay
+   *              the bill.
+   * @type {Object}
+   * @private
+   * @since 0.1.0
+   * @version 0.1.0
+   * @example
+   * 2018-01-30
+   */
+  duedAt: {
+    type: Date
+  }
+
+}, SUB_DOCUMENT_OPTIONS);
+
+
+
+/**
+ * @name Balance
+ * @description bill(or invoice) balances 
+ * @type {Schema}
+ * @since 0.1.0
+ * @version 0.1.0
+ * @private
+ */
+const Balance = new Schema({
+  /**
+   * @name outstand
+   * @description Current bill period outstand balance
+   * @type {Object}
+   * @private
+   * @since 0.1.0
+   * @version 0.1.0
+   * @example
+   * 800
+   */
+  outstand: {
+    type: Number
+  },
+
+
+  /**
+   * @name open
+   * @description Current bill period open balance
+   * @type {Object}
+   * @private
+   * @since 0.1.0
+   * @version 0.1.0
+   * @example
+   * 200
+   */
+  open: {
+    type: Number
+  },
+
+
+  /**
+   * @name charges
+   * @description Current bill period charges
+   * @type {Object}
+   * @private
+   * @since 0.1.0
+   * @version 0.1.0
+   * @example
+   * 100
+   */
+  charges: {
+    type: Number
+  },
+
+
+  /**
+   * @name debt
+   * @description Current bill period account total additional debt i.e loan
+   * @type {Object}
+   * @private
+   * @since 0.1.0
+   * @version 0.1.0
+   * @example
+   * 700
+   */
+  debt: {
+    type: Number
+  },
+
+
+  /**
+   * @name close
+   * @description Current bill period close balance
+   * @type {Object}
+   * @private
+   * @since 0.1.0
+   * @version 0.1.0
+   * @example
+   * 300
+   */
+  close: {
+    type: Number
+  }
+
+}, SUB_DOCUMENT_OPTIONS);
+
+
+/**
+ * @name Item
+ * @description bill(or invoice) item 
+ * @type {Schema}
+ * @since 0.1.0
+ * @version 0.1.0
+ * @private
+ */
+const Item = new Schema({
+  /**
+   * @name name
+   * @description Human readable name of bill item.
+   * @type {Object}
+   * @private
+   * @since 0.1.0
+   * @version 0.1.0
+   * @example
+   * Water Consumption
+   */
+  name: {
+    type: String,
+    trim: true,
+    uppercase: true
+  },
+
+
+  /**
+   * @name quantity
+   * @description Bill item quantity
+   * @type {Object}
+   * @private
+   * @since 0.1.0
+   * @version 0.1.0
+   * @example
+   * 5
+   */
+  quantity: {
+    type: Number
+  },
+
+
+
+  /**
+   * @name price
+   * @description Bill item total price e.g if quantity if 5 then price
+   *              must be total for all of the 5 item.
+   * @type {Object}
+   * @private
+   * @since 0.1.0
+   * @version 0.1.0
+   * @example
+   * 6000
+   */
+  price: {
+    type: Number
+  }
+
+}, SUB_DOCUMENT_OPTIONS);
+
+
 
 /**
  * @name BillSchema
@@ -32,7 +242,7 @@ const Schema = mongoose.Schema;
  * @version 0.1.0
  * @private
  */
-const BillSchema = new Schema({
+const Bill = new Schema({
   /**
    * @name number
    * @description Unique human readable bill number(i.e invoice number, 
@@ -42,16 +252,69 @@ const BillSchema = new Schema({
    * @private
    * @since 0.1.0
    * @version 0.1.0
+   * @example
+   * TP4547
    */
   number: {
     type: String,
-    required: true,
     trim: true,
-    uppercase: true,
-    searchable: true,
+    uppercase: true
   },
 
 
+  /**
+   * @name period
+   * @description A bill period under which an account is obligated to
+   *              cover for the service from jurisdiction.
+   *        
+   * @type {Object}
+   * @private
+   * @since 0.1.0
+   * @version 0.1.0
+   * @example
+   * {
+   *   form: 2018-01-01
+   *   to: 2018-01-31
+   * }
+   */
+  period: Period,
+
+
+  /**
+   * @name balance
+   * @description Current bill balances
+   * @type {Object}
+   * @private
+   * @since 0.1.0
+   * @version 0.1.0
+   * @example
+   * {
+   *   outstand: 1200,
+   *   open: 800,
+   *   charges: 200,
+   *   close: 1200,
+   *   debt: 200
+   * }
+   */
+  balance: Balance,
+
+
+  /**
+   * @name items
+   * @description Current bill items
+   * @type {Object}
+   * @private
+   * @since 0.1.0
+   * @version 0.1.0
+   * @example
+   * {
+   *   name: 'Clean Water',
+   *   quantity: 2,
+   *   price: 400,
+   *   unit: 'cbm'
+   * }
+   */
+  items: [Item],
 
 
   /**
@@ -63,34 +326,25 @@ const BillSchema = new Schema({
    * @private
    * @since 0.1.0
    * @version 0.1.0
+   * @example
+   * You should pay this bill before its due date
    */
   notes: {
     type: String,
-    trim: true,
-    searchable: true
+    trim: true
   }
 
-}, { _id: false, id: false, timestamps: false, emitIndexErrors: true });
 
-
-
-//-----------------------------------------------------------------------------
-// BillSchema Hooks
-//-----------------------------------------------------------------------------
-BillSchema.pre('validate', function (next) {
-
-  next();
-
-});
+}, SUB_DOCUMENT_OPTIONS);
 
 
 
 /**
  * @name Bill
- * @description export account schema
+ * @description export bill schema
  * @type {Model}
  * @since 0.1.0
  * @version 0.1.0
  * @public
  */
-module.exports = BillSchema;
+module.exports = Bill;
