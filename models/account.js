@@ -96,9 +96,10 @@ const AccountSchema = new Schema({
   number: {
     type: String,
     required: true,
+    index: true,
     trim: true,
     uppercase: true,
-    searchable: true,
+    searchable: true
   },
 
 
@@ -108,9 +109,9 @@ const AccountSchema = new Schema({
    * @name name
    * @description Human readable name of the account
    *
-   * 			  This is either a full name of an individual or organization
-   * 			  that a jurisdiction used to when refer to the account.
-   * 			  
+   *        This is either a full name of an individual or organization
+   *        that a jurisdiction used to when refer to the account.
+   *        
    * @type {Object}
    * @private
    * @since 0.1.0
@@ -120,6 +121,7 @@ const AccountSchema = new Schema({
     type: String,
     required: true,
     trim: true,
+    index: true,
     searchable: true
   },
 
@@ -197,9 +199,9 @@ const AccountSchema = new Schema({
    * @name location
    * @description jurisdiction point of interest on account.
    *
-   *			  This may be a point where there a meter number, installed
-   *			  antenna, house etc.
-   *			   
+   *        This may be a point where there a meter number, installed
+   *        antenna, house etc.
+   *         
    * @since  0.1.0
    * @version  0.1.0
    * @type {Object}
@@ -212,8 +214,8 @@ const AccountSchema = new Schema({
    * @name bills
    * @description Latest account bills of the account from the jurisdiction.
    *
-   * 			  This is optional as to some of jurisdiction(s) 
-   * 			  is not applicable.
+   *        This is optional as to some of jurisdiction(s) 
+   *        is not applicable.
    *              
    * @type {Object}
    * @private
@@ -227,7 +229,7 @@ const AccountSchema = new Schema({
    * @name active
    * @description state whether the account is active as per contract with
    *              a jurisdiction.
-   * 			  
+   *        
    * @type {Object}
    * @private
    * @since 0.1.0
@@ -315,10 +317,10 @@ AccountSchema.pre('validate', function (next) {
 
 /**
  * @name Account
- * @description export account schema
+ * @description register and export account model
  * @type {Model}
  * @since 0.1.0
  * @version 0.1.0
  * @public
  */
-module.exports = AccountSchema;
+module.exports = mongoose.model('Account', AccountSchema);
