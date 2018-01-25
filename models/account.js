@@ -205,7 +205,23 @@ const AccountSchema = new Schema({
    * @type {Object}
    * @private
    */
-  location: GeoPoint
+  location: GeoPoint,
+
+
+  /**
+   * @name active
+   * @description state whether the account is active as per contract with
+   *              a jurisdiction.
+   * 			  
+   * @type {Object}
+   * @private
+   * @since 0.1.0
+   * @version 0.1.0
+   */
+  active: {
+    type: Boolean,
+    default: true
+  }
 
 }, { timestamps: true, emitIndexErrors: true });
 
