@@ -125,11 +125,13 @@ describe('Account', function () {
         expect(location).to.exist;
         expect(location).to.be.an('object');
         expect(tree).to.exist;
+        expect(tree.type).to.exist;
+        expect(tree.coordinates).to.exist;
 
       });
 
 
-      it('should have address field', function () {
+      it('should have GeoJSON type field', function () {
 
         const type = Account.schema.tree.location.tree.type;
         const instance =
@@ -146,7 +148,7 @@ describe('Account', function () {
       });
 
 
-      it('should have coordinates field', function () {
+      it('should have GeoJSON coordinates field', function () {
 
         const coordinates = Account.schema.tree.location.tree.coordinates;
         const instance =
@@ -165,7 +167,24 @@ describe('Account', function () {
     });
 
 
-    describe('bill', function () {
+    describe('bills', function () {
+
+      it('should be array of embedded subdocument', function () {
+
+        const bills = Account.schema.tree.bills;
+        const instance = Account.schema.paths.bills.instance;
+        const tree = Account.schema.tree.bills[0].tree;
+
+        expect(instance).to.be.equal('Array');
+        expect(bills).to.exist;
+        expect(tree).to.exist;
+        expect(tree.number).to.exist;
+        expect(tree.period).to.exist;
+        expect(tree.balance).to.exist;
+        expect(tree.items).to.exist;
+        expect(tree.notes).to.exist;
+
+      });
 
     });
 

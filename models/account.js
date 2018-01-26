@@ -226,7 +226,7 @@ const AccountSchema = new Schema({
    */
   active: {
     type: Boolean,
-    index: true,
+    index:true,
     default: true
   }
 

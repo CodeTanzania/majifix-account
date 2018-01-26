@@ -1,7 +1,7 @@
 {
   "name": "majifix-account",
   "version": "0.1.0",
-  "description": "",
+  "description": "A representation of an entity (i.e organization, individual, customer, or client) which receiving service(s) from a particular jurisdiction",
   "main": "index.js",
   "scripts": {
     "test": "grunt test",
