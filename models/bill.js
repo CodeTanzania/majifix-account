@@ -229,6 +229,22 @@ const Item = new Schema({
    */
   price: {
     type: Number
+  },
+
+
+  /**
+   * @name unit
+   * @description Human readable unit of bill item.
+   * @type {Object}
+   * @private
+   * @since 0.1.0
+   * @version 0.1.0
+   * @example
+   * Water Consumption is in cubic meter so its cbm
+   */
+  unit: {
+    type: String,
+    trim: true
   }
 
 }, SUB_DOCUMENT_OPTIONS);

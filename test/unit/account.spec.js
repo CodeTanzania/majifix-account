@@ -115,7 +115,7 @@ describe('Account', function () {
 
     describe('location', function () {
 
-      it('should be embedded subdocument', function () {
+      it('should be an embedded subdocument', function () {
 
         const location = Account.schema.tree.location;
         const instance = Account.schema.paths.location.instance;
@@ -131,45 +131,51 @@ describe('Account', function () {
       });
 
 
-      it('should have GeoJSON type field', function () {
+      describe('schema', function () {
 
-        const type = Account.schema.tree.location.tree.type;
-        const instance =
-          Account.schema.paths.location.schema.paths.type.instance;
+        it('should have GeoJSON type field', function () {
 
-        expect(instance).to.be.equal('String');
-        expect(type).to.exist;
-        expect(type).to.be.an('object');
-        expect(type.type).to.be.a('function');
-        expect(type.type.name).to.be.equal('String');
-        expect(type.trim).to.be.true;
-        expect(type.default).to.exist;
+          const type = Account.schema.tree.location.tree.type;
+          const instance =
+            Account.schema.paths.location.schema.paths.type
+            .instance;
+
+          expect(instance).to.be.equal('String');
+          expect(type).to.exist;
+          expect(type).to.be.an('object');
+          expect(type.type).to.be.a('function');
+          expect(type.type.name).to.be.equal('String');
+          expect(type.trim).to.be.true;
+          expect(type.default).to.exist;
+
+        });
+
+
+        it('should have GeoJSON coordinates field', function () {
+
+          const coordinates = Account.schema.tree.location.tree
+            .coordinates;
+          const instance =
+            Account.schema.paths.location.schema.paths.coordinates
+            .instance;
+
+          expect(instance).to.be.equal('Array');
+          expect(coordinates).to.exist;
+          expect(coordinates).to.be.an('object');
+          expect(coordinates.type[0]).to.be.a('function');
+          expect(coordinates.type[0].name).to.be.equal(
+            'Number');
+
+        });
 
       });
-
-
-      it('should have GeoJSON coordinates field', function () {
-
-        const coordinates = Account.schema.tree.location.tree.coordinates;
-        const instance =
-          Account.schema.paths.location.schema.paths.coordinates
-          .instance;
-
-        expect(instance).to.be.equal('Array');
-        expect(coordinates).to.exist;
-        expect(coordinates).to.be.an('object');
-        expect(coordinates.type[0]).to.be.a('function');
-        expect(coordinates.type[0].name).to.be.equal('Number');
-
-      });
-
 
     });
 
 
     describe('bills', function () {
 
-      it('should be array of embedded subdocument', function () {
+      it('should be an array of embedded subdocument', function () {
 
         const bills = Account.schema.tree.bills;
         const instance = Account.schema.paths.bills.instance;
@@ -183,6 +189,100 @@ describe('Account', function () {
         expect(tree.balance).to.exist;
         expect(tree.items).to.exist;
         expect(tree.notes).to.exist;
+
+      });
+
+      describe('schema', function () {
+
+        it('should have number field', function () {
+
+          const number = Account.schema.tree.bills[0].tree.number;
+          const instance =
+            Account.schema.paths.bills.schema.paths.number
+            .instance;
+
+          expect(instance).to.be.equal('String');
+          expect(number).to.exist;
+          expect(number).to.be.an('object');
+          expect(number.type).to.be.a('function');
+          expect(number.type.name).to.be.equal('String');
+          expect(number.trim).to.be.true;
+          expect(number.uppercase).to.be.true;
+
+        });
+
+        it('should have period field', function () {
+
+          const period = Account.schema.tree.bills[0].tree.period;
+          const instance = Account.schema.paths.bills.schema
+            .paths.period.instance;
+          const tree = Account.schema.tree.bills[0].tree.period
+            .tree;
+
+          expect(instance).to.be.equal('Embedded');
+          expect(period).to.exist;
+          expect(period).to.be.an('object');
+          expect(tree).to.exist;
+          expect(tree.startedAt).to.exist;
+          expect(tree.endedAt).to.exist;
+          expect(tree.duedAt).to.exist;
+
+        });
+
+        it('should have balance field', function () {
+
+          const balance = Account.schema.tree.bills[0].tree
+            .balance;
+          const instance = Account.schema.paths.bills.schema
+            .paths.balance.instance;
+          const tree = Account.schema.tree.bills[0].tree.balance
+            .tree;
+
+          expect(instance).to.be.equal('Embedded');
+          expect(balance).to.exist;
+          expect(balance).to.be.an('object');
+          expect(tree).to.exist;
+          expect(tree.outstand).to.exist;
+          expect(tree.open).to.exist;
+          expect(tree.charges).to.exist;
+          expect(tree.close).to.exist;
+
+        });
+
+        it('should have items field', function () {
+
+          const items = Account.schema.tree.bills[0].tree.items;
+          const instance = Account.schema.paths.bills.schema
+            .paths.items.instance;
+          const tree = Account.schema.tree.bills[0].tree.items[
+            0].tree;
+
+          expect(instance).to.be.equal('Array');
+          expect(items).to.exist;
+          expect(items[0]).to.be.an('object');
+          expect(tree).to.exist;
+          expect(tree.name).to.exist;
+          expect(tree.quantity).to.exist;
+          expect(tree.price).to.exist;
+          expect(tree.unit).to.exist;
+
+        });
+
+        it('should have notes field', function () {
+
+          const notes = Account.schema.tree.bills[0].tree.notes;
+          const instance =
+            Account.schema.paths.bills.schema.paths.notes
+            .instance;
+
+          expect(instance).to.be.equal('String');
+          expect(notes).to.exist;
+          expect(notes).to.be.an('object');
+          expect(notes.type).to.be.a('function');
+          expect(notes.type.name).to.be.equal('String');
+          expect(notes.trim).to.be.true;
+
+        });
 
       });
 
