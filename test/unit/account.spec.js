@@ -319,6 +319,13 @@ describe('Account', function () {
         'accounts');
     });
 
+    it('should be able to store account');
+    it('should be able to list accounts');
+    it('should be able to get account');
+    it('should be able to update account');
+    it('should be able to remove account');
+    it('should be able to remove accounts');
+
   });
 
 });
