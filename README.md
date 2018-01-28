@@ -1,7 +1,7 @@
 majifix-account
 ====================
 
-[![Build Status](https://travis-ci.org/CodeTanzania/majifix-account.svg?branch=master)](https://travis-ci.org/CodeTanzania/majifix-account)
+[![Build Status](https://travis-ci.org/CodeTanzania/majifix-account.svg?branch=develop)](https://travis-ci.org/CodeTanzania/majifix-account)
 [![Dependencies Status](https://david-dm.org/CodeTanzania/majifix-account/status.svg?style=flat-square)](https://david-dm.org/CodeTanzania/majifix-account)
 
 A representation of an entity (i.e organization, individual, customer, or client) which receiving service(s) from a particular [jurisdiction](https://github.com/CodeTanzania/majifix-jurisdiction).
