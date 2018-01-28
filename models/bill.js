@@ -195,8 +195,7 @@ const Item = new Schema({
    */
   name: {
     type: String,
-    trim: true,
-    uppercase: true
+    trim: true
   },
 
 
