@@ -1,4 +1,4 @@
-majifix-account
+majifix-account(WIP)
 ====================
 
 [![Build Status](https://travis-ci.org/CodeTanzania/majifix-account.svg?branch=develop)](https://travis-ci.org/CodeTanzania/majifix-account)
