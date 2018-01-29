@@ -600,7 +600,7 @@ describe('Account', function () {
         get.restore();
       });
 
-      it('should be able get account', function (done) {
+      it('should be able get accounts', function (done) {
 
         expect(Account.get).to.exist;
 
@@ -616,7 +616,8 @@ describe('Account', function () {
       });
 
 
-      it('should be able get account with criteria', function (done) {
+      it('should be able get accounts with criteria', function (
+        done) {
 
         const criteria = { number: { $eq: faker.random.uuid() } };
 
@@ -633,7 +634,7 @@ describe('Account', function () {
       });
 
 
-      it('should be able get account by criteria and projection',
+      it('should be able get accounts by criteria and projection',
         function (done) {
 
           const criteria = { number: { $eq: faker.random.uuid() } };
@@ -649,6 +650,32 @@ describe('Account', function () {
               expect(found[0]._id).to.be.eql(_id);
               done(error, found);
             });
+
+        }
+      );
+
+      it(
+        'should be able get accounts by criteria. projection and options',
+        function (done) {
+
+          const criteria = { number: { $eq: faker.random.uuid() } };
+          const projection = 'name number';
+          const options = { skip: 10 };
+
+          Account
+            .get(criteria, projection, options,
+              function (error, found) {
+                expect(get).to.have.been.called;
+                expect(get).to.have.been.calledOnce;
+                expect(get)
+                  .to
+                  .have
+                  .been
+                  .calledWith(criteria, projection, options);
+                expect(found).to.have.length(1);
+                expect(found[0]._id).to.be.eql(_id);
+                done(error, found);
+              });
 
         }
       );
