@@ -28,11 +28,6 @@ $ npm install
 $ npm test
 ```
 
-## TODO
-- [ ] add dependencies to jurisdiction
-- [ ] add dependencies to messages(for email, sms, ivr etc)
-- [ ] send alerts(messages) in background
-
 
 ## Contribute
 It will be nice, if you open an issue first so that we can know what is going on, then, fork this repo and push in your ideas. Do not forget to add a bit of test(s) of what value you adding.

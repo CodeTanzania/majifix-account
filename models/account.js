@@ -22,6 +22,9 @@
 //TODO add device details
 //TODO implement alert module
 //TODO fetch multi jurisdiction level(or hierarchy)
+//TODO add dependencies to jurisdiction
+//TODO add dependencies to messages(for email, sms, ivr etc)
+//TODO send alerts(messages) in background
 
 
 //global dependencies(or imports)
