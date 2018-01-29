@@ -28,10 +28,12 @@ module.exports = function factory(optns) {
   //restore mongoose
   mongoose = (options.mongoose || mongoose);
 
+  //TODO check if model should be registered
   //register mongoose model
   const Account = mongoose.model(options.name, AccountSchema);
 
   //TODO register a router and export it
+  //TODO use mongoose-rest-actions to expose http resources
 
 
   //return
