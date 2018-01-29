@@ -546,12 +546,45 @@ describe('Account', function () {
         'accounts');
     });
 
-    it('should be able to store account');
-    it('should be able to list accounts');
-    it('should be able to get account');
-    it('should be able to update account');
-    it('should be able to remove account');
-    it('should be able to remove accounts');
+    describe('store', function () {
+
+      it('should be able to store account', function () {
+        expect(Account.store).to.not.exist;
+      });
+
+    });
+
+    describe('list', function () {
+
+      it('should be able to list accounts', function () {
+        expect(Account.get).to.not.exist;
+      });
+
+    });
+
+    describe('show', function () {
+
+      it('should be able to get account', function () {
+        expect(Account.getById).to.not.exist;
+      });
+
+    });
+
+    describe('update', function () {
+
+      it('should be able to update account', function () {
+        expect(Account.getByIdAndUpdate).to.not.exist;
+      });
+
+    });
+
+    describe('remove', function () {
+
+      it('should be able to remove account', function () {
+        expect(Account.getByIdAndRemove).to.not.exist;
+      });
+
+    });
 
   });
 
