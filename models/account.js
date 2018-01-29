@@ -320,8 +320,8 @@ AccountSchema.pre('validate', function (next) {
  * @public
  * @static
  */
-AccountSchema.statics.get = function (criteria, options, done) {
-  return this.find(criteria, options, done);
+AccountSchema.statics.get = function (criteria, projection, options, done) {
+  return this.find(criteria, projection, options, done);
 };
 
 

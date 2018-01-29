@@ -632,6 +632,27 @@ describe('Account', function () {
 
       });
 
+
+      it('should be able get account by criteria and projection',
+        function (done) {
+
+          const criteria = { number: { $eq: faker.random.uuid() } };
+          const projection = 'name number';
+
+          Account
+            .get(criteria, projection, function (error, found) {
+              expect(get).to.have.been.called;
+              expect(get).to.have.been.calledOnce;
+              expect(get)
+                .to.have.been.calledWith(criteria, projection);
+              expect(found).to.have.length(1);
+              expect(found[0]._id).to.be.eql(_id);
+              done(error, found);
+            });
+
+        }
+      );
+
     });
 
     describe('getById', function () {
