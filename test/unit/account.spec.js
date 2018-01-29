@@ -549,7 +549,7 @@ describe('Account', function () {
     describe('store', function () {
 
       it('should be able to store account', function () {
-        expect(Account.store).to.not.exist;
+        expect(Account.store).to.exist;
       });
 
     });
@@ -557,7 +557,7 @@ describe('Account', function () {
     describe('list', function () {
 
       it('should be able to list accounts', function () {
-        expect(Account.get).to.not.exist;
+        expect(Account.get).to.exist;
       });
 
     });
@@ -565,7 +565,7 @@ describe('Account', function () {
     describe('show', function () {
 
       it('should be able to get account', function () {
-        expect(Account.getById).to.not.exist;
+        expect(Account.getById).to.exist;
       });
 
     });
@@ -573,7 +573,7 @@ describe('Account', function () {
     describe('update', function () {
 
       it('should be able to update account', function () {
-        expect(Account.getByIdAndUpdate).to.not.exist;
+        expect(Account.getByIdAndUpdate).to.exist;
       });
 
     });
@@ -581,7 +581,7 @@ describe('Account', function () {
     describe('remove', function () {
 
       it('should be able to remove account', function () {
-        expect(Account.getByIdAndRemove).to.not.exist;
+        expect(Account.getByIdAndRemove).to.exist;
       });
 
     });

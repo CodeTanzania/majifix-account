@@ -20,6 +20,9 @@
 
 //TODO add push notification(apns, fcm) details
 //TODO add device details
+//TODO implement alert module
+//TODO fetch multi jurisdiction level(or hierarchy)
+
 
 //global dependencies(or imports)
 const path = require('path');
@@ -226,7 +229,7 @@ const AccountSchema = new Schema({
    */
   active: {
     type: Boolean,
-    index:true,
+    index: true,
     default: true
   }
 
@@ -295,13 +298,108 @@ AccountSchema.pre('validate', function (next) {
 
 
 
-
 //-----------------------------------------------------------------------------
 // AccountSchema Static Methods
 //-----------------------------------------------------------------------------
 
-//TODO implement alert
-//TODO fetch multi jurisdiction level(or hierarch)
+
+/**
+ * @name get
+ * @param  {Object} criteria valid model query criteria
+ * @param  {Object} [optns] additional opetation options
+ * @param  {Function} [done]  a callback to invoke on success or error
+ * @return {Model[]|Error}  found model instances or error
+ * @see {@link http://mongoosejs.com/docs/api.html#find_find}
+ * @type {Function}
+ * @since 0.1.0
+ * @version 0.1.0
+ * @author lally elias <lallyelias87@mail.com>
+ * @public
+ * @static
+ */
+AccountSchema.statics.get = function (criteria, options, done) {
+  return this.find(criteria, options, done);
+};
+
+
+
+/**
+ * @name store
+ * @param  {Object|}   model valid model to save(or create)
+ * @param  {Function} [done]  a callback to invoke on success or error
+ * @return {Model|Error}  created model instance or error
+ * @see {@link http://mongoosejs.com/docs/api.html#create_create}
+ * @type {Function}
+ * @since 0.1.0
+ * @version 0.1.0
+ * @author lally elias <lallyelias87@mail.com>
+ * @public
+ * @static
+ */
+AccountSchema.statics.store = function (model, done) {
+  return this.create(model, done);
+};
+
+
+
+/**
+ * @name getById
+ * @param  {ObjectId|String}  id valid mongodb object id
+ * @param  {Object}   [optns] additional operations options
+ * @param  {Function} [done]  a callback to invoke on success or error
+ * @return {Model|Error}  updated model instance or error
+ * @see {@link http://mongoosejs.com/docs/api.html#findbyid_findById}
+ * @type {Function}
+ * @since 0.1.0
+ * @version 0.1.0
+ * @author lally elias <lallyelias87@mail.com>
+ * @public
+ * @static
+ */
+AccountSchema.statics.getById = function (id, options, done) {
+  return this.findById(id, options, done);
+};
+
+
+
+/**
+ * @name getByIdAndUpdate
+ * @param  {ObjectId|String}  id valid mongodb object id
+ * @param  {Object}   updates valid instance updates
+ * @param  {Object}   [optns] additional operations options
+ * @param  {Function} [done]  a callback to invoke on success or error
+ * @return {Model|Error}  updated model instance or error
+ * @see {@link http://mongoosejs.com/docs/api.html#findbyidandupdate_findByIdAndUpdate}
+ * @type {Function}
+ * @since 0.1.0
+ * @version 0.1.0
+ * @author lally elias <lallyelias87@mail.com>
+ * @public
+ * @static
+ */
+AccountSchema.statics.getByIdAndUpdate = function (id, update, optns, done) {
+  return this.findByIdAndUpdate(id, update, optns, done);
+};
+
+
+
+/**
+ * @name getByIdAndRemove
+ * @param  {ObjectId|String}  id valid mongodb object id
+ * @param  {Object}   [optns] additional operations options
+ * @param  {Function} [done]  a callback to invoke on success or error
+ * @return {Model|Error}  removed model instance or error
+ * @see {@link http://mongoosejs.com/docs/api.html#findbyidandremove_findByIdAndRemove}
+ * @type {Function}
+ * @since 0.1.0
+ * @version 0.1.0
+ * @author lally elias <lallyelias87@mail.com>
+ * @public
+ * @static
+ */
+AccountSchema.statics.getByIdAndRemove = function (id, optns, done) {
+  return this.findByIdAndRemove(id, opts, done);
+};
 
 
 
