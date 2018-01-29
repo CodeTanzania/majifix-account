@@ -3,8 +3,10 @@
 
 //dependencies
 const path = require('path');
+const sinon = require('sinon');
 const expect = require('chai').expect;
 const mongoose = require('mongoose');
+const faker = require('faker');
 const Model = mongoose.Model;
 const Account = require(path.join(__dirname, '..', '..', 'models', 'account'));
 
@@ -548,40 +550,174 @@ describe('Account', function () {
 
     describe('store', function () {
 
-      it('should be able to store account', function () {
+      const _id = new mongoose.Types.ObjectId();
+      const model = { number: faker.random.uuid() };
+
+      let store;
+
+      beforeEach(function () {
+        store = sinon.mock(Account)
+          .expects('store')
+          .yields(null, { _id: _id, number: model.number });
+      });
+
+      afterEach(function () {
+        store.restore();
+      });
+
+      it('should be able to create account', function (done) {
+
         expect(Account.store).to.exist;
+
+        Account
+          .store(model, function (error, created) {
+            expect(store).to.have.been.called;
+            expect(store).to.have.been.calledOnce;
+            expect(store)
+              .to.have.been.calledWith(model);
+            expect(created._id).to.be.eql(_id);
+            expect(created.number).to.be.equal(model.number);
+            done(error, created);
+          });
+
       });
 
     });
 
-    describe('list', function () {
+    describe('get', function () {
 
-      it('should be able to list accounts', function () {
+      const _id = new mongoose.Types.ObjectId();
+
+      let get;
+
+      beforeEach(function () {
+        get = sinon.mock(Account)
+          .expects('get')
+          .yields(null, [{ _id: _id }]);
+      });
+
+      afterEach(function () {
+        get.restore();
+      });
+
+      it('should be able get account', function (done) {
+
         expect(Account.get).to.exist;
+
+        Account
+          .get(function (error, found) {
+            expect(get).to.have.been.called;
+            expect(get).to.have.been.calledOnce;
+            expect(found).to.have.length(1);
+            expect(found[0]._id).to.be.eql(_id);
+            done(error, found);
+          });
+
       });
 
     });
 
-    describe('show', function () {
+    describe('getById', function () {
 
-      it('should be able to get account', function () {
+      const _id = new mongoose.Types.ObjectId();
+
+      let getById;
+
+      beforeEach(function () {
+        getById = sinon.mock(Account)
+          .expects('getById')
+          .yields(null, { _id: _id });
+      });
+
+      afterEach(function () {
+        getById.restore();
+      });
+
+      it('should be able get account', function (done) {
+
         expect(Account.getById).to.exist;
+
+        Account
+          .getById(_id, function (error, found) {
+            expect(getById).to.have.been.called;
+            expect(getById).to.have.been.calledOnce;
+            expect(getById).to.have.been.calledWith(_id);
+            expect(found._id).to.be.eql(_id);
+            done(error, found);
+          });
+
       });
+
 
     });
 
-    describe('update', function () {
+    describe('getByIdAndUpdate', function () {
 
-      it('should be able to update account', function () {
+      const _id = new mongoose.Types.ObjectId();
+      const updates = { number: faker.random.uuid() };
+
+      let getByIdAndUpdate;
+
+      beforeEach(function () {
+        getByIdAndUpdate = sinon.mock(Account)
+          .expects('getByIdAndUpdate')
+          .yields(null, { _id: _id, number: updates.number });
+      });
+
+      afterEach(function () {
+        getByIdAndUpdate.restore();
+      });
+
+      it('should be able to update account', function (done) {
+
         expect(Account.getByIdAndUpdate).to.exist;
+
+        Account
+          .getByIdAndUpdate(_id, updates,
+            function (error, updated) {
+              expect(getByIdAndUpdate).to.have.been.called;
+              expect(getByIdAndUpdate).to.have.been.calledOnce;
+              expect(getByIdAndUpdate)
+                .to.have.been.calledWith(_id, updates);
+              expect(updated._id).to.be.eql(_id);
+              expect(updated.number).to.be.equal(updates.number);
+              done(error, updated);
+            });
+
       });
 
     });
 
-    describe('remove', function () {
+    describe('getByIdAndRemove', function () {
 
-      it('should be able to remove account', function () {
+      const _id = new mongoose.Types.ObjectId();
+
+      let getByIdAndRemove;
+
+      beforeEach(function () {
+        getByIdAndRemove = sinon.mock(Account)
+          .expects('getByIdAndRemove')
+          .yields(null, { _id: _id });
+      });
+
+      afterEach(function () {
+        getByIdAndRemove.restore();
+      });
+
+      it('should be able to remove account', function (done) {
+
         expect(Account.getByIdAndRemove).to.exist;
+
+        Account
+          .getByIdAndRemove(_id, function (error, removed) {
+            expect(getByIdAndRemove).to.have.been.called;
+            expect(getByIdAndRemove).to.have.been.calledOnce;
+            expect(getByIdAndRemove)
+              .to.have.been.calledWith(_id);
+            expect(removed._id).to.be.eql(_id);
+            done(error, removed);
+          });
+
       });
 
     });
