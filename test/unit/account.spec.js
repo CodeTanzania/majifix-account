@@ -615,6 +615,23 @@ describe('Account', function () {
 
       });
 
+
+      it('should be able get account with criteria', function (done) {
+
+        const criteria = { number: { $eq: faker.random.uuid() } };
+
+        Account
+          .get(criteria, function (error, found) {
+            expect(get).to.have.been.called;
+            expect(get).to.have.been.calledOnce;
+            expect(get).to.have.been.calledWith(criteria);
+            expect(found).to.have.length(1);
+            expect(found[0]._id).to.be.eql(_id);
+            done(error, found);
+          });
+
+      });
+
     });
 
     describe('getById', function () {
