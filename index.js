@@ -9,7 +9,7 @@ let mongoose = require('mongoose');
 
 
 //local dependencies(or import)
-const AccountSchema = require(path.join(__dirname, 'models', 'geopoint'));
+const AccountSchema = require(path.join(__dirname, 'models', 'account'));
 
 
 //default options
@@ -31,11 +31,14 @@ module.exports = function factory(optns) {
   //register mongoose model
   const Account = mongoose.model(options.name, AccountSchema);
 
-  //TODO register a router
+  //TODO register a router and export it
 
 
   //return
-  return { AccountSchema, Account };
+  return {
+    AccountSchema: AccountSchema,
+    Account: Account
+  };
 
 
 };
