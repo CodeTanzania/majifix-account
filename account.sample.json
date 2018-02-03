@@ -11,6 +11,7 @@
     "bills": [{ //last 3months bill
         "number": "53652323", //controll number to be used in payment
         "period": {
+            "name": "January 2018", //bill period name
             "startedAt": "2018-01-01", // bill period start date
             "endedAt": "2018-01-30", //bill period end date
             "duedAt": "2018-01-31" //last day for pay the bill
@@ -38,6 +39,7 @@
     }, {
         "number": "53652323", //control number to be used in payment
         "period": {
+            "name": "December 2017", //bill period name
             "startedAt": "2017-12-01",
             "endedAt": "2017-12-30",
             "duedAt": "2017-12-31"

@@ -230,11 +230,30 @@ describe('Account', function () {
             expect(period).to.exist;
             expect(period).to.be.an('object');
             expect(tree).to.exist;
+            expect(tree.name).to.exist;
             expect(tree.startedAt).to.exist;
             expect(tree.endedAt).to.exist;
             expect(tree.duedAt).to.exist;
 
           });
+
+          it('should have name', function () {
+
+            const name = Account.schema.tree.bills[
+              0].tree.period.tree.name;
+            const instance = Account.schema.paths.bills
+              .schema.paths.period.schema.paths.name
+              .instance;
+
+            expect(instance).to.be.equal('String');
+            expect(name).to.exist;
+            expect(name).to.be.an('object');
+            expect(name.trim).to.exist;
+            expect(name.required).to.not.exist;
+            expect(name.index).to.not.exist;
+
+          });
+
 
           it('should have start date', function () {
 

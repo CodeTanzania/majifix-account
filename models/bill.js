@@ -39,6 +39,22 @@ const SUB_DOCUMENT_OPTIONS =
  */
 const Period = new Schema({
   /**
+   * @name name
+   * @description Human readable period name e.g November, Jan-Jun etc
+   * @type {Object}
+   * @private
+   * @since 0.1.0
+   * @version 0.1.0
+   * @example
+   * Januany, Jan-Jun
+   */
+  name: {
+    type: String,
+    trim: true
+  },
+
+
+  /**
    * @name startedAt
    * @description A bill period start date(or time)
    * @type {Object}
