@@ -16,11 +16,15 @@ It's a simplified version obtained after merging:
 ## Requirements
 - [NodeJS v9.3.0+](https://nodejs.org)
 
-## Usage
-- Clone
+## Installation
 ```sh
-$ npm install majifix-account
+$ npm install majifix-account --save
 ``` 
+
+## Usage
+```sh
+TODO
+```
 
 ## Testing
 * Clone this repository
