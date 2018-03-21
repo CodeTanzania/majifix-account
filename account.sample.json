@@ -7,13 +7,14 @@
     {
       "phone": "255714095",
       "email": "l@eg.com",
-      "verified": true //whether contact can act on behalf of owner
+      "verified": true //whether contact can act on behalf of account owner
     }
   ],
-  "address": "Ilala / Ubungo / Mabibo",
-  "neighbourhood": "Ilala",
-  "location":
-  { //current meter(installation) location
+  "address": "Ilala / Ubungo / Mabibo", //account physical address
+  "area": "Ilala", //region or state where account found(GeoPolygon)
+  "neighborhood": "Upanga", // district or town(GeoPolygon) 
+  "location": //GeoPoint
+  { //current valid geo-point of an account e.g meter(installation)
     "longitude": 39.276638,
     "latitude": -6.816330
   },

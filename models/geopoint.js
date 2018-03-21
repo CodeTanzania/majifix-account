@@ -10,6 +10,11 @@
  * @since 0.1.0
  * @version 0.1.0
  * @private
+ * @see  {@link http://geojson.org/}
+ * @see  {@link https://tools.ietf.org/html/rfc7946}
+ * @see  {@link https://docs.mongodb.com/manual/geospatial-queries/#geo-overview-location-data}
+ * @see  {@link https://gist.github.com/aheckmann/5241574}
+ * @see  {@link https://gist.github.com/eastenluis/d4564daf7312c657748fc6a3dc5fceec}
  * @example
  * { type: "Point", coordinates: [ 40, 5 ] }
  * 

@@ -292,7 +292,7 @@ AccountSchema.pre('validate', function (next) {
   //ensure location details
   this.location = _.merge({}, {
     type: GeoPOINT,
-    coordinates: [0, 0]
+    coordinates: [0, 0] //TODO get coordinates from jurisdiction
   }, this.location ? this.location.toObject() : {});
 
   next();
