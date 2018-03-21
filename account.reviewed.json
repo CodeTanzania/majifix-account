@@ -1,0 +1,42 @@
+{
+  "number": "124352", //customer account number
+  "name": "Lally Elias", //full name of the customer
+  "phone": "255714095", //list of applicable phone numbers
+  "email": "lally@example.com", //optional customer emails
+  "address": "Ilala / Ubungo / Mabibo",
+  "region": "Boko",
+  "contacts": [
+  {
+    "phone": "255716484",
+    "verified": true
+  }],
+  "location":
+  { //current meter(installation) location
+    "longitude": 39.276638,
+    "latitude": -6.816330
+  },
+  "bills": [
+  { //last 3months bill :TODO render template(section etc)
+    "number": "53652323", //controll number to be used in payment
+    "period":
+    {
+      "name": "January 2018", //bill period name
+      "startedAt": "2017-12-01", //no use
+      "endedAt": "2017-12-30", //no use
+    },
+    "balance":
+    {
+      "outstand": 9000, //current total balance of customer
+      "open": 5000, // open balance
+      "charges": 3000, //periodic charges
+      "loan": 1000 // total customer loan balance so far if any
+    },
+    "readings":
+    {
+      "readAt": "2018-01-31",
+      "previous": 71,
+      "current": 87,
+      "consumption": 16
+    }
+  }]
+}

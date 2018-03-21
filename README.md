@@ -6,6 +6,13 @@ majifix-account(WIP)
 
 A representation of an entity (i.e organization, individual, customer, or client) which receiving service(s) from a particular [jurisdiction](https://github.com/CodeTanzania/majifix-jurisdiction).
 
+It's a simplified version obtained after merging:
+- [https://www.popoloproject.com/specs/organization.html](https://www.popoloproject.com/specs/organization.html)
+- [https://www.popoloproject.com/specs/person.html](https://www.popoloproject.com/specs/person.html)
+- [https://www.popoloproject.com/specs/contact-detail.html](https://www.popoloproject.com/specs/contact-detail.html)
+- [http://wiki.open311.org/GeoReport_v2/#post-service-request](http://wiki.open311.org/GeoReport_v2/#post-service-request)
+
+
 ## Requirements
 - [NodeJS v9.3.0+](https://nodejs.org)
 
@@ -28,9 +35,14 @@ $ npm install
 $ npm test
 ```
 
-
 ## Contribute
 It will be nice, if you open an issue first so that we can know what is going on, then, fork this repo and push in your ideas. Do not forget to add a bit of test(s) of what value you adding.
+
+## References
+- [Open311 GeoReport v2](http://wiki.open311.org/GeoReport_v2/)
+- [popolo project](https://www.popoloproject.com/)
+- [https://opengovdata.io/](https://opengovdata.io/)
+- [https://opengov.com/about/](https://opengov.com/about/)
 
 ## Licence
 The MIT License (MIT)
