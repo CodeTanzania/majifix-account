@@ -30,11 +30,10 @@
     },
     "balance":
     {
-      "outstand": 9000, //current total balance of customer
+      "current": 9000, //current total balance of customer
       "open": 5000, // open balance
       "charges": 3000, //periodic charges
-      "close": 9000, // close balance
-      "debt": 1000 // total customer debt so far if any
+      "loan": 1000 // total customer debt so far if any
     },
     "items": [
     {
