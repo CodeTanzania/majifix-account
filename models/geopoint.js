@@ -21,6 +21,10 @@
  */
 
 //TODO refactor as module
+//TODO use https://github.com/craveprogramminginc/GeoJSON-Validation
+//TODO use https://github.com/mapbox/geojsonhint
+//TODO use http://turfjs.org/
+//TODO use https://www.npmjs.com/package/geojson-polygon-center
 
 //global dependencies(or imports)
 const _ = require('lodash');
