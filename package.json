@@ -13,7 +13,7 @@
   },
   "keywords": [
     "majifix",
-    "codetanzania"
+    "codetanzania",
     "open311",
     "311",
     "tanzania",
@@ -53,6 +53,7 @@
     "async": "^2.6.0",
     "express": "^4.16.3",
     "express-mquery": "^1.0.1",
+    "grunt-apidoc": "^0.11.0",
     "lodash": "^4.17.5",
     "mongoose": "^5.0.14",
     "mongoose-locale-schema": "^0.1.0",
