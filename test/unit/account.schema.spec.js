@@ -102,6 +102,21 @@ describe('Account', function () {
 
     });
 
+    it('should have neighborhood field', function () {
+
+      const neighborhood = Account.schema.tree.neighborhood;
+      const instance = Account.schema.paths.neighborhood.instance;
+
+      expect(instance).to.be.equal('String');
+      expect(neighborhood).to.exist;
+      expect(neighborhood).to.be.an('object');
+      expect(neighborhood.type).to.be.a('function');
+      expect(neighborhood.type.name).to.be.equal('String');
+      expect(neighborhood.trim).to.be.true;
+      expect(neighborhood.searchable).to.be.true;
+
+    });
+
     it('should have address field', function () {
 
       const address = Account.schema.tree.address;

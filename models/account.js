@@ -166,6 +166,26 @@ const AccountSchema = new Schema({
 
 
   /**
+   * @name neighbourhood
+   * @description Human readable district or town of an account.
+   * 
+   *              Used when a jurisdiction what to target accounts
+   *              resides in a specific area within its boundaries.
+   *
+   * @type {Object}
+   * @see {@link https://en.wikipedia.org/wiki/Neighbourhood}
+   * @private
+   * @since 0.1.0
+   * @version 0.1.0
+   */
+  neighborhood: {
+    type: String,
+    trim: true,
+    searchable: true
+  },
+
+
+  /**
    * @name address
    * @description Human readable physical address of an account.
    * 
@@ -173,6 +193,7 @@ const AccountSchema = new Schema({
    *              the account.
    *
    * @type {Object}
+   * @see {@link https://en.wikipedia.org/wiki/Address_(geography)}
    * @private
    * @since 0.1.0
    * @version 0.1.0
@@ -192,6 +213,7 @@ const AccountSchema = new Schema({
    *              Used to format account user interfaces.
    *              
    * @type {Object}
+   * @see {@link https://en.wikipedia.org/wiki/Locale_(computer_software)}
    * @private
    * @since 0.1.0
    * @version 0.1.0
@@ -213,6 +235,7 @@ const AccountSchema = new Schema({
    *        antenna, house etc.
    *         
    * @since  0.1.0
+   * @see {@link https://tools.ietf.org/html/rfc7946#page-22}
    * @version  0.1.0
    * @type {Object}
    * @private
