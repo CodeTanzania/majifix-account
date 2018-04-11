@@ -38,6 +38,7 @@ const ObjectId = Schema.Types.ObjectId;
 
 /*** local constants*/
 const GEO_POINT = 'Point';
+const DEFAULT_LOCALE = 'en';
 
 
 /** declarations */
@@ -70,6 +71,7 @@ const AccountSchema = new Schema({
     ref: 'Jurisdiction',
     autoset: true,
     exists: true,
+    autopopulate: true,
     index: true
   },
 
@@ -120,8 +122,8 @@ const AccountSchema = new Schema({
 
 
   /**
-   * @name phones
-   * @description Primary mobile phone number(s) used to contact an account 
+   * @name phone
+   * @description Primary mobile phone number used to contact an account 
    *              direct by a jurisdiction.
    *              
    *              Used when a jurisdiction want to send an sms message or 
@@ -132,17 +134,18 @@ const AccountSchema = new Schema({
    * @since 0.1.0
    * @version 0.1.0
    */
-  phones: {
-    type: [String],
-    index: true,
+  phone: {
+    type: String,
     required: true,
+    trim: true,
+    index: true,
     searchable: true
   },
 
 
   /**
-   * @name emails
-   * @description Primary email address(s) used to contact an account direct 
+   * @name email
+   * @description Primary email address used to contact an account direct 
    *              by a jurisdiction.
    *              
    *              Used when a jurisdiction want to send direct mail to the 
@@ -153,8 +156,10 @@ const AccountSchema = new Schema({
    * @since 0.1.0
    * @version 0.1.0
    */
-  emails: {
-    type: [String],
+  email: {
+    type: String,
+    trim: true,
+    lowercase: true,
     index: true,
     searchable: true
   },
@@ -175,6 +180,27 @@ const AccountSchema = new Schema({
   address: {
     type: String,
     trim: true,
+    searchable: true
+  },
+
+
+  /**
+   * @name locale
+   * @description defines the account's language, region and any 
+   *              special variant preferences.
+   *              
+   *              Used to format account user interfaces.
+   *              
+   * @type {Object}
+   * @private
+   * @since 0.1.0
+   * @version 0.1.0
+   */
+  locale: {
+    type: String,
+    trim: true,
+    default: DEFAULT_LOCALE,
+    index: true,
     searchable: true
   },
 
@@ -296,6 +322,11 @@ AccountSchema.pre('validate', function (next) {
 
 /*** use mongoose rest actions*/
 AccountSchema.plugin(actions);
+
+
+
+//Statics
+AccountSchema.statics.DEFAULT_LOCALE = DEFAULT_LOCALE;
 
 
 /*** export Account model */
