@@ -37,6 +37,7 @@ const router =
 
 /*** export account model */
 exports.model = Account;
+exports.Account = Account;
 
 
 /*** export account router */

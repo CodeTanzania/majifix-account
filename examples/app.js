@@ -6,13 +6,39 @@ process.env.MONGODB_URI =
 
 //dependencies
 const path = require('path');
+const async = require('async');
 const mongoose = require('mongoose');
-const account = require(path.join(__dirname, '..'));
+const { Account, app } = require(path.join(__dirname, '..'));
 
 //connect to mongoose
 mongoose.connect(process.env.MONGODB_URI);
 
-//fire the app
-account.app.start(function (error, env) {
-  console.log(`visit http://0.0.0.0:${env.PORT}/v1.0.0/accounts`);
-});
+
+function boot() {
+
+  async.waterfall([
+
+    function clear(next) {
+      Account.remove(function ( /*error, results*/ ) {
+        next();
+      });
+    },
+
+    function seed(next) {
+      //fake accounts
+      const accounts = Account.fake(100);
+      Account.create(accounts, next);
+    }
+
+  ], function () {
+
+    //fire the app
+    app.start(function (error, env) {
+      console.log(`visit http://0.0.0.0:${env.PORT}/v1.0.0/accounts`);
+    });
+
+  });
+
+}
+
+boot();

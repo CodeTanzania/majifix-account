@@ -29,6 +29,27 @@ describe('Account', function () {
         .to.be.equal('accounts');
     });
 
+    describe('fake', function () {
+
+      it('should exists', function () {
+        expect(Account.fake).to.exist;
+        expect(Account.fake).to.be.a('function');
+      });
+
+      it('should generate a fake account', function () {
+        const account = Account.fake();
+        expect(account).to.exist;
+        expect(account.number).to.exist;
+        expect(account.name).to.exist;
+        expect(account.phone).to.exist;
+        expect(account.email).to.exist;
+        expect(account.neighborhood).to.exist;
+        expect(account.address).to.exist;
+        expect(account.bills).to.exist;
+      });
+
+    });
+
     describe('post', function () {
 
       const _id = new mongoose.Types.ObjectId();
