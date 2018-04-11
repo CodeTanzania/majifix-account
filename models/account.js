@@ -1,7 +1,6 @@
 'use strict';
 
 
-
 /**
  * @module Account
  * @name Account
@@ -27,22 +26,23 @@
 //TODO send alerts(messages) in background
 
 
-//global dependencies(or imports)
+/*** dependencies */
 const path = require('path');
 const _ = require('lodash');
 const async = require('async');
 const mongoose = require('mongoose');
+const actions = require('mongoose-rest-actions');
 const Schema = mongoose.Schema;
 const ObjectId = Schema.Types.ObjectId;
 
 
-//local constants
+/*** local constants*/
 const GEO_POINT = 'Point';
 
 
+/** declarations */
 const GeoPoint = require(path.join(__dirname, 'geopoint'));
 const Bill = require(path.join(__dirname, 'bill'));
-
 
 
 /**
@@ -74,7 +74,6 @@ const AccountSchema = new Schema({
   },
 
 
-
   /**
    * @name number
    * @description Unique human readable account number.
@@ -99,8 +98,6 @@ const AccountSchema = new Schema({
   },
 
 
-
-
   /**
    * @name name
    * @description Human readable name of the account
@@ -120,8 +117,6 @@ const AccountSchema = new Schema({
     index: true,
     searchable: true
   },
-
-
 
 
   /**
@@ -145,8 +140,6 @@ const AccountSchema = new Schema({
   },
 
 
-
-
   /**
    * @name emails
    * @description Primary email address(s) used to contact an account direct 
@@ -167,8 +160,6 @@ const AccountSchema = new Schema({
   },
 
 
-
-
   /**
    * @name address
    * @description Human readable physical address of an account.
@@ -186,8 +177,6 @@ const AccountSchema = new Schema({
     trim: true,
     searchable: true
   },
-
-
 
 
   /**
@@ -240,9 +229,7 @@ const AccountSchema = new Schema({
 
 
 
-//-----------------------------------------------------------------------------
-// AccountSchema Virtuals
-//-----------------------------------------------------------------------------
+//Virtuals
 
 /**
  * @name longitude
@@ -256,8 +243,6 @@ AccountSchema.virtual('longitude').get(function () {
   return this.location && this.location.coordinates ?
     this.location.coordinates[0] : 0;
 });
-
-
 
 /**
  * @name latitude
@@ -274,19 +259,25 @@ AccountSchema.virtual('latitude').get(function () {
 
 
 
-//-----------------------------------------------------------------------------
-// AccountSchema Indexes
-//-----------------------------------------------------------------------------
+// Indexes
 
-//ensure `2dsphere` on jurisdiction location and boundaries
+/**
+ * ensure 2dsphere index on jurisdiction location and boundaries
+ */
 AccountSchema.index({ location: '2dsphere' });
+
+/**
+ * ensure unique account number per jurisdiction
+ */
 AccountSchema.index({ jurisdiction: 1, number: 1 }, { unique: true });
 
 
 
-//-----------------------------------------------------------------------------
-// AccountSchema Hooks
-//-----------------------------------------------------------------------------
+//Hooks
+
+/**
+ * pre validate schema hook
+ */
 AccountSchema.pre('validate', function (next) {
 
   //ensure location details
@@ -301,117 +292,11 @@ AccountSchema.pre('validate', function (next) {
 
 
 
-//-----------------------------------------------------------------------------
-// AccountSchema Static Methods
-//-----------------------------------------------------------------------------
+//Plugins
+
+/*** use mongoose rest actions*/
+AccountSchema.plugin(actions);
 
 
-/**
- * @name get
- * @param  {Object} criteria valid model query criteria
- * @param  {Object} [optns] additional opetation options
- * @param  {Function} [done]  a callback to invoke on success or error
- * @return {Model[]|Error}  found model instances or error
- * @see {@link http://mongoosejs.com/docs/api.html#find_find}
- * @type {Function}
- * @since 0.1.0
- * @version 0.1.0
- * @author lally elias <lallyelias87@mail.com>
- * @public
- * @static
- */
-AccountSchema.statics.get = function (criteria, projection, options, done) {
-  return this.find(criteria, projection, options, done);
-};
-
-
-
-/**
- * @name store
- * @param  {Object|}   model valid model to save(or create)
- * @param  {Function} [done]  a callback to invoke on success or error
- * @return {Model|Error}  created model instance or error
- * @see {@link http://mongoosejs.com/docs/api.html#create_create}
- * @type {Function}
- * @since 0.1.0
- * @version 0.1.0
- * @author lally elias <lallyelias87@mail.com>
- * @public
- * @static
- */
-AccountSchema.statics.store = function (model, done) {
-  return this.create(model, done);
-};
-
-
-
-/**
- * @name getById
- * @param  {ObjectId|String}  id valid mongodb object id
- * @param  {Object}   [optns] additional operations options
- * @param  {Function} [done]  a callback to invoke on success or error
- * @return {Model|Error}  updated model instance or error
- * @see {@link http://mongoosejs.com/docs/api.html#findbyid_findById}
- * @type {Function}
- * @since 0.1.0
- * @version 0.1.0
- * @author lally elias <lallyelias87@mail.com>
- * @public
- * @static
- */
-AccountSchema.statics.getById = function (id, options, done) {
-  return this.findById(id, options, done);
-};
-
-
-
-/**
- * @name getByIdAndUpdate
- * @param  {ObjectId|String}  id valid mongodb object id
- * @param  {Object}   updates valid instance updates
- * @param  {Object}   [optns] additional operations options
- * @param  {Function} [done]  a callback to invoke on success or error
- * @return {Model|Error}  updated model instance or error
- * @see {@link http://mongoosejs.com/docs/api.html#findbyidandupdate_findByIdAndUpdate}
- * @type {Function}
- * @since 0.1.0
- * @version 0.1.0
- * @author lally elias <lallyelias87@mail.com>
- * @public
- * @static
- */
-AccountSchema.statics.getByIdAndUpdate = function (id, update, optns, done) {
-  return this.findByIdAndUpdate(id, update, optns, done);
-};
-
-
-
-/**
- * @name getByIdAndRemove
- * @param  {ObjectId|String}  id valid mongodb object id
- * @param  {Object}   [optns] additional operations options
- * @param  {Function} [done]  a callback to invoke on success or error
- * @return {Model|Error}  removed model instance or error
- * @see {@link http://mongoosejs.com/docs/api.html#findbyidandremove_findByIdAndRemove}
- * @type {Function}
- * @since 0.1.0
- * @version 0.1.0
- * @author lally elias <lallyelias87@mail.com>
- * @public
- * @static
- */
-AccountSchema.statics.getByIdAndRemove = function (id, optns, done) {
-  return this.findByIdAndRemove(id, opts, done);
-};
-
-
-
-/**
- * @name Account
- * @description register and export account model
- * @type {Model}
- * @since 0.1.0
- * @version 0.1.0
- * @public
- */
+/*** export Account model */
 module.exports = mongoose.model('Account', AccountSchema);
