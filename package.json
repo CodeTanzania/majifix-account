@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "grunt test",
-    "integration": "grunt integration"
+    "integration": "grunt integration",
+    "dev": "BASE_PATH=./examples nodemon ./examples/app.js"
   },
   "repository": {
     "type": "git",
@@ -40,6 +41,7 @@
     "grunt-mocha-test": "^0.13.3",
     "jshint-stylish": "^2.2.1",
     "mocha": "^5.0.5",
+    "nodemon": "^1.17.3",
     "sinon": "^4.5.0",
     "sinon-chai": "^3.0.0",
     "sinon-mongoose": "^2.1.1",
