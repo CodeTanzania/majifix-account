@@ -12,9 +12,9 @@ It's a simplified version obtained after merging:
 - [https://www.popoloproject.com/specs/contact-detail.html](https://www.popoloproject.com/specs/contact-detail.html)
 - [http://wiki.open311.org/GeoReport_v2/#post-service-request](http://wiki.open311.org/GeoReport_v2/#post-service-request)
 
-
 ## Requirements
-- [NodeJS v9.3.0+](https://nodejs.org)
+- [NodeJS v9.9.0+](https://nodejs.org)
+- [Mongoose v5.0.14+](https://github.com/Automattic/mongoose)
 
 ## Installation
 ```sh
