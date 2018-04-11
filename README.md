@@ -1,4 +1,4 @@
-majifix-account(WIP)
+majifix-account
 ====================
 
 [![Build Status](https://travis-ci.org/CodeTanzania/majifix-account.svg?branch=develop)](https://travis-ci.org/CodeTanzania/majifix-account)
@@ -22,8 +22,23 @@ $ npm install majifix-account --save
 ``` 
 
 ## Usage
-```sh
-TODO
+```js
+//ensure mongo uri
+process.env.MONGODB_URI =
+  (process.env.MONGODB_URI || 'mongodb://localhost/majifix-account');
+
+//dependencies
+const path = require('path');
+const mongoose = require('mongoose');
+const account = require('majifix-account');
+
+//connect to mongoose
+mongoose.connect(process.env.MONGODB_URI);
+
+//fire the app
+account.app.start(function (error, env) {
+  ...
+});
 ```
 
 ## Testing
