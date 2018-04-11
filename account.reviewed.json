@@ -3,17 +3,16 @@
   "name": "Lally Elias", //full name of the customer
   "phone": "255714095", //list of applicable phone numbers
   "email": "lally@example.com", //optional customer emails
-  "address": "Ilala / Ubungo / Mabibo",
-  "region": "Boko",
-  "contacts": [
+  "neighborhood": "Boma",
+  "address": "Opposite Karume Market",
+  "area": "Boko",
+  "location": //eg. current meter(Hinstallation) location
   {
-    "phone": "255716484",
-    "verified": true
-  }],
-  "location":
-  { //current meter(installation) location
-    "longitude": 39.276638,
-    "latitude": -6.816330
+    "type": "Point",
+    "coordinates": [
+      39.276638, //longitude
+      -6.816330 //latitude
+    ]
   },
   "bills": [
   { //last 3months bill :TODO render template(section etc)
