@@ -14,5 +14,5 @@ mongoose.connect(process.env.MONGODB_URI);
 
 //fire the app
 account.app.start(function (error, env) {
-  console.log(`visit http://0.0.0.0:${env.PORT}/v1.0.0/clients`);
+  console.log(`visit http://0.0.0.0:${env.PORT}/v1.0.0/accounts`);
 });

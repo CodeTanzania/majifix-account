@@ -1,10 +1,57 @@
 'use strict';
 
 
-/*** dependencies*/
+/**
+ * @name majifix-account
+ * @description A representation of an entity (i.e organization, individual, 
+ *              customer, or client) which receiving service(s) from 
+ *              a particular jurisdiction
+ * @author lally elias <lallyelias87@mail.com>
+ * @since  0.1.0
+ * @version 0.1.0
+ * @example
+ * 
+ * const account = require('@lykmapipo/majifix-account');
+ *
+ * ...
+ * 
+ * account.app.start();
+ * 
+ */
+
+
+/*** dependencies */
 const path = require('path');
+const app = require('@lykmapipo/express-common');
 
 
-/*** export http app */
-const app = require(path.join(__dirname, '..', 'http', 'app'));
-module.exports = app;
+/*** import models */
+const Account =
+  require(path.join(__dirname, 'models', 'account'));
+
+
+/**import routers*/
+const router =
+  require(path.join(__dirname, 'http', 'router'));
+
+
+/*** export account model */
+exports.model = Account;
+
+
+/*** export account router */
+exports.router = router;
+
+
+/*** export app */
+Object.defineProperty(exports, 'app', {
+  get() {
+
+    //TODO bind oauth middlewares authenticate, token, authorize
+
+    /*** bind account router */
+    app.mount(router);
+    return app;
+  }
+
+});
