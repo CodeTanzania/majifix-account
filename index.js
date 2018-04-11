@@ -27,12 +27,12 @@ const app = require('@lykmapipo/express-common');
 
 /*** import models */
 const Account =
-  require(path.join(__dirname, 'models', 'account'));
+  require(path.join(__dirname, 'lib', 'account.model'));
 
 
 /**import routers*/
 const router =
-  require(path.join(__dirname, 'http', 'router'));
+  require(path.join(__dirname, 'lib', 'http.router'));
 
 
 /*** export account model */

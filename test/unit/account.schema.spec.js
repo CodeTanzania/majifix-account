@@ -7,7 +7,7 @@ const expect = require('chai').expect;
 
 /*** declarations */
 const Account =
-  require(path.join(__dirname, '..', '..', 'models', 'account'));
+  require(path.join(__dirname, '..', '..', 'lib', 'account.model'));
 
 
 describe('Account', function () {

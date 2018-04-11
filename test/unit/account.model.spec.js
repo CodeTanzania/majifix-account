@@ -11,7 +11,7 @@ const faker = require('faker');
 /*** declarations */
 const Model = mongoose.Model;
 const Account =
-  require(path.join(__dirname, '..', '..', 'models', 'account'));
+  require(path.join(__dirname, '..', '..', 'lib', 'account.model'));
 
 
 describe('Account', function () {
