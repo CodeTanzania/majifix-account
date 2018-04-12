@@ -30,13 +30,13 @@ process.env.MONGODB_URI =
 //dependencies
 const path = require('path');
 const mongoose = require('mongoose');
-const account = require('majifix-account');
+const { app } = require('majifix-account');
 
 //connect to mongoose
 mongoose.connect(process.env.MONGODB_URI);
 
 //fire the app
-account.app.start(function (error, env) {
+app.start(function (error, env) {
   ...
 });
 ```
