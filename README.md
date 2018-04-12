@@ -28,7 +28,6 @@ process.env.MONGODB_URI =
   (process.env.MONGODB_URI || 'mongodb://localhost/majifix-account');
 
 //dependencies
-const path = require('path');
 const mongoose = require('mongoose');
 const { app } = require('majifix-account');
 
