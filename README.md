@@ -52,7 +52,7 @@ $ npm install
 ```sh
 npm run dev
 ```
- Then in your browser you can open http://localhost:5000/v1.0.0/accounts to see test it
+ Then in your browser open http://localhost:5000/v1.0.0/accounts
 
 * Then run test
 ```sh
