@@ -284,6 +284,22 @@ describe('Account', function () {
         });
 
 
+        it('should have bill date', function () {
+
+          const billedAt = Account.schema.tree.bills[
+            0].tree.period.tree.billedAt;
+          const instance = Account.schema.paths.bills
+            .schema.paths.period.schema.paths.billedAt
+            .instance;
+
+          expect(instance).to.be.equal('Date');
+          expect(billedAt).to.exist;
+          expect(billedAt).to.be.an('object');
+          expect(billedAt.required).to.not.exist;
+          expect(billedAt.index).to.not.exist;
+
+        });
+
         it('should have start date', function () {
 
           const startedAt = Account.schema.tree.bills[
