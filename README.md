@@ -50,7 +50,7 @@ $ npm install
 
 * Run example
 ```sh
-npm run dev
+$ npm run dev
 ```
  Then in your browser open http://localhost:5000/v1.0.0/accounts
 
