@@ -38,10 +38,10 @@
     "grunt": "^1.0.2",
     "grunt-apidoc": "^0.11.0",
     "grunt-contrib-jshint": "^1.1.0",
-    "grunt-contrib-watch": "^1.0.0",
+    "grunt-contrib-watch": "^1.0.1",
     "grunt-mocha-test": "^0.13.3",
     "jshint-stylish": "^2.2.1",
-    "mocha": "^5.1.0",
+    "mocha": "^5.1.1",
     "nodemon": "^1.17.3",
     "sinon": "^4.5.0",
     "sinon-chai": "^3.0.0",
@@ -59,8 +59,8 @@
     "express-mquery": "^1.0.2",
     "lodash": "^4.17.5",
     "moment": "^2.22.1",
-    "mongoose": "^5.0.14",
-    "mongoose-rest-actions": "^0.6.0"
+    "mongoose": "^5.0.15",
+    "mongoose-rest-actions": "^0.6.1"
   },
   "engines": {
     "node": ">=8.6.0",
