@@ -12,7 +12,6 @@ require('chai').use(require('sinon-chai'));
 require('sinon');
 require('sinon-mongoose');
 
-
-before(function (done) {
-  mongoose.connect('mongodb://localhost/majifix-account', done);
-});
+// before(function (done) {
+//   mongoose.connect('mongodb://localhost/majifix-account', done);
+// });

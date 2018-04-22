@@ -79,9 +79,10 @@ module.exports = function (grunt) {
   });
 
   //custom tasks
-  grunt.registerTask('default', ['jshint', 'mochaTest:unit', 'watch']);
-  grunt.registerTask('test', ['jshint', 'mochaTest:unit']);
+  grunt.registerTask('default', ['jshint', 'mochaTest', 'watch']);
+  grunt.registerTask('test', ['jshint', 'mochaTest']);
   grunt.registerTask('integration', ['jshint', 'mochaTest:integration']);
+  grunt.registerTask('unit', ['jshint', 'mochaTest:unit']);
   grunt.registerTask('doc', ['jshint', 'apidoc:api']);
 
 };
