@@ -2,6 +2,7 @@
 
 /*** dependencies */
 const path = require('path');
+const _ = require('lodash');
 const chai = require('chai');
 const mongoose = require('mongoose');
 const expect = chai.expect;
@@ -17,7 +18,7 @@ describe('Account', function () {
     Account.remove(done);
   });
 
-  describe('static get by id', function () {
+  describe('get by id', function () {
 
     let account;
 
@@ -38,6 +39,45 @@ describe('Account', function () {
           expect(found._id).to.eql(account._id);
           done(error, found);
         });
+    });
+
+    it('should be able to get with options', function (done) {
+
+      const options = {
+        _id: account._id,
+        select: 'number'
+      };
+
+      Account
+        .getById(options, function (error, found) {
+          expect(error).to.not.exist;
+          expect(found).to.exist;
+          expect(found._id).to.eql(account._id);
+          expect(found.number).to.exist;
+
+          //...assert selection
+          const fields = _.keys(found.toObject());
+          expect(fields).to.have.length(2);
+          _.map([
+            'locale',
+            'active',
+            'bills',
+            'name',
+            'phone',
+            'email',
+            'neighborhood',
+            'address',
+            'location',
+            'createdAt',
+            'updatedAt'
+          ], function (field) {
+            expect(fields).to.not.include(field);
+          });
+
+
+          done(error, found);
+        });
+
     });
 
     it('should throw if not exists', function (done) {
