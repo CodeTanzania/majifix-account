@@ -9,176 +9,180 @@ const expect = chai.expect;
 const { Account, app } = require(path.join(__dirname, '..', '..'));
 
 
-describe('Account API', function () {
+describe('Account', function () {
 
-  before(function (done) {
-    mongoose.connect('mongodb://localhost/majifix-account', done);
-  });
+  describe('Rest API', function () {
 
-  before(function (done) {
-    Account.remove(done);
-  });
+    before(function (done) {
+      mongoose.connect('mongodb://localhost/majifix-account', done);
+    });
 
-  let account;
+    before(function (done) {
+      Account.remove(done);
+    });
 
-  it('should handle HTTP POST on /accounts', function (done) {
+    let account;
 
-    account = Account.fake();
+    it('should handle HTTP POST on /accounts', function (done) {
 
-    request(app)
-      .post('/v1.0.0/accounts')
-      .set('Accept', 'application/json')
-      .set('Content-Type', 'application/json')
-      .send(account)
-      .expect(201)
-      .end(function (error, response) {
-        expect(error).to.not.exist;
-        expect(response).to.exist;
+      account = Account.fake();
 
-        const created = response.body;
+      request(app)
+        .post('/v1.0.0/accounts')
+        .set('Accept', 'application/json')
+        .set('Content-Type', 'application/json')
+        .send(account)
+        .expect(201)
+        .end(function (error, response) {
+          expect(error).to.not.exist;
+          expect(response).to.exist;
 
-        expect(created._id).to.exist;
-        expect(created.number).to.exist;
-        expect(created.name).to.exist;
+          const created = response.body;
 
-        done(error, response);
+          expect(created._id).to.exist;
+          expect(created.number).to.exist;
+          expect(created.name).to.exist;
 
-      });
+          done(error, response);
 
-  });
+        });
 
-  it('should handle HTTP GET on /accounts', function (done) {
+    });
 
-    request(app)
-      .get('/v1.0.0/accounts')
-      .set('Accept', 'application/json')
-      .expect(200)
-      .expect('Content-Type', /json/)
-      .end(function (error, response) {
-        expect(error).to.not.exist;
-        expect(response).to.exist;
+    it('should handle HTTP GET on /accounts', function (done) {
 
-        //assert headers
-        expect(response.headers['last-modified'])
-          .to.exist;
+      request(app)
+        .get('/v1.0.0/accounts')
+        .set('Accept', 'application/json')
+        .expect(200)
+        .expect('Content-Type', /json/)
+        .end(function (error, response) {
+          expect(error).to.not.exist;
+          expect(response).to.exist;
 
-        //assert payload
-        const result = response.body;
-        expect(result.data).to.exist;
-        expect(result.total).to.exist;
-        expect(result.limit).to.exist;
-        expect(result.skip).to.exist;
-        expect(result.page).to.exist;
-        expect(result.pages).to.exist;
-        expect(result.lastModified).to.exist;
-        done(error, response);
+          //assert headers
+          expect(response.headers['last-modified'])
+            .to.exist;
 
-      });
+          //assert payload
+          const result = response.body;
+          expect(result.data).to.exist;
+          expect(result.total).to.exist;
+          expect(result.limit).to.exist;
+          expect(result.skip).to.exist;
+          expect(result.page).to.exist;
+          expect(result.pages).to.exist;
+          expect(result.lastModified).to.exist;
+          done(error, response);
 
-  });
+        });
 
-  it('should handle HTTP GET on /accounts/id:', function (done) {
+    });
 
-    request(app)
-      .get(`/v1.0.0/accounts/${account._id}`)
-      .set('Accept', 'application/json')
-      .expect(200)
-      .end(function (error, response) {
-        expect(error).to.not.exist;
-        expect(response).to.exist;
+    it('should handle HTTP GET on /accounts/id:', function (done) {
 
-        const found = response.body;
-        expect(found._id).to.exist;
-        expect(found._id).to.be.equal(account._id.toString());
-        expect(found.number).to.be.equal(account.number);
-        expect(found.name).to.be.equal(account.name);
+      request(app)
+        .get(`/v1.0.0/accounts/${account._id}`)
+        .set('Accept', 'application/json')
+        .expect(200)
+        .end(function (error, response) {
+          expect(error).to.not.exist;
+          expect(response).to.exist;
 
-        done(error, response);
+          const found = response.body;
+          expect(found._id).to.exist;
+          expect(found._id).to.be.equal(account._id.toString());
+          expect(found.number).to.be.equal(account.number);
+          expect(found.name).to.be.equal(account.name);
 
-      });
+          done(error, response);
 
-  });
+        });
 
-  it('should handle HTTP PATCH on /accounts/id:', function (done) {
+    });
 
-    const patch = account.fakeOnly('name');
+    it('should handle HTTP PATCH on /accounts/id:', function (done) {
 
-    request(app)
-      .patch(`/v1.0.0/accounts/${account._id}`)
-      .set('Accept', 'application/json')
-      .set('Content-Type', 'application/json')
-      .send(patch)
-      .expect(200)
-      .end(function (error, response) {
-        expect(error).to.not.exist;
-        expect(response).to.exist;
+      const patch = account.fakeOnly('name');
 
-        const patched = response.body;
+      request(app)
+        .patch(`/v1.0.0/accounts/${account._id}`)
+        .set('Accept', 'application/json')
+        .set('Content-Type', 'application/json')
+        .send(patch)
+        .expect(200)
+        .end(function (error, response) {
+          expect(error).to.not.exist;
+          expect(response).to.exist;
 
-        expect(patched._id).to.exist;
-        expect(patched._id).to.be.equal(account._id.toString());
-        expect(patched.number).to.be.equal(account.number);
-        expect(patched.name).to.be.equal(account.name);
+          const patched = response.body;
 
-        done(error, response);
+          expect(patched._id).to.exist;
+          expect(patched._id).to.be.equal(account._id.toString());
+          expect(patched.number).to.be.equal(account.number);
+          expect(patched.name).to.be.equal(account.name);
 
-      });
+          done(error, response);
 
-  });
+        });
 
-  it('should handle HTTP PUT on /accounts/id:', function (done) {
+    });
 
-    const put = account.fakeOnly('name');
+    it('should handle HTTP PUT on /accounts/id:', function (done) {
 
-    request(app)
-      .put(`/v1.0.0/accounts/${account._id}`)
-      .set('Accept', 'application/json')
-      .set('Content-Type', 'application/json')
-      .send(put)
-      .expect(200)
-      .end(function (error, response) {
-        expect(error).to.not.exist;
-        expect(response).to.exist;
+      const put = account.fakeOnly('name');
 
-        const puted = response.body;
+      request(app)
+        .put(`/v1.0.0/accounts/${account._id}`)
+        .set('Accept', 'application/json')
+        .set('Content-Type', 'application/json')
+        .send(put)
+        .expect(200)
+        .end(function (error, response) {
+          expect(error).to.not.exist;
+          expect(response).to.exist;
 
-        expect(puted._id).to.exist;
-        expect(puted._id).to.be.equal(account._id.toString());
-        expect(puted.number).to.be.equal(account.number);
-        expect(puted.name).to.be.equal(account.name);
+          const puted = response.body;
 
-        done(error, response);
+          expect(puted._id).to.exist;
+          expect(puted._id).to.be.equal(account._id.toString());
+          expect(puted.number).to.be.equal(account.number);
+          expect(puted.name).to.be.equal(account.name);
 
-      });
+          done(error, response);
 
-  });
+        });
 
-  it('should handle HTTP DELETE on /accounts/:id', function (done) {
+    });
 
-    request(app)
-      .delete(`/v1.0.0/accounts/${account._id}`)
-      .set('Accept', 'application/json')
-      .expect(200)
-      .end(function (error, response) {
-        expect(error).to.not.exist;
-        expect(response).to.exist;
+    it('should handle HTTP DELETE on /accounts/:id', function (done) {
 
-        const deleted = response.body;
+      request(app)
+        .delete(`/v1.0.0/accounts/${account._id}`)
+        .set('Accept', 'application/json')
+        .expect(200)
+        .end(function (error, response) {
+          expect(error).to.not.exist;
+          expect(response).to.exist;
 
-        expect(deleted._id).to.exist;
-        expect(deleted._id).to.be.equal(account._id.toString());
-        expect(deleted.number).to.be.equal(account.number);
-        expect(deleted.name).to.be.equal(account.name);
+          const deleted = response.body;
 
-        done(error, response);
+          expect(deleted._id).to.exist;
+          expect(deleted._id).to.be.equal(account._id.toString());
+          expect(deleted.number).to.be.equal(account.number);
+          expect(deleted.name).to.be.equal(account.name);
 
-      });
+          done(error, response);
 
-  });
+        });
+
+    });
 
 
-  after(function (done) {
-    Account.remove(done);
+    after(function (done) {
+      Account.remove(done);
+    });
+
   });
 
 });
