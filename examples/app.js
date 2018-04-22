@@ -9,6 +9,7 @@ const path = require('path');
 const async = require('async');
 const mongoose = require('mongoose');
 const { Account, app } = require(path.join(__dirname, '..'));
+const samples = require('./samples')(20);
 
 //connect to mongoose
 mongoose.connect(process.env.MONGODB_URI);
@@ -26,11 +27,10 @@ function boot() {
 
     function seed(next) {
       //fake accounts
-      const accounts = Account.fake(100);
-      Account.create(accounts, next);
+      Account.create(samples, next);
     }
 
-  ], function () {
+  ], function (error, results) {
 
     //fire the app
     app.start(function (error, env) {

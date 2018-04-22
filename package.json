@@ -34,7 +34,7 @@
   "homepage": "https://github.com/CodeTanzania/majifix-account",
   "devDependencies": {
     "chai": "^4.1.2",
-    "faker": "^4.1.0",
+    "faker": "git+https://github.com/Marak/faker.js.git",
     "grunt": "^1.0.2",
     "grunt-apidoc": "^0.11.0",
     "grunt-contrib-jshint": "^1.1.0",
