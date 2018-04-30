@@ -11,7 +11,7 @@ module.exports = function (grunt) {
   grunt.initConfig({
     apidoc: {
       api: {
-        src: 'http/',
+        src: 'lib/',
         dest: 'docs/',
         options: {
           debug: true,
