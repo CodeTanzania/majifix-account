@@ -43,10 +43,10 @@
     "jshint-stylish": "^2.2.1",
     "mocha": "^5.1.1",
     "nodemon": "^1.17.3",
-    "sinon": "^4.5.0",
+    "sinon": "^5.0.1",
     "sinon-chai": "^3.0.0",
     "sinon-mongoose": "^2.1.1",
-    "superagent": "^3.8.2",
+    "superagent": "^3.8.3",
     "supertest": "^3.0.0"
   },
   "dependencies": {
@@ -57,9 +57,9 @@
     "async": "^2.6.0",
     "express": "^4.16.3",
     "express-mquery": "^1.0.2",
-    "lodash": "^4.17.5",
+    "lodash": "^4.17.10",
     "moment": "^2.22.1",
-    "mongoose": "^5.0.15",
+    "mongoose": "^5.0.16",
     "mongoose-rest-actions": "^0.6.3"
   },
   "engines": {

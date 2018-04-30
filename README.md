@@ -1,8 +1,9 @@
 majifix-account
-====================
+================
 
 [![Build Status](https://travis-ci.org/CodeTanzania/majifix-account.svg?branch=develop)](https://travis-ci.org/CodeTanzania/majifix-account)
 [![Dependencies Status](https://david-dm.org/CodeTanzania/majifix-account/status.svg?style=flat-square)](https://david-dm.org/CodeTanzania/majifix-account)
+[![Deploy to Heroku](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy?template=https://github.com/CodeTanzania/majifix-account/tree/develop)
 
 A representation of an entity (i.e organization, individual, customer, or client) which receiving service(s) from a particular [jurisdiction](https://github.com/CodeTanzania/majifix-jurisdiction).
 
@@ -14,6 +15,7 @@ It's a simplified version obtained after merging:
 
 ## Requirements
 - [NodeJS v9.9.0+](https://nodejs.org)
+- [MongoDB v3.4.10+](https://www.mongodb.com/)
 - [Mongoose v5.0.14+](https://github.com/Automattic/mongoose)
 
 ## Installation
@@ -23,19 +25,14 @@ $ npm install majifix-account --save
 
 ## Usage
 ```js
-//ensure mongo uri
-process.env.MONGODB_URI =
-  (process.env.MONGODB_URI || 'mongodb://localhost/majifix-account');
-
-//dependencies
 const mongoose = require('mongoose');
 const { app } = require('majifix-account');
 
-//connect to mongoose
+//connect to mongodb
 mongoose.connect(process.env.MONGODB_URI);
 
 //fire the app
-app.start(function (error, env) {
+app.start(function(error, env) {
   ...
 });
 ```
@@ -52,7 +49,6 @@ $ npm install
 ```sh
 $ npm run dev
 ```
- Then in your browser open http://localhost:5000/v1.0.0/accounts
 
 * Then run test
 ```sh
