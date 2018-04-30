@@ -11,5 +11,8 @@
     "account",
     "customer",
     "client"
+  ],
+  "addons": [
+    "mongolab"
   ]
 }
