@@ -14,6 +14,7 @@ It's a simplified version obtained after merging:
 
 ## Requirements
 - [NodeJS v9.9.0+](https://nodejs.org)
+- [MongoDB v3.4.10+](https://www.mongodb.com/)
 - [Mongoose v5.0.14+](https://github.com/Automattic/mongoose)
 
 ## Installation
@@ -23,19 +24,14 @@ $ npm install majifix-account --save
 
 ## Usage
 ```js
-//ensure mongo uri
-process.env.MONGODB_URI =
-  (process.env.MONGODB_URI || 'mongodb://localhost/majifix-account');
-
-//dependencies
 const mongoose = require('mongoose');
 const { app } = require('majifix-account');
 
-//connect to mongoose
+//connect to mongodb
 mongoose.connect(process.env.MONGODB_URI);
 
 //fire the app
-app.start(function (error, env) {
+app.start(function(error, env) {
   ...
 });
 ```
@@ -52,7 +48,6 @@ $ npm install
 ```sh
 $ npm run dev
 ```
- Then in your browser open http://localhost:5000/v1.0.0/accounts
 
 * Then run test
 ```sh
