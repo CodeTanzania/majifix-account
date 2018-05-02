@@ -1,6 +1,6 @@
 'use strict';
 
-/*** dependencies */
+/* dependencies */
 const path = require('path');
 const chai = require('chai');
 const mongoose = require('mongoose');

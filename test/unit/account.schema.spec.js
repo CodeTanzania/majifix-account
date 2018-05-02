@@ -1,11 +1,11 @@
 'use strict';
 
 
-/*** dependencies */
+/* dependencies */
 const path = require('path');
 const expect = require('chai').expect;
 
-/*** declarations */
+/* declarations */
 const Account =
   require(path.join(__dirname, '..', '..', 'lib', 'account.model'));
 

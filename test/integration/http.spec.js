@@ -1,6 +1,6 @@
 'use strict';
 
-/*** dependencies */
+/* dependencies */
 const path = require('path');
 const request = require('supertest');
 const chai = require('chai');

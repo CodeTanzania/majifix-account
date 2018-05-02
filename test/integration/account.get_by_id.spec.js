@@ -1,6 +1,6 @@
 'use strict';
 
-/*** dependencies */
+/* dependencies */
 const path = require('path');
 const _ = require('lodash');
 const chai = require('chai');
