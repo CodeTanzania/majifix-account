@@ -25,6 +25,7 @@ function sample() {
     },
     bills: _.map(periods, function (period) {
       return {
+        number: faker.random.number(99999, 999999),
         items: [{
             name: 'Previous Readings',
             quantity: faker.random.number(888, 999),
