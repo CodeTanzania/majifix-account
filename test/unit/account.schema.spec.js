@@ -156,7 +156,7 @@ describe('Account', function () {
 
         const location = Account.schema.tree.location;
         const instance = Account.schema.paths.location.instance;
-        const tree = Account.schema.tree.location.tree;
+        const tree = Account.schema.paths.location.schema.tree;
 
         expect(instance).to.be.equal('Embedded');
         expect(location).to.exist;
@@ -169,17 +169,15 @@ describe('Account', function () {
 
       it('should have GeoJSON type field', function () {
 
-        const type = Account.schema.tree.location.tree.type;
-        const instance =
-          Account.schema.paths.location.schema.paths.type
-          .instance;
+        const schema = Account.schema.paths.location.schema;
+        const type = schema.tree.type;
+        const instance = schema.paths.type.instance;
 
         expect(instance).to.be.equal('String');
         expect(type).to.exist;
         expect(type).to.be.an('object');
         expect(type.type).to.be.a('function');
         expect(type.type.name).to.be.equal('String');
-        expect(type.trim).to.be.true;
         expect(type.default).to.exist;
 
       });
@@ -187,11 +185,9 @@ describe('Account', function () {
 
       it('should have GeoJSON coordinates field', function () {
 
-        const coordinates = Account.schema.tree.location.tree
-          .coordinates;
-        const instance =
-          Account.schema.paths.location.schema.paths.coordinates
-          .instance;
+        const schema = Account.schema.paths.location.schema;
+        const coordinates = schema.tree.coordinates;
+        const instance = schema.paths.coordinates.instance;
 
         expect(instance).to.be.equal('Array');
         expect(coordinates).to.exist;
