@@ -20,37 +20,37 @@
  */
 
 
-/*** dependencies */
+/* dependencies */
 const path = require('path');
 const app = require('@lykmapipo/express-common');
 
 
-/*** import models */
+/* import models */
 const Account =
   require(path.join(__dirname, 'lib', 'account.model'));
 
 
-/**import routers*/
+/* import routers*/
 const router =
   require(path.join(__dirname, 'lib', 'http.router'));
 
 
-/*** export account model */
+/* export account model */
 exports.model = Account;
 exports.Account = Account;
 
 
-/*** export account router */
+/* export account router */
 exports.router = router;
 
 
-/*** export app */
+/* export app */
 Object.defineProperty(exports, 'app', {
   get() {
 
     //TODO bind oauth middlewares authenticate, token, authorize
 
-    /*** bind account router */
+    /* bind account router */
     app.mount(router);
     return app;
   }

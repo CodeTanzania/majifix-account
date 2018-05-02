@@ -1,6 +1,6 @@
 'use strict';
 
-/*** dependencies */
+/* dependencies */
 const path = require('path');
 const chai = require('chai');
 const mongoose = require('mongoose');
@@ -43,7 +43,7 @@ describe('Account', function () {
     let account;
 
     it('should be able to post', function (done) {
-      
+
       account = Account.fake();
 
       account

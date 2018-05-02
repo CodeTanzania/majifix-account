@@ -1,14 +1,14 @@
 'use strict';
 
 
-/*** dependencies */
+/* dependencies */
 const path = require('path');
 const sinon = require('sinon');
 const expect = require('chai').expect;
 const mongoose = require('mongoose');
 const faker = require('faker');
 
-/*** declarations */
+/* declarations */
 const Model = mongoose.Model;
 const Account =
   require(path.join(__dirname, '..', '..', 'lib', 'account.model'));
