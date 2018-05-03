@@ -3,19 +3,20 @@
 
 /**
  * @name majifix-account
- * @description A representation of an entity (i.e organization, individual,
- *              customer, or client) which receiving service(s) from
- *              a particular jurisdiction
+ * @description A representation of an entity 
+ * (i.e organization, individual, customer, or client) which 
+ * receiving service(s) from a particular jurisdiction.
+ * 
  * @author lally elias <lallyelias87@mail.com>
  * @since  0.1.0
  * @version 0.1.0
  * @example
  *
- * const account = require('majifix-account');
+ * const { app } = require('majifix-account');
  *
  * ...
  *
- * account.app.start();
+ * app.start();
  *
  */
 
@@ -36,7 +37,6 @@ const router =
 
 
 /* export account model */
-exports.model = Account;
 exports.Account = Account;
 
 

@@ -55,7 +55,7 @@
     "lodash": "^4.17.10",
     "moment": "^2.22.1",
     "mongoose": "^5.0.17",
-    "mongoose-geojson-schemas": "^0.1.0",
+    "mongoose-geojson-schemas": "^0.3.0",
     "mongoose-rest-actions": "^0.7.0"
   },
   "engines": {
