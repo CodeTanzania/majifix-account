@@ -1,10 +1,12 @@
 'use strict';
 
-/* depedencies */
+/* dependencies */
 const _ = require('lodash');
 const faker = require('faker');
 const moment = require('moment');
-const { randomPoint } = require('mongoose-geojson-schemas');
+const {
+  randomPoint
+} = require('mongoose-geojson-schemas');
 const today = moment(new Date());
 const periods = _.range(1, 4);
 
