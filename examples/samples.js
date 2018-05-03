@@ -4,6 +4,7 @@
 const _ = require('lodash');
 const faker = require('faker');
 const moment = require('moment');
+const { randomPoint } = require('mongoose-geojson-schemas');
 const today = moment(new Date());
 const periods = _.range(1, 4);
 
@@ -16,15 +17,10 @@ function sample() {
     neighborhood: faker.address.city(),
     address: faker.address.streetAddress(),
     locale: 'en',
-    location: {
-      type: 'Point',
-      coordinates: [
-        faker.address.longitude(39.5475, 39.1432),
-        faker.address.latitude(-6.6122, -7.0089)
-      ]
-    },
+    location: randomPoint(),
     bills: _.map(periods, function (period) {
       return {
+        number: faker.random.number(99999, 999999),
         items: [{
             name: 'Previous Readings',
             quantity: faker.random.number(888, 999),
