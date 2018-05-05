@@ -2,12 +2,14 @@
 
 /* dependencies */
 const path = require('path');
-const chai = require('chai');
+const { expect } = require('chai');
 const mongoose = require('mongoose');
-const expect = chai.expect;
+const { Jurisdiction } = require('majifix-jurisdiction');
 const { Account } = require(path.join(__dirname, '..', '..'));
 
 describe('Account', function () {
+
+  let jurisdiction;
 
   before(function (done) {
     mongoose.connect('mongodb://localhost/majifix-account', done);
@@ -17,6 +19,18 @@ describe('Account', function () {
     Account.remove(done);
   });
 
+  before(function (done) {
+    Jurisdiction.remove(done);
+  });
+
+  before(function (done) {
+    jurisdiction = Jurisdiction.fake();
+    jurisdiction.post(function (error, created) {
+      jurisdiction = created;
+      done(error, created);
+    });
+  });
+
   describe('static post', function () {
 
     let account;
@@ -24,12 +38,15 @@ describe('Account', function () {
     it('should be able to post', function (done) {
 
       account = Account.fake();
+      account.jurisdiction = jurisdiction;
 
       Account
         .post(account, function (error, created) {
           expect(error).to.not.exist;
           expect(created).to.exist;
           expect(created._id).to.eql(account._id);
+          expect(created.jurisdiction._id)
+            .to.eql(account.jurisdiction._id);
           expect(created.name).to.eql(account.name);
           expect(created.number).to.eql(account.number);
           done(error, created);
@@ -57,6 +74,10 @@ describe('Account', function () {
         });
     });
 
+  });
+
+  after(function (done) {
+    Jurisdiction.remove(done);
   });
 
   after(function (done) {
