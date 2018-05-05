@@ -53,14 +53,19 @@ describe('Account', function () {
     describe('post', function () {
 
       const _id = new mongoose.Types.ObjectId();
-      const model = { number: faker.random.uuid() };
+      const model = {
+        number: faker.random.uuid()
+      };
 
       let post;
 
       beforeEach(function () {
         post = sinon.mock(Account)
           .expects('post')
-          .yields(null, { _id: _id, number: model.number });
+          .yields(null, {
+            _id: _id,
+            number: model.number
+          });
       });
 
       afterEach(function () {
@@ -96,7 +101,11 @@ describe('Account', function () {
       beforeEach(function () {
         get = sinon.mock(Account)
           .expects('get')
-          .yields(null, { data: [{ _id: _id }] });
+          .yields(null, {
+            data: [{
+              _id: _id
+            }]
+          });
       });
 
       afterEach(function () {
@@ -188,7 +197,9 @@ describe('Account', function () {
       beforeEach(function () {
         getById = sinon.mock(Account)
           .expects('getById')
-          .yields(null, { _id: _id });
+          .yields(null, {
+            _id: _id
+          });
       });
 
       afterEach(function () {
@@ -238,14 +249,19 @@ describe('Account', function () {
     describe('patch', function () {
 
       const _id = new mongoose.Types.ObjectId();
-      const patches = { number: faker.random.uuid() };
+      const patches = {
+        number: faker.random.uuid()
+      };
 
       let patch;
 
       beforeEach(function () {
         patch = sinon.mock(Account)
           .expects('patch')
-          .yields(null, { _id: _id, number: patches.number });
+          .yields(null, {
+            _id: _id,
+            number: patches.number
+          });
       });
 
       afterEach(function () {
@@ -281,7 +297,9 @@ describe('Account', function () {
       beforeEach(function () {
         del = sinon.mock(Account)
           .expects('del')
-          .yields(null, { _id: _id });
+          .yields(null, {
+            _id: _id
+          });
       });
 
       afterEach(function () {

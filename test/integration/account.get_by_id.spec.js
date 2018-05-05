@@ -6,7 +6,9 @@ const _ = require('lodash');
 const chai = require('chai');
 const mongoose = require('mongoose');
 const expect = chai.expect;
-const { Account } = require(path.join(__dirname, '..', '..'));
+const {
+  Account
+} = require(path.join(__dirname, '..', '..'));
 
 describe('Account', function () {
 

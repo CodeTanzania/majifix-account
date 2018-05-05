@@ -5,7 +5,9 @@ const path = require('path');
 const chai = require('chai');
 const mongoose = require('mongoose');
 const expect = chai.expect;
-const { Account } = require(path.join(__dirname, '..', '..'));
+const {
+  Account
+} = require(path.join(__dirname, '..', '..'));
 
 describe('Account', function () {
 
@@ -86,7 +88,7 @@ describe('Account', function () {
         });
     });
 
-    it('should throw if not exists', function (done) {
+    it('should not throw if not exists', function (done) {
       account
         .put(function (error, updated) {
           expect(error).to.not.exist;
