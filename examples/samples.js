@@ -53,6 +53,7 @@ function sample() {
           debt: faker.random.number(333, 444),
           close: faker.random.number(555, 666)
         },
+        currency: faker.finance.currencyCode(),
         notes: faker.lorem.sentence()
       };
     }),

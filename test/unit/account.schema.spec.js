@@ -573,6 +573,23 @@ describe('Account', function () {
         });
       });
 
+      it('should have currency field', function () {
+
+        const currency = Account.schema.tree.bills[0].tree.currency;
+        const instance =
+          Account.schema.paths.bills.schema.paths.currency
+          .instance;
+
+        expect(instance).to.be.equal('String');
+        expect(currency).to.exist;
+        expect(currency).to.be.an('object');
+        expect(currency.type).to.be.a('function');
+        expect(currency.type.name).to.be.equal('String');
+        expect(currency.trim).to.be.true;
+        expect(currency.uppercase).to.be.true;
+
+      });
+
       it('should have notes field', function () {
 
         const notes = Account.schema.tree.bills[0].tree.notes;
