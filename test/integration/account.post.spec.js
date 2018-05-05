@@ -16,10 +16,6 @@ describe('Account', function () {
   });
 
   before(function (done) {
-    Account.remove(done);
-  });
-
-  before(function (done) {
     Jurisdiction.remove(done);
   });
 
@@ -29,6 +25,10 @@ describe('Account', function () {
       jurisdiction = created;
       done(error, created);
     });
+  });
+
+  before(function (done) {
+    Account.remove(done);
   });
 
   describe('static post', function () {
@@ -62,6 +62,7 @@ describe('Account', function () {
     it('should be able to post', function (done) {
 
       account = Account.fake();
+      account.jurisdiction = jurisdiction;
 
       account
         .post(function (error, created) {
@@ -77,11 +78,11 @@ describe('Account', function () {
   });
 
   after(function (done) {
-    Jurisdiction.remove(done);
+    Account.remove(done);
   });
 
   after(function (done) {
-    Account.remove(done);
+    Jurisdiction.remove(done);
   });
 
 });

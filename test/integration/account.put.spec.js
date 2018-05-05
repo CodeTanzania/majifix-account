@@ -2,17 +2,31 @@
 
 /* dependencies */
 const path = require('path');
-const chai = require('chai');
+const { expect } = require('chai');
 const mongoose = require('mongoose');
-const expect = chai.expect;
+const { Jurisdiction } = require('majifix-jurisdiction');
 const {
   Account
 } = require(path.join(__dirname, '..', '..'));
 
 describe('Account', function () {
 
+  let jurisdiction;
+
   before(function (done) {
     mongoose.connect('mongodb://localhost/majifix-account', done);
+  });
+
+  before(function (done) {
+    Jurisdiction.remove(done);
+  });
+
+  before(function (done) {
+    jurisdiction = Jurisdiction.fake();
+    jurisdiction.post(function (error, created) {
+      jurisdiction = created;
+      done(error, created);
+    });
   });
 
   before(function (done) {
@@ -24,8 +38,10 @@ describe('Account', function () {
     let account;
 
     before(function (done) {
-      const fake = Account.fake();
-      fake
+      account = Account.fake();
+      account.jurisdiction = jurisdiction;
+
+      account
         .post(function (error, created) {
           account = created;
           done(error, created);
@@ -67,8 +83,10 @@ describe('Account', function () {
     let account;
 
     before(function (done) {
-      const fake = Account.fake();
-      fake
+      account = Account.fake();
+      account.jurisdiction = jurisdiction;
+
+      account
         .post(function (error, created) {
           account = created;
           done(error, created);
@@ -102,6 +120,10 @@ describe('Account', function () {
 
   after(function (done) {
     Account.remove(done);
+  });
+
+  after(function (done) {
+    Jurisdiction.remove(done);
   });
 
 });

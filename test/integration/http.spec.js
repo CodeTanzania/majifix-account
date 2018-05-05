@@ -3,22 +3,35 @@
 /* dependencies */
 const path = require('path');
 const request = require('supertest');
-const chai = require('chai');
+const { expect } = require('chai');
 const mongoose = require('mongoose');
-const expect = chai.expect;
+const { Jurisdiction } = require('majifix-jurisdiction');
+
+/* declarations */
 const { Account, app } = require(path.join(__dirname, '..', '..'));
 
 
-describe('Account', function () {
+describe.only('Account', function () {
 
   describe('Rest API', function () {
+
+    let jurisdiction;
 
     before(function (done) {
       mongoose.connect('mongodb://localhost/majifix-account', done);
     });
 
     before(function (done) {
+      Jurisdiction.remove(done);
+    });
+
+    before(function (done) {
       Account.remove(done);
+    });
+
+    before(function (done) {
+      jurisdiction = Jurisdiction.fake();
+      jurisdiction.post(done);
     });
 
     let account;
@@ -26,6 +39,7 @@ describe('Account', function () {
     it('should handle HTTP POST on /accounts', function (done) {
 
       account = Account.fake();
+      account.jurisdiction = jurisdiction;
 
       request(app)
         .post('/v1.0.0/accounts')
@@ -75,7 +89,7 @@ describe('Account', function () {
 
     });
 
-    it('should handle HTTP GET on /accounts/id:', function (done) {
+    it('should handle HTTP GET on /accounts/:id', function (done) {
 
       request(app)
         .get(`/v1.0.0/accounts/${account._id}`)
@@ -97,7 +111,7 @@ describe('Account', function () {
 
     });
 
-    it('should handle HTTP PATCH on /accounts/id:', function (done) {
+    it('should handle HTTP PATCH on /accounts/:id', function (done) {
 
       const patch = account.fakeOnly('name');
 
@@ -124,7 +138,7 @@ describe('Account', function () {
 
     });
 
-    it('should handle HTTP PUT on /accounts/id:', function (done) {
+    it('should handle HTTP PUT on /accounts/:id', function (done) {
 
       const put = account.fakeOnly('name');
 
@@ -135,6 +149,7 @@ describe('Account', function () {
         .send(put)
         .expect(200)
         .end(function (error, response) {
+
           expect(error).to.not.exist;
           expect(response).to.exist;
 
@@ -150,6 +165,34 @@ describe('Account', function () {
         });
 
     });
+
+    it('should handle HTTP GET on /jurisdictions/:id/accounts',
+      function (done) {
+
+        request(app)
+          .get(
+            `/v1.0.0/jurisdictions/${account.jurisdiction._id}/accounts`
+          )
+          .set('Accept', 'application/json')
+          .expect(200)
+          .end(function (error, response) {
+            expect(error).to.not.exist;
+            expect(response).to.exist;
+
+            //assert payload
+            const result = response.body;
+            expect(result.data).to.exist;
+            expect(result.total).to.exist;
+            expect(result.limit).to.exist;
+            expect(result.skip).to.exist;
+            expect(result.page).to.exist;
+            expect(result.pages).to.exist;
+            expect(result.lastModified).to.exist;
+            done(error, response);
+
+          });
+
+      });
 
     it('should handle HTTP DELETE on /accounts/:id', function (done) {
 
@@ -177,6 +220,10 @@ describe('Account', function () {
 
     after(function (done) {
       Account.remove(done);
+    });
+
+    after(function (done) {
+      Jurisdiction.remove(done);
     });
 
   });
