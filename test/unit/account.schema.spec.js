@@ -554,6 +554,22 @@ describe('Account', function () {
 
           });
 
+          it('should have time field', function () {
+
+            const time = Account.schema.tree.bills[
+              0].tree.items[0].tree.time;
+            const instance = Account.schema.paths
+              .bills
+              .schema.paths.items.schema.paths
+              .time
+              .instance;
+
+            expect(instance).to.be.equal('Date');
+            expect(time).to.exist;
+            expect(time).to.be.an('object');
+
+          });
+
         });
       });
 

@@ -29,6 +29,7 @@ function sample() {
             unit: 'cbm'
           },
           {
+            time: today.clone().subtract(period, 'months').toDate(),
             name: 'Current Readings',
             quantity: faker.random.number(555, 777),
             unit: 'cbm'
