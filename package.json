@@ -53,7 +53,7 @@
     "@lykmapipo/express-common": "^0.5.1",
     "async": "^2.6.0",
     "lodash": "^4.17.10",
-    "majifix-jurisdiction": "git+https://github.com/CodeTanzania/majifix-jurisdiction.git",
+    "majifix-jurisdiction": "git+https://github.com/CodeTanzania/majifix-jurisdiction.git#develop",
     "moment": "^2.22.1",
     "mongoose": "^5.0.17",
     "mongoose-geojson-schemas": "^0.3.0",
