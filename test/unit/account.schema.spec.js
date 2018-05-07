@@ -27,7 +27,7 @@ describe('Account', function () {
       expect(jurisdiction.index).to.be.true;
       expect(jurisdiction.exists).to.be.true;
       expect(jurisdiction.autoset).to.be.true;
-      expect(jurisdiction.autopopulate).to.be.true;
+      expect(jurisdiction.autopopulate).to.exist;
 
     });
 
