@@ -6,10 +6,12 @@ process.env.MONGODB_URI =
 
 //dependencies
 const path = require('path');
+const _ = require('lodash');
 const async = require('async');
 const mongoose = require('mongoose');
+const { Jurisdiction } = require('majifix-jurisdiction');
 const { Account, app } = require(path.join(__dirname, '..'));
-const samples = require('./samples')(20);
+let samples = require('./samples')(20);
 
 //connect to mongoose
 mongoose.connect(process.env.MONGODB_URI);
@@ -25,8 +27,17 @@ function boot() {
       });
     },
 
-    function seed(next) {
+    function seedJurisdiction(next) {
+      const jurisdiction = Jurisdiction.fake();
+      jurisdiction.post(next);
+    },
+
+    function seedAccounts(jurisdiction, next) {
       //fake accounts
+      samples = _.map(samples, function (sample) {
+        sample.jurisdiction = jurisdiction;
+        return sample;
+      });
       Account.create(samples, next);
     }
 
