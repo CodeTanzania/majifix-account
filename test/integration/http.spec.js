@@ -11,7 +11,7 @@ const { Jurisdiction } = require('majifix-jurisdiction');
 const { Account, app } = require(path.join(__dirname, '..', '..'));
 
 
-describe.only('Account', function () {
+describe('Account', function () {
 
   describe('Rest API', function () {
 
