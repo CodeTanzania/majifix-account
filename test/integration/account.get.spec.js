@@ -4,16 +4,10 @@
 const path = require('path');
 const _ = require('lodash');
 const async = require('async');
-const chai = require('chai');
-const mongoose = require('mongoose');
-const expect = chai.expect;
+const { expect } = require('chai');
 const { Account } = require(path.join(__dirname, '..', '..'));
 
 describe('Account', function () {
-
-  before(function (done) {
-    mongoose.connect('mongodb://localhost/majifix-account', done);
-  });
 
   before(function (done) {
     Account.remove(done);

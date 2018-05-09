@@ -22,16 +22,26 @@
     "customer",
     "client"
   ],
-  "author": {
-    "name": "lykmapipo",
-    "email": "lallyelias87@gmail.com",
-    "url": "https://github.com/lykmapipo"
-  },
+  "contributors": [{
+      "name": "lykmapipo",
+      "email": "lallyelias87@gmail.com",
+      "url": "https://github.com/lykmapipo"
+    },
+    {
+      "name": "benMaruchu",
+      "email": "benmaruchu@gmail.com",
+      "url": "https://github.com/BenMaruchu"
+    }
+  ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/CodeTanzania/majifix-account/issues"
+    "url": "https://github.com/CodeTanzania/majifix-account/issues",
+    "email": "lallyelias87@gmail.com"
   },
   "homepage": "https://github.com/CodeTanzania/majifix-account",
+  "sandbox": {
+    "url": "https://majifix-account.herokuapp.com/v0.1.0/accounts"
+  },
   "devDependencies": {
     "chai": "^4.1.2",
     "faker": "git+https://github.com/Marak/faker.js.git",
@@ -55,7 +65,7 @@
     "lodash": "^4.17.10",
     "majifix-jurisdiction": "git+https://github.com/CodeTanzania/majifix-jurisdiction.git#develop",
     "moment": "^2.22.1",
-    "mongoose": "^5.0.17",
+    "mongoose": "^5.0.18",
     "mongoose-geojson-schemas": "^0.4.0",
     "mongoose-rest-actions": "^0.9.1"
   },

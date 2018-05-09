@@ -11,7 +11,7 @@ const _ = require('lodash');
 const async = require('async');
 const mongoose = require('mongoose');
 const { Jurisdiction } = require('majifix-jurisdiction');
-const { Account, app } = require(path.join(__dirname, '..'));
+const { Account, app, info } = require(path.join(__dirname, '..'));
 let samples = require('./samples')(20);
 
 
@@ -31,13 +31,17 @@ function boot() {
 
     function seedJurisdiction(next) {
       const jurisdiction = Jurisdiction.fake();
-      jurisdiction.post(next);
+      Jurisdiction.remove(function ( /*error, results*/ ) {
+        jurisdiction.post(next);
+      });
     },
 
     function seedAccounts(jurisdiction, next) {
       /* fake accounts */
-      samples = _.map(samples, function (sample) {
-        sample.jurisdiction = jurisdiction;
+      samples = _.map(samples, function (sample, index) {
+        if ((index % 2 === 0)) {
+          sample.jurisdiction = jurisdiction;
+        }
         return sample;
       });
       /* fake statuses */
@@ -46,9 +50,17 @@ function boot() {
 
   ], function (error, results) {
 
+    /* expose module info */
+    app.get('/', function (request, response) {
+      response.status(200);
+      response.json(info);
+    });
+
     /* fire the app */
     app.start(function (error, env) {
-      console.log(`visit http://0.0.0.0:${env.PORT}/v1.0.0/accounts`);
+      console.log(
+        `visit http://0.0.0.0:${env.PORT}/v${info.version}/accounts`
+      );
     });
 
   });

@@ -4,11 +4,10 @@
 const path = require('path');
 const request = require('supertest');
 const { expect } = require('chai');
-const mongoose = require('mongoose');
 const { Jurisdiction } = require('majifix-jurisdiction');
 
 /* declarations */
-const { Account, app } = require(path.join(__dirname, '..', '..'));
+const { Account, app, info } = require(path.join(__dirname, '..', '..'));
 
 
 describe('Account', function () {
@@ -16,10 +15,6 @@ describe('Account', function () {
   describe('Rest API', function () {
 
     let jurisdiction;
-
-    before(function (done) {
-      mongoose.connect('mongodb://localhost/majifix-account', done);
-    });
 
     before(function (done) {
       Jurisdiction.remove(done);
@@ -42,7 +37,7 @@ describe('Account', function () {
       account.jurisdiction = jurisdiction;
 
       request(app)
-        .post('/v1.0.0/accounts')
+        .post(`/v${info.version}/accounts`)
         .set('Accept', 'application/json')
         .set('Content-Type', 'application/json')
         .send(account)
@@ -66,7 +61,7 @@ describe('Account', function () {
     it('should handle HTTP GET on /accounts', function (done) {
 
       request(app)
-        .get('/v1.0.0/accounts')
+        .get(`/v${info.version}/accounts`)
         .set('Accept', 'application/json')
         .expect(200)
         .expect('Content-Type', /json/)
@@ -92,7 +87,7 @@ describe('Account', function () {
     it('should handle HTTP GET on /accounts/:id', function (done) {
 
       request(app)
-        .get(`/v1.0.0/accounts/${account._id}`)
+        .get(`/v${info.version}/accounts/${account._id}`)
         .set('Accept', 'application/json')
         .expect(200)
         .end(function (error, response) {
@@ -116,7 +111,7 @@ describe('Account', function () {
       const patch = account.fakeOnly('name');
 
       request(app)
-        .patch(`/v1.0.0/accounts/${account._id}`)
+        .patch(`/v${info.version}/accounts/${account._id}`)
         .set('Accept', 'application/json')
         .set('Content-Type', 'application/json')
         .send(patch)
@@ -143,7 +138,7 @@ describe('Account', function () {
       const put = account.fakeOnly('name');
 
       request(app)
-        .put(`/v1.0.0/accounts/${account._id}`)
+        .put(`/v${info.version}/accounts/${account._id}`)
         .set('Accept', 'application/json')
         .set('Content-Type', 'application/json')
         .send(put)
@@ -171,7 +166,7 @@ describe('Account', function () {
 
         request(app)
           .get(
-            `/v1.0.0/jurisdictions/${account.jurisdiction._id}/accounts`
+            `/v${info.version}/jurisdictions/${account.jurisdiction._id}/accounts`
           )
           .set('Accept', 'application/json')
           .expect(200)
@@ -197,7 +192,7 @@ describe('Account', function () {
     it('should handle HTTP DELETE on /accounts/:id', function (done) {
 
       request(app)
-        .delete(`/v1.0.0/accounts/${account._id}`)
+        .delete(`/v${info.version}/accounts/${account._id}`)
         .set('Accept', 'application/json')
         .expect(200)
         .end(function (error, response) {

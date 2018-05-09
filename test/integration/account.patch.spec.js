@@ -3,19 +3,12 @@
 /* dependencies */
 const path = require('path');
 const { expect } = require('chai');
-const mongoose = require('mongoose');
 const { Jurisdiction } = require('majifix-jurisdiction');
-const {
-  Account
-} = require(path.join(__dirname, '..', '..'));
+const { Account } = require(path.join(__dirname, '..', '..'));
 
 describe('Account', function () {
 
   let jurisdiction;
-
-  before(function (done) {
-    mongoose.connect('mongodb://localhost/majifix-account', done);
-  });
 
   before(function (done) {
     Jurisdiction.remove(done);
