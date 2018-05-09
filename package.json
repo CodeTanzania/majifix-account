@@ -43,7 +43,7 @@
     "jshint-stylish": "^2.2.1",
     "mocha": "^5.1.1",
     "nodemon": "^1.17.4",
-    "sinon": "^5.0.6",
+    "sinon": "^5.0.7",
     "sinon-chai": "^3.0.0",
     "sinon-mongoose": "^2.1.1",
     "superagent": "^3.8.3",
@@ -56,8 +56,8 @@
     "majifix-jurisdiction": "git+https://github.com/CodeTanzania/majifix-jurisdiction.git#develop",
     "moment": "^2.22.1",
     "mongoose": "^5.0.17",
-    "mongoose-geojson-schemas": "^0.3.0",
-    "mongoose-rest-actions": "^0.8.0"
+    "mongoose-geojson-schemas": "^0.4.0",
+    "mongoose-rest-actions": "^0.9.1"
   },
   "engines": {
     "node": ">=8.6.0",
