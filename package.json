@@ -22,7 +22,8 @@
     "customer",
     "client"
   ],
-  "contributors": [{
+  "contributors": [
+    {
       "name": "lykmapipo",
       "email": "lallyelias87@gmail.com",
       "url": "https://github.com/lykmapipo"
@@ -67,7 +68,7 @@
     "moment": "^2.22.1",
     "mongoose": "^5.0.18",
     "mongoose-geojson-schemas": "^0.4.0",
-    "mongoose-rest-actions": "^0.9.1"
+    "mongoose-rest-actions": "^0.9.2"
   },
   "engines": {
     "node": ">=8.6.0",
