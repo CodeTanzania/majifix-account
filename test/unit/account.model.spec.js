@@ -141,6 +141,12 @@ describe('Account', function () {
   });
 
   describe('Statics', function () {
+
+    it('should expose model name as constant', function () {
+      expect(Account.MODEL_NAME).to.exist;
+      expect(Account.MODEL_NAME).to.be.equal('Account');
+    });
+
     it('should expose default locale `en` when not set', function () {
       expect(Account.DEFAULT_LOCALE).to.exist;
       expect(Account.DEFAULT_LOCALE).to.equal('en');
