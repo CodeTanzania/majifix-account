@@ -94,8 +94,8 @@ describe('Account', function () {
       beforeEach(function () {
         getById =
           mock(Jurisdiction)
-          .expects('getById')
-          .yields(null, jurisdiction);
+            .expects('getById')
+            .yields(null, jurisdiction);
         ensureLocation =
           spy(account, 'ensureLocation');
       });
@@ -138,6 +138,13 @@ describe('Account', function () {
 
     });
 
+  });
+
+  describe('Statics', function () {
+    it('should expose default locale `en` when not set', function () {
+      expect(Account.DEFAULT_LOCALE).to.exist;
+      expect(Account.DEFAULT_LOCALE).to.equal('en');
+    });
   });
 
 });
