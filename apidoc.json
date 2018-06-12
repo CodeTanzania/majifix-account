@@ -1,10 +1,9 @@
 {
   "name": "majifix-account",
-  "version": "0.1.0",
   "description": "A representation of an entity (i.e organization, individual, customer, or client) which receiving service(s) from a particular jurisdiction",
   "title": "MajiFix Account",
-  "url": "https://majifix-account.herokuapp.com/v0.1.0",
-  "sampleUrl": "https://majifix-account.herokuapp.com/v0.1.0",
+  "url": "https://majifix-account.herokuapp.com/v1",
+  "sampleUrl": "https://majifix-account.herokuapp.com/v1",
   "template":
   {
     "withCompare": true,

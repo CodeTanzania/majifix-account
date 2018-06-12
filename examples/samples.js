@@ -15,7 +15,7 @@ function sample() {
   return {
     number: faker.random.number(99999, 999999),
     name: faker.name.findName(),
-    phone: faker.phone.phoneNumber(),
+    phone: phones[faker.random.number(0, 3)],
     email: faker.internet.email(),
     neighborhood: faker.address.city(),
     address: faker.address.streetAddress(),
