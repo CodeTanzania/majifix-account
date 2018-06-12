@@ -10,7 +10,7 @@ const {
   randomPolygon,
   TYPE_POINT
 } = require('mongoose-geojson-schemas');
-const { Jurisdiction } = require('majifix-jurisdiction');
+const { Jurisdiction } = require('@codetanzania/majifix-jurisdiction');
 
 
 /* declarations */
@@ -94,8 +94,8 @@ describe('Account', function () {
       beforeEach(function () {
         getById =
           mock(Jurisdiction)
-            .expects('getById')
-            .yields(null, jurisdiction);
+          .expects('getById')
+          .yields(null, jurisdiction);
         ensureLocation =
           spy(account, 'ensureLocation');
       });

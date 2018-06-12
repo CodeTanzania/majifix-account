@@ -12,7 +12,7 @@
  * @version 0.1.0
  * @example
  *
- * const { app } = require('majifix-account');
+ * const { app } = require('@codetanzania/majifix-account');
  *
  * ...
  *
@@ -41,10 +41,6 @@ const fields = [
   'contributors'
 ];
 const info = _.merge({}, _.pick(pkg, fields));
-
-
-/* ensure api version */
-process.env.API_VERSION = (process.env.API_VERSION || info.version);
 
 
 /* import models */

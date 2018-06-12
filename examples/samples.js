@@ -2,13 +2,14 @@
 
 /* dependencies */
 const _ = require('lodash');
-const faker = require('faker');
+const faker = require('@benmaruchu/faker');
 const moment = require('moment');
 const {
   randomPoint
 } = require('mongoose-geojson-schemas');
 const today = moment(new Date());
 const periods = _.range(1, 4);
+const phones = ['255719818179', '255714095061', '255756995069'];
 
 function sample() {
   return {
@@ -20,6 +21,13 @@ function sample() {
     address: faker.address.streetAddress(),
     locale: 'en',
     location: randomPoint(),
+    accessors: _.map(phones, function (phone) {
+      return {
+        name: faker.name.findName(),
+        phone: phone,
+        email: faker.internet.email(),
+      }
+    }),
     bills: _.map(periods, function (period) {
       return {
         number: faker.random.number(99999, 999999),
