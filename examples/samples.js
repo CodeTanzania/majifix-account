@@ -21,11 +21,12 @@ function sample() {
     address: faker.address.streetAddress(),
     locale: 'en',
     location: randomPoint(),
-    accessors: _.map(phones, function (phone) {
+    accessors: _.map(phones, function (phone, index) {
       return {
         name: faker.name.findName(),
         phone: phone,
         email: faker.internet.email(),
+        verifiedAt: (index > 0 ? new Date() : undefined)
       }
     }),
     bills: _.map(periods, function (period) {
