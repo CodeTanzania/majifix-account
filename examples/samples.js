@@ -33,22 +33,26 @@ function sample() {
       return {
         number: faker.random.number(99999, 999999),
         items: [{
-            name: 'Previous Readings',
-            quantity: faker.random.number(888, 999),
-            unit: 'cbm'
-          },
-          {
-            time: today.clone().subtract(period, 'months').toDate(),
-            name: 'Current Readings',
-            quantity: faker.random.number(555, 777),
-            unit: 'cbm'
-          },
-          {
-            name: 'Unit Consumed',
-            quantity: faker.random.number(111, 333),
-            unit: 'cbm'
-          }
-        ],
+          name: 'Unit Consumed',
+          quantity: faker.random.number(111, 333),
+          unit: 'cbm',
+          items: [{
+              name: 'Previous Readings',
+              quantity: faker.random.number(888, 999),
+              unit: 'cbm'
+            },
+            {
+              time: today.clone().subtract(period, 'months').toDate(),
+              name: 'Current Readings',
+              quantity: faker.random.number(555, 777),
+              unit: 'cbm'
+            }
+          ]
+        }, {
+          name: 'Re-Connection',
+          quantity: 1,
+          price: faker.random.number(8888, 9999)
+        }],
         period: {
           billedAt: today.clone().subtract(period, 'months').toDate(),
           startedAt: today.clone().subtract(period + 1, 'months').toDate(),
