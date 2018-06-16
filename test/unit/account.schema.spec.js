@@ -607,21 +607,6 @@ describe('Account', function () {
 
     });
 
-
-    it('should have active field', function () {
-
-      const active = Account.schema.tree.active;
-      const instance = Account.schema.paths.active.instance;
-
-      expect(instance).to.be.equal('Boolean');
-      expect(active).to.exist;
-      expect(active).to.be.an('object');
-      expect(active.type).to.be.a('function');
-      expect(active.type.name).to.be.equal('Boolean');
-      expect(active.index).to.be.true;
-
-    });
-
   });
 
 });

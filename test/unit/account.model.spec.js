@@ -75,6 +75,47 @@ describe('Account', function () {
         expect(location.coordinates).to.have.length(2);
       });
 
+
+    it('`ensureUniqueAccessors` should be a function', function () {
+      const account = Account.fake();
+      expect(account.ensureUniqueAccessors).to.exist;
+      expect(account.ensureUniqueAccessors).to.be.a('function');
+      expect(account.ensureUniqueAccessors.length)
+        .to.be.equal(0);
+      expect(account.ensureUniqueAccessors.name)
+        .to.be.equal('ensureUniqueAccessors');
+    });
+
+    it('should be able to ensure unique accessors', function () {
+      const account = Account.fake();
+      const accessors = account.ensureUniqueAccessors();
+      expect(accessors).to.exist;
+    });
+
+    it('should be able to ensure unique accessors', function () {
+      const account = Account.fake();
+      const exist = account.accessors.toObject();
+
+      account.accessors.push(undefined);
+      const accessors = account.ensureUniqueAccessors();
+
+      expect(accessors).to.exist;
+      expect(accessors.toObject()).to.eql(exist);
+
+    });
+
+    it('should be able to ensure unique accessors', function () {
+      const account = Account.fake();
+      const exist = account.accessors.toObject();
+
+      account.accessors.push(account.accessors[0].toObject());
+      const accessors = account.ensureUniqueAccessors();
+
+      expect(accessors).to.exist;
+      expect(accessors.toObject()).to.eql(exist);
+
+    });
+
   });
 
 

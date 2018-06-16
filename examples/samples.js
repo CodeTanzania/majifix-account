@@ -9,7 +9,7 @@ const {
 } = require('mongoose-geojson-schemas');
 const today = moment(new Date());
 const periods = _.range(1, 4);
-const phones = ['255719818179', '255714095061', '255756995069'];
+const phones = ['255719818179', '255714095061', '255756995069', '255756995069'];
 
 function sample() {
   return {
@@ -37,6 +37,7 @@ function sample() {
           quantity: faker.random.number(111, 333),
           unit: 'cbm',
           items: [{
+              time: today.clone().subtract(period + 1, 'months').toDate(),
               name: 'Previous Readings',
               quantity: faker.random.number(888, 999),
               unit: 'cbm'
