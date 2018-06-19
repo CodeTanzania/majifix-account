@@ -9,7 +9,7 @@ const {
 } = require('mongoose-geojson-schemas');
 const today = moment(new Date());
 const periods = _.range(1, 4);
-const phones = ['255719818179', '255714095061', '255756995069', '255756995069'];
+const phones = ['255719818179', '255714095061', '255756995069'];
 
 function sample() {
   return {
