@@ -11,9 +11,9 @@ const today = moment(new Date());
 const periods = _.range(1, 4);
 const phones = ['255719818179', '255714095061', '255756995069'];
 
-function sample() {
+function sample(n) {
   return {
-    number: faker.random.number(99999, 999999),
+    number: (n > 0) ? faker.random.number(99999, 999999) : '55555',
     name: faker.name.findName(),
     phone: phones[faker.random.number(0, 3)],
     email: faker.internet.email(),
@@ -33,27 +33,40 @@ function sample() {
       return {
         number: faker.random.number(99999, 999999),
         items: [{
-          name: 'Unit Consumed',
-          quantity: faker.random.number(111, 333),
-          unit: 'cbm',
-          items: [{
-              time: today.clone().subtract(period + 1, 'months').toDate(),
-              name: 'Previous Readings',
-              quantity: faker.random.number(888, 999),
-              unit: 'cbm'
-            },
-            {
-              time: today.clone().subtract(period, 'months').toDate(),
-              name: 'Current Readings',
-              quantity: faker.random.number(555, 777),
-              unit: 'cbm'
-            }
-          ]
-        }, {
-          name: 'Re-Connection',
-          quantity: 1,
-          price: faker.random.number(8888, 9999)
-        }],
+            name: 'Water Charge',
+            quantity: faker.random.number(5, 10),
+            unit: 'cbm',
+            price: faker.random.number(8888, 9999),
+            items: [{
+                name: 'Previous Readings',
+                quantity: faker.random.number(111, 222),
+                unit: 'cbm'
+              },
+              {
+                name: 'Current Readings',
+                quantity: faker.random.number(333, 444),
+                unit: 'cbm',
+                time: '2018-05-15T13:55:22.000Z'
+              }
+            ]
+          },
+          {
+            name: 'Service Charge',
+            price: faker.random.number(8888, 9999)
+          },
+          {
+            name: 'Sewage Charge',
+            price: faker.random.number(8888, 9999)
+          },
+          {
+            name: 'Adjustments',
+            price: faker.random.number(8888, 9999)
+          },
+          {
+            name: 'Payments',
+            price: faker.random.number(8888, 9999)
+          }
+        ],
         period: {
           billedAt: today.clone().subtract(period, 'months').toDate(),
           startedAt: today.clone().subtract(period + 1, 'months').toDate(),
