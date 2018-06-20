@@ -68,6 +68,7 @@ function sample(n) {
           }
         ],
         period: {
+          name: today.clone().subtract(period, 'months').format('MMMYYYY'),
           billedAt: today.clone().subtract(period, 'months').toDate(),
           startedAt: today.clone().subtract(period + 1, 'months').toDate(),
           endedAt: today.clone().subtract(period, 'months').toDate(),
