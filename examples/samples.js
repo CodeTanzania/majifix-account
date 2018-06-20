@@ -34,7 +34,7 @@ function sample(n) {
         number: faker.random.number(99999, 999999),
         items: [{
             name: 'Water Charge',
-            quantity: faker.random.number(5, 10),
+            quantity: faker.random.number(11, 99),
             unit: 'cbm',
             price: faker.random.number(8888, 9999),
             items: [{
