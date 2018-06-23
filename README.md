@@ -1,5 +1,4 @@
-majifix-account
-================
+# majifix-account
 
 [![Build Status](https://travis-ci.org/CodeTanzania/majifix-account.svg?branch=develop)](https://travis-ci.org/CodeTanzania/majifix-account)
 [![Dependencies Status](https://david-dm.org/CodeTanzania/majifix-account/status.svg?style=flat-square)](https://david-dm.org/CodeTanzania/majifix-account)
@@ -8,25 +7,29 @@ majifix-account
 A representation of an entity (i.e organization, individual, customer, or client) which receiving service(s) from a particular [jurisdiction](https://github.com/CodeTanzania/majifix-jurisdiction).
 
 It's a simplified version obtained after merging:
+
 - [https://www.popoloproject.com/specs/organization.html](https://www.popoloproject.com/specs/organization.html)
 - [https://www.popoloproject.com/specs/person.html](https://www.popoloproject.com/specs/person.html)
 - [https://www.popoloproject.com/specs/contact-detail.html](https://www.popoloproject.com/specs/contact-detail.html)
 - [http://wiki.open311.org/GeoReport_v2/#post-service-request](http://wiki.open311.org/GeoReport_v2/#post-service-request)
 
 ## Requirements
-- [NodeJS v9.9.0+](https://nodejs.org)
+
+- [NodeJS v8.11.1+](https://nodejs.org)
 - [MongoDB v3.4.10+](https://www.mongodb.com/)
-- [Mongoose v5.0.14+](https://github.com/Automattic/mongoose)
+- [Mongoose v5.1.2+](https://github.com/Automattic/mongoose)
 
 ## Installation
+
 ```sh
-$ npm install majifix-account --save
+npm install @codetanzania/majifix-account --save
 ```
 
 ## Usage
+
 ```js
 const mongoose = require('mongoose');
-const { app } = require('majifix-account');
+const { app } = require('@codetanzania/majifix-account');
 
 //connect to mongodb
 mongoose.connect(process.env.MONGODB_URI);
@@ -38,27 +41,33 @@ app.start(function(error, env) {
 ```
 
 ## Testing
-* Clone this repository
 
-* Install all development dependencies
+- Clone this repository
+
+- Install all development dependencies
+
 ```sh
-$ npm install
+npm install
 ```
 
-* Run example
+- Run example
+
 ```sh
-$ npm run dev
+npm run dev
 ```
 
-* Then run test
+- Then run test
+
 ```sh
-$ npm test
+npm test
 ```
 
 ## Contribute
+
 It will be nice, if you open an issue first so that we can know what is going on, then, fork this repo and push in your ideas. Do not forget to add a bit of test(s) of what value you adding.
 
 ## References
+
 - [Open311 GeoReport v2](http://wiki.open311.org/GeoReport_v2/)
 - [popolo project](https://www.popoloproject.com/)
 - [http://geojson.org/](http://geojson.org/)
@@ -66,6 +75,7 @@ It will be nice, if you open an issue first so that we can know what is going on
 - [https://opengovdata.io/](https://opengovdata.io/)
 
 ## Licence
+
 The MIT License (MIT)
 
 Copyright (c) 2018 CodeTanzania & Contributors
