@@ -1,6 +1,6 @@
 {
-  "name": "majifix-account",
-  "version": "0.1.0",
+  "name": "@codetanzania/majifix-account",
+  "version": "1.0.0",
   "description": "A representation of an entity (i.e organization, individual, customer, or client) which receiving service(s) from a particular jurisdiction",
   "main": "index.js",
   "scripts": {
@@ -15,15 +15,14 @@
   "keywords": [
     "majifix",
     "codetanzania",
-    "open311",
-    "311",
-    "tanzania",
+    "majifix",
+    "majifix-module",
     "account",
     "customer",
-    "client"
+    "client",
+    "open311"
   ],
-  "contributors": [
-    {
+  "contributors": [{
       "name": "lykmapipo",
       "email": "lallyelias87@gmail.com",
       "url": "https://github.com/lykmapipo"
@@ -72,7 +71,7 @@
     "mongoose-rest-actions": "^0.13.1"
   },
   "engines": {
-    "node": ">=8.6.0",
-    "npm": ">=5.3.0"
+    "node": ">=8.11.1",
+    "npm": ">=5.6.0"
   }
 }
