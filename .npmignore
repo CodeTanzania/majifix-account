@@ -17,3 +17,5 @@ test
 .editorconfig
 .travis.yml
 Gruntfile.js
+examples
+docs
