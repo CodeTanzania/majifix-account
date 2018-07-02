@@ -15,9 +15,10 @@ function sample(n) {
   return {
     number: (n > 0) ? faker.random.number(99999, 999999) : '55555',
     name: faker.name.findName(),
+    category: faker.name.jobType(),
     phone: phones[faker.random.number(0, 3)],
     email: faker.internet.email(),
-    neighborhood: faker.address.city(),
+    neighborhood: faker.address.county(),
     address: faker.address.streetAddress(),
     locale: 'en',
     location: randomPoint(),
