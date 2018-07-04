@@ -4,148 +4,179 @@
 /* dependencies */
 const path = require('path');
 const { expect } = require('chai');
+const mongoose = require('mongoose');
+const { Types } = mongoose.Schema;
 
 /* declarations */
+const { Jurisdiction } = require('@codetanzania/majifix-jurisdiction');
 const Account =
   require(path.join(__dirname, '..', '..', 'lib', 'account.model'));
 
 
 describe('Account', function () {
 
-  describe('Schema', function () {
+  describe('Schema', function () { //compiled schema
 
     it('should have jurisdiction field', function () {
 
-      const jurisdiction = Account.schema.tree.jurisdiction;
-      const instance = Account.schema.paths.jurisdiction.instance;
+      const jurisdiction = Account.schema.path('jurisdiction');
 
-      expect(instance).to.be.equal('ObjectID');
       expect(jurisdiction).to.exist;
+      expect(jurisdiction).to.be.an.instanceof(Types.ObjectId);
+      expect(jurisdiction.instance).to.be.equal('ObjectID');
       expect(jurisdiction).to.be.an('object');
-      expect(jurisdiction.type).to.be.a('function');
-      expect(jurisdiction.type.name).to.be.equal('ObjectId');
-      expect(jurisdiction.index).to.be.true;
-      expect(jurisdiction.exists).to.be.true;
-      expect(jurisdiction.autopopulate).to.exist;
+      expect(jurisdiction.options.type).to.be.a('function');
+      expect(jurisdiction.options.type.name).to.be.equal('ObjectId');
+      expect(jurisdiction.options.ref).to.be.equal(Jurisdiction.MODEL_NAME);
+      expect(jurisdiction.options.index).to.be.true;
+      expect(jurisdiction.options.exists).to.be.true;
+      expect(jurisdiction.options.autopopulate).to.exist;
 
     });
 
+    it('should have category field', function () {
+
+      const category = Account.schema.path('category');
+
+      expect(category).to.exist;
+      expect(category).to.be.an.instanceof(Types.String);
+      expect(category.instance).to.be.equal('String');
+      expect(category).to.be.an('object');
+      expect(category.options.type).to.be.a('function');
+      expect(category.options.type.name).to.be.equal('String');
+      expect(category.options.trim).to.be.true;
+      expect(category.options.index).to.be.true;
+      expect(category.options.searchable).to.be.true;
+      expect(category.options.fake).to.exist;
+
+    });
+
+
     it('should have number field', function () {
 
-      const number = Account.schema.tree.number;
-      const instance = Account.schema.paths.number.instance;
+      const number = Account.schema.path('number');
 
-      expect(instance).to.be.equal('String');
       expect(number).to.exist;
+      expect(number).to.be.an.instanceof(Types.String);
+      expect(number.instance).to.be.equal('String');
       expect(number).to.be.an('object');
-      expect(number.type).to.be.a('function');
-      expect(number.type.name).to.be.equal('String');
-      expect(number.required).to.be.true;
-      expect(number.uppercase).to.be.true;
-      expect(number.trim).to.be.true;
-      expect(number.index).to.be.true;
-      expect(number.searchable).to.be.true;
+      expect(number.options.type).to.be.a('function');
+      expect(number.options.type.name).to.be.equal('String');
+      expect(number.options.required).to.be.true;
+      expect(number.options.uppercase).to.be.true;
+      expect(number.options.trim).to.be.true;
+      expect(number.options.index).to.be.true;
+      expect(number.options.searchable).to.be.true;
+      expect(number.options.fake).to.exist;
 
     });
 
     it('should have name field', function () {
 
-      const name = Account.schema.tree.name;
-      const instance = Account.schema.paths.name.instance;
+      const name = Account.schema.path('name');
 
-      expect(instance).to.be.equal('String');
       expect(name).to.exist;
+      expect(name).to.be.an.instanceof(Types.String);
+      expect(name.instance).to.be.equal('String');
       expect(name).to.be.an('object');
-      expect(name.type).to.be.a('function');
-      expect(name.type.name).to.be.equal('String');
-      expect(name.required).to.be.true;
-      expect(name.trim).to.be.true;
-      expect(name.index).to.be.true;
-      expect(name.searchable).to.be.true;
+      expect(name.options.type).to.be.a('function');
+      expect(name.options.type.name).to.be.equal('String');
+      expect(name.options.required).to.be.true;
+      expect(name.options.trim).to.be.true;
+      expect(name.options.index).to.be.true;
+      expect(name.options.searchable).to.be.true;
+      expect(name.options.fake).to.exist;
 
     });
 
 
     it('should have phone field', function () {
 
-      const phone = Account.schema.tree.phone;
-      const instance = Account.schema.paths.phone.instance;
+      const phone = Account.schema.path('phone');
 
-      expect(instance).to.be.equal('String');
       expect(phone).to.exist;
+      expect(phone).to.be.an.instanceof(Types.String);
+      expect(phone.instance).to.be.equal('String');
       expect(phone).to.be.an('object');
-      expect(phone.type).to.be.a('function');
-      expect(phone.type.name).to.be.equal('String');
-      expect(phone.required).to.be.true;
-      expect(phone.trim).to.be.true;
-      expect(phone.index).to.be.true;
-      expect(phone.searchable).to.be.true;
+      expect(phone.options.type).to.be.a('function');
+      expect(phone.options.type.name).to.be.equal('String');
+      expect(phone.options.required).to.be.true;
+      expect(phone.options.trim).to.be.true;
+      expect(phone.options.index).to.be.true;
+      expect(phone.options.searchable).to.be.true;
+      expect(phone.options.fake).to.exist;
 
     });
 
 
     it('should have email field', function () {
 
-      const email = Account.schema.tree.email;
-      const instance = Account.schema.paths.email.instance;
+      const email = Account.schema.path('email');
 
-      expect(instance).to.be.equal('String');
       expect(email).to.exist;
+      expect(email).to.be.an.instanceof(Types.String);
+      expect(email.instance).to.be.equal('String');
       expect(email).to.be.an('object');
-      expect(email.type).to.be.a('function');
-      expect(email.type.name).to.be.equal('String');
-      expect(email.trim).to.be.true;
-      expect(email.lowercase).to.be.true;
-      expect(email.index).to.be.true;
-      expect(email.searchable).to.be.true;
+      expect(email.options.type).to.be.a('function');
+      expect(email.options.type.name).to.be.equal('String');
+      expect(email.options.lowercase).to.be.true;
+      expect(email.options.trim).to.be.true;
+      expect(email.options.index).to.be.true;
+      expect(email.options.searchable).to.be.true;
+      expect(email.options.fake).to.exist;
 
     });
 
     it('should have neighborhood field', function () {
 
-      const neighborhood = Account.schema.tree.neighborhood;
-      const instance = Account.schema.paths.neighborhood.instance;
+      const neighborhood = Account.schema.path('neighborhood');
 
-      expect(instance).to.be.equal('String');
       expect(neighborhood).to.exist;
+      expect(neighborhood).to.be.an.instanceof(Types.String);
+      expect(neighborhood.instance).to.be.equal('String');
       expect(neighborhood).to.be.an('object');
-      expect(neighborhood.type).to.be.a('function');
-      expect(neighborhood.type.name).to.be.equal('String');
-      expect(neighborhood.trim).to.be.true;
-      expect(neighborhood.searchable).to.be.true;
+      expect(neighborhood.options.type).to.be.a('function');
+      expect(neighborhood.options.type.name).to.be.equal('String');
+      expect(neighborhood.options.trim).to.be.true;
+      expect(neighborhood.options.index).to.be.true;
+      expect(neighborhood.options.searchable).to.be.true;
+      expect(neighborhood.options.fake).to.exist;
 
     });
 
     it('should have address field', function () {
 
-      const address = Account.schema.tree.address;
-      const instance = Account.schema.paths.address.instance;
+      const address = Account.schema.path('address');
 
-      expect(instance).to.be.equal('String');
       expect(address).to.exist;
+      expect(address).to.be.an.instanceof(Types.String);
+      expect(address.instance).to.be.equal('String');
       expect(address).to.be.an('object');
-      expect(address.type).to.be.a('function');
-      expect(address.type.name).to.be.equal('String');
-      expect(address.trim).to.be.true;
-      expect(address.searchable).to.be.true;
+      expect(address.options.type).to.be.a('function');
+      expect(address.options.type.name).to.be.equal('String');
+      expect(address.options.trim).to.be.true;
+      expect(address.options.index).to.be.true;
+      expect(address.options.searchable).to.be.true;
+      expect(address.options.fake).to.exist;
 
     });
 
     it('should have locale field', function () {
 
-      const locale = Account.schema.tree.locale;
-      const instance = Account.schema.paths.locale.instance;
+      const locale = Account.schema.path('locale');
 
-      expect(instance).to.be.equal('String');
       expect(locale).to.exist;
+      expect(locale).to.be.an.instanceof(Types.String);
+      expect(locale.instance).to.be.equal('String');
       expect(locale).to.be.an('object');
-      expect(locale.type).to.be.a('function');
-      expect(locale.type.name).to.be.equal('String');
-      expect(locale.trim).to.be.true;
-      expect(locale.index).to.be.true;
-      expect(locale.searchable).to.be.true;
-      expect(locale.default).to.exist;
-      expect(locale.default).to.be.equal(Account.DEFAULT_LOCALE);
+      expect(locale.options.type).to.be.a('function');
+      expect(locale.options.type.name).to.be.equal('String');
+      expect(locale.options.default).to.exist;
+      expect(locale.options.trim).to.be.true;
+      expect(locale.options.index).to.be.true;
+      expect(locale.options.searchable).to.be.true;
+      expect(locale.options.fake).to.exist;
+      expect(locale.options.default).to.be.equal(Account.DEFAULT_LOCALE);
 
     });
 
@@ -196,7 +227,6 @@ describe('Account', function () {
           'Number');
 
       });
-
 
     });
 
