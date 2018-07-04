@@ -3,11 +3,11 @@
 
 /**
  * @name majifix-account
- * @description A representation of an entity 
- * (i.e organization, individual, customer, or client) which 
+ * @description A representation of an entity
+ * (i.e organization, individual, customer, or client) which
  * receiving service(s) from a particular jurisdiction.
- * 
- * @author lally elias <lallyelias87@mail.com>
+ *
+ * @author lally elias <lallyelias87@gmail.com>
  * @since  0.1.0
  * @version 0.1.0
  * @example

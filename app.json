@@ -5,12 +5,12 @@
   "keywords": [
     "majifix",
     "codetanzania",
-    "open311",
-    "311",
-    "tanzania",
+    "majifix",
+    "majifix-module",
     "account",
     "customer",
-    "client"
+    "client",
+    "open311"
   ],
   "addons": [
     "mongolab"
