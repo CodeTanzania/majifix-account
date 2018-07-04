@@ -3,6 +3,7 @@
 
 /* dependencies */
 const path = require('path');
+const faker = require('@benmaruchu/faker');
 const { expect } = require('chai');
 const { mock, spy } = require('sinon');
 const {
@@ -75,7 +76,6 @@ describe('Account', function () {
         expect(location.coordinates).to.have.length(2);
       });
 
-
     it('`ensureUniqueAccessors` should be a function', function () {
       const account = Account.fake();
       expect(account.ensureUniqueAccessors).to.exist;
@@ -88,19 +88,13 @@ describe('Account', function () {
 
     it('should be able to ensure unique accessors', function () {
       const account = Account.fake();
-      const accessors = account.ensureUniqueAccessors();
-      expect(accessors).to.exist;
-    });
-
-    it('should be able to ensure unique accessors', function () {
-      const account = Account.fake();
       const exist = account.accessors.toObject();
 
       account.accessors.push(undefined);
-      const accessors = account.ensureUniqueAccessors();
+      account.ensureUniqueAccessors();
 
-      expect(accessors).to.exist;
-      expect(accessors.toObject()).to.eql(exist);
+      expect(account.accessors).to.exist;
+      expect(account.accessors.toObject()).to.eql(exist);
 
     });
 
@@ -109,10 +103,99 @@ describe('Account', function () {
       const exist = account.accessors.toObject();
 
       account.accessors.push(account.accessors[0].toObject());
-      const accessors = account.ensureUniqueAccessors();
+      account.ensureUniqueAccessors();
 
-      expect(accessors).to.exist;
-      expect(accessors.toObject()).to.eql(exist);
+      expect(account.accessors).to.exist;
+      expect(account.accessors.toObject()).to.eql(exist);
+
+    });
+
+    it('`upsertAccessor` should be a function', function () {
+      const account = Account.fake();
+      expect(account.upsertAccessor).to.exist;
+      expect(account.upsertAccessor).to.be.a('function');
+      expect(account.upsertAccessor.length)
+        .to.be.equal(2);
+      expect(account.upsertAccessor.name)
+        .to.be.equal('upsertAccessor');
+    });
+
+    it('should be able to update existing accessor', function () {
+      const account = Account.fake();
+      account.accessors = [account.accessors[0]];
+
+      const exist = account.accessors.toObject();
+
+      const accessor = account.accessors[0];
+      const updates = {
+        phone: faker.phone.phoneNumber(),
+        name: faker.name.findName(),
+        email: faker.internet.email()
+      };
+      account.upsertAccessor(accessor.phone, updates);
+
+      expect(account.accessors).to.exist;
+      expect(account.accessors.toObject()).to.not.be.eql(exist);
+
+    });
+
+    it('should be able to add new accessor', function () {
+      const account = Account.fake();
+      const exist = account.accessors.toObject();
+
+      const updates = {
+        phone: faker.phone.phoneNumber(),
+        name: faker.name.findName(),
+        email: faker.internet.email()
+      };
+      account.upsertAccessor(undefined, updates);
+      const current = account.accessors.toObject();
+
+      expect(account.accessors).to.exist;
+      expect(exist.length < current.length).to.be.true;
+      expect(current).to.not.be.eql(exist);
+
+    });
+
+    it('should be able to add new accessor', function () {
+      const account = Account.fake();
+      const exist = account.accessors.toObject();
+
+      const updates = {
+        phone: faker.phone.phoneNumber(),
+        name: faker.name.findName(),
+        email: faker.internet.email()
+      };
+      account.upsertAccessor(updates.phone, updates);
+      const current = account.accessors.toObject();
+
+      expect(account.accessors).to.exist;
+      expect(exist.length < current.length).to.be.true;
+      expect(current).to.not.be.eql(exist);
+
+    });
+
+    it('`removeAccessor` should be a function', function () {
+      const account = Account.fake();
+      expect(account.removeAccessor).to.exist;
+      expect(account.removeAccessor).to.be.a('function');
+      expect(account.removeAccessor.length)
+        .to.be.equal(1);
+      expect(account.removeAccessor.name)
+        .to.be.equal('removeAccessor');
+    });
+
+    it('should be able to remove existing accessor', function () {
+      const account = Account.fake();
+      const exist = account.accessors.toObject();
+      const accessor = account.accessors[0];
+
+      account.removeAccessor(accessor.phone);
+      const current = account.accessors.toObject();
+
+      expect(account.accessors).to.exist;
+      expect(current.length < exist.length).to.true;
+      expect(current).to.not.be.eql(exist);
 
     });
 
@@ -134,11 +217,9 @@ describe('Account', function () {
 
       beforeEach(function () {
         getById =
-          mock(Jurisdiction)
-          .expects('getById')
-          .yields(null, jurisdiction);
-        ensureLocation =
-          spy(account, 'ensureLocation');
+          mock(Jurisdiction).expects('getById').yields(null,
+            jurisdiction);
+        ensureLocation = spy(account, 'ensureLocation');
       });
 
       afterEach(function () {
@@ -192,6 +273,7 @@ describe('Account', function () {
       expect(Account.DEFAULT_LOCALE).to.exist;
       expect(Account.DEFAULT_LOCALE).to.equal('en');
     });
+
   });
 
 });
