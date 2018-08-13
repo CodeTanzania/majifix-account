@@ -5,14 +5,25 @@
   "keywords": [
     "majifix",
     "codetanzania",
-    "open311",
-    "311",
-    "tanzania",
+    "majifix",
+    "majifix-module",
     "account",
     "customer",
-    "client"
+    "client",
+    "open311"
   ],
   "addons": [
     "mongolab"
-  ]
+  ],
+  "env":
+  {
+    "NPM_CONFIG_PRODUCTION":
+    {
+      "value": "false"
+    },
+    "YARN_PRODUCTION":
+    {
+      "value": "false"
+    }
+  }
 }
