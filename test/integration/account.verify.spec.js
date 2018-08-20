@@ -13,7 +13,7 @@ describe('Account', function () {
   let jurisdiction;
 
   before(function (done) {
-    Jurisdiction.remove(done);
+    Jurisdiction.deleteMany(done);
   });
 
   before(function (done) {
@@ -25,7 +25,7 @@ describe('Account', function () {
   });
 
   before(function (done) {
-    Account.remove(done);
+    Account.deleteMany(done);
   });
 
   describe('verify', function () {
@@ -121,11 +121,11 @@ describe('Account', function () {
   });
 
   after(function (done) {
-    Account.remove(done);
+    Account.deleteMany(done);
   });
 
   after(function (done) {
-    Jurisdiction.remove(done);
+    Jurisdiction.deleteMany(done);
   });
 
 });
