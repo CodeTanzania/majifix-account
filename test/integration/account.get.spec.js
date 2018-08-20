@@ -10,7 +10,7 @@ const { Account } = require(path.join(__dirname, '..', '..'));
 describe('Account', function () {
 
   before(function (done) {
-    Account.remove(done);
+    Account.deleteMany(done);
   });
 
   describe('get', function () {
@@ -24,10 +24,10 @@ describe('Account', function () {
         };
       });
       async
-        .parallel(fakes, function (error, created) {
-          accounts = created;
-          done(error, created);
-        });
+      .parallel(fakes, function (error, created) {
+        accounts = created;
+        done(error, created);
+      });
     });
 
     it('should be able to get without options', function (done) {
@@ -141,7 +141,7 @@ describe('Account', function () {
   });
 
   after(function (done) {
-    Account.remove(done);
+    Account.deleteMany(done);
   });
 
 });

@@ -9,7 +9,7 @@ const { Account } = require(path.join(__dirname, '..', '..'));
 describe('Account', function () {
 
   before(function (done) {
-    Account.remove(done);
+    Account.deleteMany(done);
   });
 
   describe('get by id', function () {
@@ -90,7 +90,7 @@ describe('Account', function () {
   });
 
   after(function (done) {
-    Account.remove(done);
+    Account.deleteMany(done);
   });
 
 });

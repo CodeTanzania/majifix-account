@@ -8,7 +8,7 @@ const { Account } = require(path.join(__dirname, '..', '..'));
 describe('Account', function () {
 
   before(function (done) {
-    Account.remove(done);
+    Account.deleteMany(done);
   });
 
   describe('static delete', function () {
@@ -83,7 +83,7 @@ describe('Account', function () {
   });
 
   after(function (done) {
-    Account.remove(done);
+    Account.deleteMany(done);
   });
 
 });
