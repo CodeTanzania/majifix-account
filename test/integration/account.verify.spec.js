@@ -2,6 +2,7 @@
 
 /* dependencies */
 const path = require('path');
+const _ = require('lodash');
 const faker = require('@benmaruchu/faker');
 const { expect } = require('chai');
 const { Jurisdiction } = require('@codetanzania/majifix-jurisdiction');
@@ -72,6 +73,31 @@ describe('Account', function () {
           expect(verified).to.exist;
           expect(verified._id).to.eql(account._id);
           expect(verified.number).to.eql(account.number);
+          done(error, verified);
+        });
+    });
+
+    it('should be able to verify shallow access', function (done) {
+
+      const accessor = {
+        account: account.number,
+        phone: faker.phone.phoneNumber(),
+        shallow: true
+      };
+
+      Account
+        .verify(accessor, function (error, verified) {
+          expect(error).to.not.exist;
+          expect(verified).to.exist;
+          expect(verified._id).to.eql(account._id);
+          expect(verified.number).to.eql(account.number);
+
+          const _accessor =
+            _.find(verified.accessors, { phone: accessor.phone });
+          expect(_accessor).to.exist;
+          expect(_accessor.verifiedAt).to.not.exist;
+          expect(_accessor.phone).to.be.equal(accessor.phone);
+
           done(error, verified);
         });
     });
