@@ -71,6 +71,24 @@ describe('Account', function () {
 
     });
 
+    it('should have identity field', function () {
+
+      const identity = Account.schema.path('identity');
+
+      expect(identity).to.exist;
+      expect(identity).to.be.an.instanceof(Types.String);
+      expect(identity.instance).to.be.equal('String');
+      expect(identity).to.be.an('object');
+      expect(identity.options.type).to.be.a('function');
+      expect(identity.options.type.name).to.be.equal('String');
+      expect(identity.options.uppercase).to.be.true;
+      expect(identity.options.trim).to.be.true;
+      expect(identity.options.index).to.be.true;
+      expect(identity.options.searchable).to.be.true;
+      expect(identity.options.fake).to.exist;
+
+    });
+
     it('should have name field', function () {
 
       const name = Account.schema.path('name');

@@ -14,6 +14,7 @@ const phones = ['255719818179', '255714095061', '255756995069'];
 function sample(n) {
   return {
     number: (n > 0) ? faker.random.number(99999, 999999) : '55555',
+    identity: (n > 0) ? faker.random.number(11111, 44444) : '44444',
     name: faker.name.findName(),
     category: faker.name.jobType(),
     phone: phones[faker.random.number(0, 3)],
