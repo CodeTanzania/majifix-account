@@ -43,7 +43,7 @@ describe('Account', function () {
         });
     });
 
-    it('should be able to verify access', function (done) {
+    it('should be able to verify access by account', function (done) {
 
       const accessor = {
         account: account.number,
@@ -60,7 +60,27 @@ describe('Account', function () {
         });
     });
 
-    it('should be able to verify access', function (done) {
+    it('should be able to verify access by identity', function (
+      done) {
+
+      const accessor = {
+        identity: account.identity,
+        phone: account.phone
+      };
+
+      Account
+        .verify(accessor, function (error, verified) {
+          expect(error).to.not.exist;
+          expect(verified).to.exist;
+          expect(verified._id).to.eql(account._id);
+          expect(verified.number).to.eql(account.number);
+          expect(verified.identity).to.eql(account.identity);
+          done(error, verified);
+        });
+    });
+
+    it('should be able to verify access by account', function (
+      done) {
 
       const accessor = {
         account: account.number,
@@ -77,7 +97,27 @@ describe('Account', function () {
         });
     });
 
-    it('should be able to verify shallow access', function (done) {
+    it('should be able to verify access by identity', function (
+      done) {
+
+      const accessor = {
+        identity: account.identity,
+        phone: account.accessors[0].phone
+      };
+
+      Account
+        .verify(accessor, function (error, verified) {
+          expect(error).to.not.exist;
+          expect(verified).to.exist;
+          expect(verified._id).to.eql(account._id);
+          expect(verified.number).to.eql(account.number);
+          expect(verified.identity).to.eql(account.identity);
+          done(error, verified);
+        });
+    });
+
+    it('should be able to verify shallow access by account', function (
+      done) {
 
       const accessor = {
         account: account.number,
@@ -102,7 +142,35 @@ describe('Account', function () {
         });
     });
 
-    it('should be able to verify access', function (done) {
+    it('should be able to verify shallow access by identity',
+      function (
+        done) {
+
+        const accessor = {
+          identity: account.identity,
+          phone: faker.phone.phoneNumber(),
+          shallow: true
+        };
+
+        Account
+          .verify(accessor, function (error, verified) {
+            expect(error).to.not.exist;
+            expect(verified).to.exist;
+            expect(verified._id).to.eql(account._id);
+            expect(verified.number).to.eql(account.number);
+            expect(verified.identity).to.eql(account.identity);
+
+            const _accessor =
+              _.find(verified.accessors, { phone: accessor.phone });
+            expect(_accessor).to.exist;
+            expect(_accessor.verifiedAt).to.not.exist;
+            expect(_accessor.phone).to.be.equal(accessor.phone);
+
+            done(error, verified);
+          });
+      });
+
+    it('should be able to restrict access', function (done) {
 
       const accessor = {
         account: account.number,
