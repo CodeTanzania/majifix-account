@@ -53,24 +53,28 @@ const router =
   require(path.join(__dirname, 'lib', 'http.router'));
 
 
+/* export function*/
+function account() {}
+
+
 /* export package(module) info */
-exports.info = info;
+account.info = info;
 
 
 /* export account model */
-exports.Account = Account;
+account.Account = Account;
 
 
 /* export account router */
-exports.router = router;
+account.router = router;
 
 
 /* export router api version */
-exports.apiVersion = router.apiVersion;
+account.apiVersion = router.apiVersion;
 
 
 /* export app */
-Object.defineProperty(exports, 'app', {
+Object.defineProperty(account, 'app', {
   get() {
 
     //TODO bind oauth middlewares authenticate, token, authorize
@@ -81,3 +85,6 @@ Object.defineProperty(exports, 'app', {
   }
 
 });
+
+
+exports = module.exports = account;
