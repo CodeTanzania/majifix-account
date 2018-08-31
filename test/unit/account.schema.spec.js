@@ -657,4 +657,20 @@ describe('Account', function () {
 
   });
 
+  it('should have fetchedAt field', function () {
+
+    const fetchedAt = Account.schema.path('fetchedAt');
+
+    expect(fetchedAt).to.exist;
+    expect(fetchedAt).to.be.an.instanceof(Types.Date);
+    expect(fetchedAt.instance).to.be.equal('Date');
+    expect(fetchedAt).to.be.an('object');
+    expect(fetchedAt.options.type).to.be.a('function');
+    expect(fetchedAt.options.type.name).to.be.equal('Date');
+    expect(fetchedAt.options.index).to.be.true;
+    expect(fetchedAt.options.hide).to.be.true;
+    expect(fetchedAt.options.fake).to.exist;
+
+  });
+
 });

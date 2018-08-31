@@ -89,6 +89,35 @@ describe('Account', function () {
 
     });
 
+    it('should handle GET /accounts by filters', function (done) {
+
+      request(app)
+        .get(
+          `/v${apiVersion}/accounts?filter[number]=${account.number}`
+        )
+        .set('Accept', 'application/json')
+        .expect(200)
+        .expect('Content-Type', /json/)
+        .end(function (error, response) {
+          expect(error).to.not.exist;
+          expect(response).to.exist;
+
+          //assert payload
+          const result = response.body;
+          expect(result.data).to.exist;
+          expect(result.data).to.have.length.at.least(1);
+          expect(result.total).to.exist;
+          expect(result.limit).to.exist;
+          expect(result.skip).to.exist;
+          expect(result.page).to.exist;
+          expect(result.pages).to.exist;
+          expect(result.lastModified).to.exist;
+          done(error, response);
+
+        });
+
+    });
+
     it('should handle GET /accounts/:id', function (done) {
 
       request(app)
