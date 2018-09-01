@@ -115,8 +115,8 @@ describe('Account', () => {
     });
 
     it('should be able to fetch and upsert without provider', (done) => {
-      const { identity, fetchedAt } = Account.fake();
-      Account.fetchAndUpsert(identity, fetchedAt, (error) => {
+      const { identity } = Account.fake();
+      Account.fetchAndUpsert(identity, (error) => {
         expect(error).to.exist;
         done();
       });
@@ -125,12 +125,12 @@ describe('Account', () => {
     it('should be able to fetch and upsert with provider', (done) => {
       const account = Account.fake();
 
-      const { identity, fetchedAt } = account;
+      const { identity } = account;
       Account.fetchAccount = (identity, fetchedAt, cb) => {
         return cb(null, account.toObject());
       };
 
-      Account.fetchAndUpsert(identity, fetchedAt, (error, upserted) => {
+      Account.fetchAndUpsert(identity, (error, upserted) => {
         expect(error).to.not.exist;
         expect(upserted).to.exist;
         expect(upserted).to.be.not.be.empty;
@@ -142,7 +142,7 @@ describe('Account', () => {
     });
 
     it('should be able to fetch and upsert with provider', (done) => {
-      const { identity, fetchedAt } = Account.fake();
+      const { identity } = Account.fake();
       Account.fetchAccount = (identity, fetchedAt, cb) => {
         return cb(null, {
           name: faker.name.findName(),
@@ -151,7 +151,7 @@ describe('Account', () => {
         });
       };
 
-      Account.fetchAndUpsert(identity, fetchedAt, (error) => {
+      Account.fetchAndUpsert(identity, (error) => {
         expect(error).to.exist;
         delete Account.fetchAccount;
         done();
@@ -159,24 +159,24 @@ describe('Account', () => {
     });
 
     it('should be able to handle fetch and upsert with error', (done) => {
-      const { identity, fetchedAt } = Account.fake();
+      const { identity } = Account.fake();
       Account.fetchAccount = (identity, fetchedAt, cb) => {
         return cb(new Error('No Data'));
       };
 
-      Account.fetchAndUpsert(identity, fetchedAt, (error) => {
+      Account.fetchAndUpsert(identity, (error) => {
         expect(error).to.exist;
         done();
       });
     });
 
     it('should be able to handle fetch and upsert existing', (done) => {
-      const { identity, fetchedAt } = account;
+      const { identity } = account;
       Account.fetchAccount = (identity, fetchedAt, cb) => {
         return cb(null, {});
       };
 
-      Account.fetchAndUpsert(identity, fetchedAt, (error, upserted) => {
+      Account.fetchAndUpsert(identity, (error, upserted) => {
         expect(error).to.not.exist;
         expect(upserted).to.exist;
         expect(upserted.number).to.be.eql(account.number);
