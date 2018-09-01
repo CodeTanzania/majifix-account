@@ -19,76 +19,69 @@ describe('Account', () => {
   describe('static fetch', () => {
 
     before((done) => {
-      const fake = Account.fake();
-      fake.post((error, created) => {
+      account = Account.fake();
+      account.post((error, created) => {
         account = created;
         done(error, created);
       });
     });
 
-    it('should have fetche capability', () => {
+    it('should have fetch capability', () => {
       expect(Account.fetch).to.exist;
       expect(Account.fetch).to.be.a('function');
       expect(Account.fetch.length).to.be.equal(3);
     });
 
     it('should be able to fetch with invalid args length', (done) => {
-      const { identity } = account;
-      Account
-        .fetch(identity, (error, fetched) => {
-          expect(error).to.not.exist;
-          expect(fetched).to.exist;
-          expect(fetched).to.be.empty;
-          done(error, fetched);
-        });
+      const { identity } = Account.fake();
+      Account.fetch(identity, (error, fetched) => {
+        expect(error).to.not.exist;
+        expect(fetched).to.exist;
+        expect(fetched).to.be.empty;
+        done(error, fetched);
+      });
     });
 
     it('should be able to fetch with invalid args length', (done) => {
-      Account
-        .fetch((error, fetched) => {
-          expect(error).to.not.exist;
-          expect(fetched).to.exist;
-          expect(fetched).to.be.empty;
-          done(error, fetched);
-        });
+      Account.fetch((error, fetched) => {
+        expect(error).to.not.exist;
+        expect(fetched).to.exist;
+        expect(fetched).to.be.empty;
+        done(error, fetched);
+      });
     });
 
     it('should be able to fetch without provider', (done) => {
-      const { identity, fetchedAt } = account;
-      Account
-        .fetch(identity, fetchedAt, (error, fetched) => {
-          expect(error).to.not.exist;
-          expect(fetched).to.exist;
-          expect(fetched).to.be.empty;
-          done(error, fetched);
-        });
+      const { identity, fetchedAt } = Account.fake();
+      Account.fetch(identity, fetchedAt, (error, fetched) => {
+        expect(error).to.not.exist;
+        expect(fetched).to.exist;
+        expect(fetched).to.be.empty;
+        done(error, fetched);
+      });
     });
 
     it('should be able to fetch with provider', (done) => {
-
-      const { identity, fetchedAt } = account;
+      const { identity, fetchedAt } = Account.fake();
       Account.fetchAccount = (identity, fetchedAt, cb) => {
         return cb(null, {
           name: faker.name.findName()
         });
       };
 
-      Account
-        .fetch(identity, fetchedAt, (error, fetched) => {
-          expect(error).to.not.exist;
-          expect(fetched).to.exist;
-          expect(fetched).to.be.not.be.empty;
-          expect(fetched.name).to.exist;
-          expect(fetched.fetchedAt).to.exist;
-          delete Account.fetchAccount;
-          done(error, fetched);
-        });
-
+      Account.fetch(identity, fetchedAt, (error, fetched) => {
+        expect(error).to.not.exist;
+        expect(fetched).to.exist;
+        expect(fetched).to.be.not.be.empty;
+        expect(fetched.name).to.exist;
+        expect(fetched.fetchedAt).to.exist;
+        delete Account.fetchAccount;
+        done(error, fetched);
+      });
     });
 
     it('should be able to fetch with provider', (done) => {
-
-      const { identity, fetchedAt } = account;
+      const { identity, fetchedAt } = Account.fake();
       Account.fetchAccount = (identity, fetchedAt, cb) => {
         return cb(null, {
           name: faker.name.findName(),
@@ -97,33 +90,98 @@ describe('Account', () => {
         });
       };
 
-      Account
-        .fetch(identity, fetchedAt, (error, fetched) => {
-          expect(error).to.not.exist;
-          expect(fetched).to.exist;
-          expect(fetched).to.be.not.be.empty;
-          expect(fetched.name).to.exist;
-          expect(fetched.fetchedAt).to.exist;
-          delete Account.fetchAccount;
-          done(error, fetched);
-        });
-
+      Account.fetch(identity, fetchedAt, (error, fetched) => {
+        expect(error).to.not.exist;
+        expect(fetched).to.exist;
+        expect(fetched).to.be.not.be.empty;
+        expect(fetched.name).to.exist;
+        expect(fetched.fetchedAt).to.exist;
+        delete Account.fetchAccount;
+        done(error, fetched);
+      });
     });
 
     it('should be able to handle fetch with provider error', (done) => {
-
-      const { identity, fetchedAt } = account;
+      const { identity, fetchedAt } = Account.fake();
       Account.fetchAccount = (identity, fetchedAt, cb) => {
         return cb(new Error('No Data'));
       };
 
-      Account
-        .fetch(identity, fetchedAt, (error, fetched) => {
-          expect(error).to.exist;
-          expect(fetched).to.not.exist;
-          done();
-        });
+      Account.fetch(identity, fetchedAt, (error, fetched) => {
+        expect(error).to.exist;
+        expect(fetched).to.not.exist;
+        done();
+      });
+    });
 
+    it('should be able to fetch and upsert without provider', (done) => {
+      const { identity, fetchedAt } = Account.fake();
+      Account.fetchAndUpsert(identity, fetchedAt, (error) => {
+        expect(error).to.exist;
+        done();
+      });
+    });
+
+    it('should be able to fetch and upsert with provider', (done) => {
+      const account = Account.fake();
+
+      const { identity, fetchedAt } = account;
+      Account.fetchAccount = (identity, fetchedAt, cb) => {
+        return cb(null, account.toObject());
+      };
+
+      Account.fetchAndUpsert(identity, fetchedAt, (error, upserted) => {
+        expect(error).to.not.exist;
+        expect(upserted).to.exist;
+        expect(upserted).to.be.not.be.empty;
+        expect(upserted.identity).to.be.eql(account.identity);
+        expect(upserted.fetchedAt).to.exist;
+        delete Account.fetchAccount;
+        done(error, upserted);
+      });
+    });
+
+    it('should be able to fetch and upsert with provider', (done) => {
+      const { identity, fetchedAt } = Account.fake();
+      Account.fetchAccount = (identity, fetchedAt, cb) => {
+        return cb(null, {
+          name: faker.name.findName(),
+          bills: [],
+          accessors: []
+        });
+      };
+
+      Account.fetchAndUpsert(identity, fetchedAt, (error) => {
+        expect(error).to.exist;
+        delete Account.fetchAccount;
+        done();
+      });
+    });
+
+    it('should be able to handle fetch and upsert with error', (done) => {
+      const { identity, fetchedAt } = Account.fake();
+      Account.fetchAccount = (identity, fetchedAt, cb) => {
+        return cb(new Error('No Data'));
+      };
+
+      Account.fetchAndUpsert(identity, fetchedAt, (error) => {
+        expect(error).to.exist;
+        done();
+      });
+    });
+
+    it('should be able to handle fetch and upsert existing', (done) => {
+      const { identity, fetchedAt } = account;
+      Account.fetchAccount = (identity, fetchedAt, cb) => {
+        return cb(null, {});
+      };
+
+      Account.fetchAndUpsert(identity, fetchedAt, (error, upserted) => {
+        expect(error).to.not.exist;
+        expect(upserted).to.exist;
+        expect(upserted.number).to.be.eql(account.number);
+        done();
+      });
     });
 
     it('should be able to fetch if get by filter miss', (done) => {
@@ -133,16 +191,14 @@ describe('Account', () => {
         return cb(null, account.toObject());
       };
 
-      Account
-        .get(options, (error, fetched) => {
-          expect(error).to.not.exist;
-          expect(fetched).to.exist;
-          expect(fetched.data).to.be.not.be.empty;
-          expect(fetched.data).to.have.length.at.least(1);
-          delete Account.fetchAccount;
-          done(error, fetched);
-        });
-
+      Account.get(options, (error, fetched) => {
+        expect(error).to.not.exist;
+        expect(fetched).to.exist;
+        expect(fetched.data).to.be.not.be.empty;
+        expect(fetched.data).to.have.length.at.least(1);
+        delete Account.fetchAccount;
+        done(error, fetched);
+      });
     });
 
     it('should be able to fetch if get by filter miss', (done) => {
@@ -156,7 +212,6 @@ describe('Account', () => {
           expect(fetched.data).to.be.be.empty;
           done(error, fetched);
         });
-
     });
 
     it('should not fetch if get found data', (done) => {
@@ -170,7 +225,6 @@ describe('Account', () => {
           expect(fetched.data).to.have.length.at.least(1);
           done(error, fetched);
         });
-
     });
 
   });
