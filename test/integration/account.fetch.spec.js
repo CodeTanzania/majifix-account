@@ -86,6 +86,30 @@ describe('Account', () => {
 
     });
 
+    it('should be able to fetch with provider', (done) => {
+
+      const { identity, fetchedAt } = account;
+      Account.fetchAccount = (identity, fetchedAt, cb) => {
+        return cb(null, {
+          name: faker.name.findName(),
+          bills: [],
+          accessors: []
+        });
+      };
+
+      Account
+        .fetch(identity, fetchedAt, (error, fetched) => {
+          expect(error).to.not.exist;
+          expect(fetched).to.exist;
+          expect(fetched).to.be.not.be.empty;
+          expect(fetched.name).to.exist;
+          expect(fetched.fetchedAt).to.exist;
+          delete Account.fetchAccount;
+          done(error, fetched);
+        });
+
+    });
+
     it('should be able to handle fetch with provider error', (done) => {
 
       const { identity, fetchedAt } = account;
