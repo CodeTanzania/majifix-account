@@ -248,6 +248,41 @@ describe('Account', () => {
         });
     });
 
+    it('should be able to fetch and verify', (done) => {
+      const account = Account.fake();
+      const { number, phone } = account;
+      const requestor = { account: number, phone: phone };
+      Account.fetchAccount = (identity, fetchedAt, cb) => {
+        return cb(null, account.toObject());
+      };
+
+      Account.verify(requestor, (error, verified) => {
+        expect(error).to.not.exist;
+        expect(verified).to.exist;
+        expect(verified).to.be.not.be.empty;
+        expect(verified.identity).to.be.eql(account.identity);
+        expect(verified.fetchedAt).to.exist;
+        expect(verified.updatedAt).to.exist;
+        delete Account.fetchAccount;
+        done(error, verified);
+      });
+    });
+
+    it('should be able to fetch and verify existing', (done) => {
+      const { number, phone } = account;
+      const requestor = { account: number, phone: phone };
+
+      Account.verify(requestor, (error, verified) => {
+        expect(error).to.not.exist;
+        expect(verified).to.exist;
+        expect(verified).to.be.not.be.empty;
+        expect(verified.identity).to.be.eql(account.identity);
+        expect(verified.fetchedAt).to.exist;
+        expect(verified.updatedAt).to.exist;
+        done(error, verified);
+      });
+    });
+
   });
 
   after((done) => {
