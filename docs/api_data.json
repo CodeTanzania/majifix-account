@@ -188,7 +188,7 @@
             "type": "Date",
             "optional": true,
             "field": "bills.period.billedAt",
-            "description": "<p>A date when a bill come to effect i.e bill runned or bill generated</p>"
+            "description": "<p>A date when a bill come to effect i.e bill run or bill generated</p>"
           },
           {
             "group": "Success 200",
@@ -561,7 +561,7 @@
             "type": "Date",
             "optional": true,
             "field": "bills.period.billedAt",
-            "description": "<p>A date when a bill come to effect i.e bill runned or bill generated</p>"
+            "description": "<p>A date when a bill come to effect i.e bill run or bill generated</p>"
           },
           {
             "group": "Success 200",
@@ -934,7 +934,7 @@
             "type": "Date",
             "optional": true,
             "field": "bills.period.billedAt",
-            "description": "<p>A date when a bill come to effect i.e bill runned or bill generated</p>"
+            "description": "<p>A date when a bill come to effect i.e bill run or bill generated</p>"
           },
           {
             "group": "Success 200",
@@ -1307,7 +1307,7 @@
             "type": "Date",
             "optional": true,
             "field": "bills.period.billedAt",
-            "description": "<p>A date when a bill come to effect i.e bill runned or bill generated</p>"
+            "description": "<p>A date when a bill come to effect i.e bill run or bill generated</p>"
           },
           {
             "group": "Success 200",
@@ -1674,7 +1674,7 @@
             "type": "Date",
             "optional": true,
             "field": "bills.period.billedAt",
-            "description": "<p>A date when a bill come to effect i.e bill runned or bill generated</p>"
+            "description": "<p>A date when a bill come to effect i.e bill run or bill generated</p>"
           },
           {
             "group": "Success 200",
@@ -2054,7 +2054,7 @@
             "type": "Date",
             "optional": true,
             "field": "data.bills.period.billedAt",
-            "description": "<p>A date when a bill come to effect i.e bill runned or bill generated</p>"
+            "description": "<p>A date when a bill come to effect i.e bill run or bill generated</p>"
           },
           {
             "group": "Success 200",
@@ -2483,7 +2483,7 @@
             "type": "Date",
             "optional": true,
             "field": "data.bills.period.billedAt",
-            "description": "<p>A date when a bill come to effect i.e bill runned or bill generated</p>"
+            "description": "<p>A date when a bill come to effect i.e bill run or bill generated</p>"
           },
           {
             "group": "Success 200",
@@ -2905,7 +2905,7 @@
             "type": "Date",
             "optional": true,
             "field": "bills.period.billedAt",
-            "description": "<p>A date when a bill come to effect i.e bill runned or bill generated</p>"
+            "description": "<p>A date when a bill come to effect i.e bill run or bill generated</p>"
           },
           {
             "group": "Success 200",
@@ -3278,7 +3278,7 @@
             "type": "Date",
             "optional": true,
             "field": "bills.period.billedAt",
-            "description": "<p>A date when a bill come to effect i.e bill runned or bill generated</p>"
+            "description": "<p>A date when a bill come to effect i.e bill run or bill generated</p>"
           },
           {
             "group": "Success 200",
@@ -3651,7 +3651,7 @@
             "type": "Date",
             "optional": true,
             "field": "bills.period.billedAt",
-            "description": "<p>A date when a bill come to effect i.e bill runned or bill generated</p>"
+            "description": "<p>A date when a bill come to effect i.e bill run or bill generated</p>"
           },
           {
             "group": "Success 200",
@@ -4024,7 +4024,7 @@
             "type": "Date",
             "optional": true,
             "field": "bills.period.billedAt",
-            "description": "<p>A date when a bill come to effect i.e bill runned or bill generated</p>"
+            "description": "<p>A date when a bill come to effect i.e bill run or bill generated</p>"
           },
           {
             "group": "Success 200",
@@ -4397,7 +4397,7 @@
             "type": "Date",
             "optional": true,
             "field": "bills.period.billedAt",
-            "description": "<p>A date when a bill come to effect i.e bill runned or bill generated</p>"
+            "description": "<p>A date when a bill come to effect i.e bill run or bill generated</p>"
           },
           {
             "group": "Success 200",
@@ -4770,7 +4770,7 @@
             "type": "Date",
             "optional": true,
             "field": "bills.period.billedAt",
-            "description": "<p>A date when a bill come to effect i.e bill runned or bill generated</p>"
+            "description": "<p>A date when a bill come to effect i.e bill run or bill generated</p>"
           },
           {
             "group": "Success 200",
