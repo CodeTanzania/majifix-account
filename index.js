@@ -54,7 +54,17 @@ const router =
 
 
 /* export function*/
-function account() {}
+function account(integration) {
+
+  //ensure integration integration
+  if (integration) {
+    const { fetchAccount } = integration;
+    if (_.isFunction(fetchAccount)) {
+      Account.fetchAccount = fetchAccount;
+    }
+  }
+
+}
 
 
 /* export package(module) info */

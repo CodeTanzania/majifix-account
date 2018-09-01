@@ -1,6 +1,6 @@
 {
   "name": "@codetanzania/majifix-account",
-  "version": "1.4.1",
+  "version": "1.5.0",
   "description": "A representation of an entity (i.e organization, individual, customer, or client) which receiving service(s) from a particular jurisdiction",
   "main": "index.js",
   "scripts": {
@@ -63,7 +63,7 @@
   },
   "dependencies": {
     "@codetanzania/majifix-common": "^0.9.0",
-    "@codetanzania/majifix-jurisdiction": "^1.4.0",
+    "@codetanzania/majifix-jurisdiction": "^1.4.1",
     "@lykmapipo/express-common": "^0.9.1",
     "async": "^2.6.1",
     "lodash": "^4.17.10",
