@@ -2,16 +2,31 @@
 
 /* dependencies */
 const path = require('path');
+const _ = require('lodash');
 const { expect } = require('chai');
 const faker = require('@benmaruchu/faker');
+const { Jurisdiction } = require('@codetanzania/majifix-jurisdiction');
 const { Account } = require(path.join(__dirname, '..', '..'));
 
-describe('Account', () => {
+describe.only('Account', () => {
 
   let account;
+  let jurisdiction;
 
   before((done) => {
     Account.deleteMany(done);
+  });
+
+  before((done) => {
+    Jurisdiction.deleteMany(done);
+  });
+
+  before((done) => {
+    jurisdiction = Jurisdiction.fake();
+    jurisdiction.post((error, created) => {
+      jurisdiction = created;
+      done(error, created);
+    });
   });
 
   describe.skip('instance fetch', () => {});
@@ -126,8 +141,10 @@ describe('Account', () => {
       const account = Account.fake();
 
       const { identity } = account;
+      const fetched =
+        _.merge({}, { jurisdiction: jurisdiction.name }, account.toObject());
       Account.fetchAccount = (identity, fetchedAt, cb) => {
-        return cb(null, account.toObject());
+        return cb(null, fetched);
       };
 
       Account.fetchAndUpsert(identity, (error, upserted) => {
@@ -137,6 +154,34 @@ describe('Account', () => {
         expect(upserted.identity).to.be.eql(account.identity);
         expect(upserted.fetchedAt).to.exist;
         expect(upserted.updatedAt).to.exist;
+        //assert jurisdiction
+        expect(upserted.jurisdiction).to.exist;
+        expect(upserted.jurisdiction._id)
+          .to.be.eql(jurisdiction._id);
+        delete Account.fetchAccount;
+        done(error, upserted);
+      });
+    });
+
+    it('should be able to fetch and upsert with provider', (done) => {
+      const account = Account.fake();
+
+      const { identity } = account;
+      const fetched =
+        _.merge({}, { jurisdiction: identity }, account.toObject());
+      Account.fetchAccount = (identity, fetchedAt, cb) => {
+        return cb(null, fetched);
+      };
+
+      Account.fetchAndUpsert(identity, (error, upserted) => {
+        expect(error).to.not.exist;
+        expect(upserted).to.exist;
+        expect(upserted).to.be.not.be.empty;
+        expect(upserted.identity).to.be.eql(account.identity);
+        expect(upserted.fetchedAt).to.exist;
+        expect(upserted.updatedAt).to.exist;
+        //assert jurisdiction
+        expect(upserted.jurisdiction).to.not.exist;
         delete Account.fetchAccount;
         done(error, upserted);
       });
@@ -287,6 +332,10 @@ describe('Account', () => {
 
   after((done) => {
     Account.deleteMany(done);
+  });
+
+  after((done) => {
+    Jurisdiction.deleteMany(done);
   });
 
 });
