@@ -136,6 +136,7 @@ describe('Account', () => {
         expect(upserted).to.be.not.be.empty;
         expect(upserted.identity).to.be.eql(account.identity);
         expect(upserted.fetchedAt).to.exist;
+        expect(upserted.updatedAt).to.exist;
         delete Account.fetchAccount;
         done(error, upserted);
       });
@@ -171,7 +172,7 @@ describe('Account', () => {
     });
 
     it('should be able to handle fetch and upsert existing', (done) => {
-      const { identity } = account;
+      const { identity, fetchedAt } = account;
       Account.fetchAccount = (identity, fetchedAt, cb) => {
         return cb(null, {});
       };
@@ -181,6 +182,25 @@ describe('Account', () => {
         expect(upserted).to.exist;
         expect(upserted.number).to.be.eql(account.number);
         expect(upserted.fetchedAt).to.exist;
+        expect(upserted.fetchedAt).to.be.eql(fetchedAt);
+        done();
+      });
+    });
+
+    it('should be able to handle fetch and upsert existing', (done) => {
+      const { identity, fetchedAt } = account;
+      const updates = ({ name: faker.name.findName() });
+      Account.fetchAccount = (identity, fetchedAt, cb) => {
+        return cb(null, updates);
+      };
+
+      Account.fetchAndUpsert(identity, (error, upserted) => {
+        expect(error).to.not.exist;
+        expect(upserted).to.exist;
+        expect(upserted.number).to.be.eql(account.number);
+        expect(upserted.name).to.be.eql(updates.name);
+        expect(upserted.fetchedAt).to.exist;
+        expect(upserted.fetchedAt).to.not.be.eql(fetchedAt);
         done();
       });
     });
