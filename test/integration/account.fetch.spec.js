@@ -180,6 +180,7 @@ describe('Account', () => {
         expect(error).to.not.exist;
         expect(upserted).to.exist;
         expect(upserted.number).to.be.eql(account.number);
+        expect(upserted.fetchedAt).to.exist;
         done();
       });
     });
