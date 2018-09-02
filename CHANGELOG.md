@@ -1,3 +1,6 @@
+# v1.5.1 / 2018-09-02
+- Export account singleton after initialization
+
 # v1.4.1 / 2018-08-27
 - Fix accessors API endpoints 
 
