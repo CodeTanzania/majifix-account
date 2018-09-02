@@ -64,6 +64,8 @@ function account(integration) {
     }
   }
 
+  return account;
+
 }
 
 
