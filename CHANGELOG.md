@@ -1,3 +1,7 @@
+# 1.5.2 / 09-09-2018
+- force latest dependencies
+- run security audit fix
+
 # v1.5.1 / 2018-09-02
 - Export account singleton after initialization
 
