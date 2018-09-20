@@ -8,7 +8,7 @@ const faker = require('@benmaruchu/faker');
 const { Jurisdiction } = require('@codetanzania/majifix-jurisdiction');
 const { Account } = require(path.join(__dirname, '..', '..'));
 
-describe.only('Account', () => {
+describe('Account', () => {
 
   let account;
   let jurisdiction;
