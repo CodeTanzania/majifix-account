@@ -1,3 +1,8 @@
+# 1.6.0 / 20-09-2018
+- Add Account#getPhones
+- force latest dependencies
+- run security audit fix
+
 # 1.5.2 / 09-09-2018
 - force latest dependencies
 - run security audit fix
