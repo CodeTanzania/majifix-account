@@ -231,7 +231,7 @@ describe('Account', function () {
       });
 
 
-      it('should have GeoJSON coordinates field', function () {
+      it.skip('should have GeoJSON coordinates field', function () {
 
         const schema = Account.schema.paths.location.schema;
         const coordinates = schema.tree.coordinates;
