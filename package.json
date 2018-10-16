@@ -1,6 +1,6 @@
 {
   "name": "@codetanzania/majifix-account",
-  "version": "1.7.3",
+  "version": "1.7.4",
   "description": "A representation of an entity (i.e organization, individual, customer, or client) which receiving service(s) from a particular jurisdiction",
   "main": "index.js",
   "scripts": {
@@ -62,7 +62,7 @@
     "mongoose": "^5.3.4",
     "mongoose-geojson-schemas": "^0.8.1",
     "mongoose-locale-schema": "^0.2.1",
-    "mongoose-rest-actions": "^0.18.1",
+    "mongoose-rest-actions": "^0.18.2",
     "nodemon": "^1.18.4",
     "sinon": "^7.0.0",
     "sinon-chai": "^3.2.0",
@@ -79,7 +79,7 @@
     "moment": "^2.22.2",
     "mongoose-geojson-schemas": "^0.8.1",
     "mongoose-locale-schema": "^0.2.1",
-    "mongoose-rest-actions": "^0.18.1",
+    "mongoose-rest-actions": "^0.18.2",
     "randomcolor": "^0.5.3"
   },
   "dependencies": {},
