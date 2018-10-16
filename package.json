@@ -1,6 +1,6 @@
 {
   "name": "@codetanzania/majifix-account",
-  "version": "1.7.3",
+  "version": "1.7.4",
   "description": "A representation of an entity (i.e organization, individual, customer, or client) which receiving service(s) from a particular jurisdiction",
   "main": "index.js",
   "scripts": {
@@ -45,9 +45,9 @@
   },
   "devDependencies": {
     "@benmaruchu/faker": "^4.2.1",
-    "@codetanzania/majifix-common": "^0.11.0",
-    "@codetanzania/majifix-jurisdiction": "^1.5.1",
-    "@lykmapipo/express-common": "^0.9.1",
+    "@codetanzania/majifix-common": "^0.11.1",
+    "@codetanzania/majifix-jurisdiction": "^1.5.2",
+    "@lykmapipo/express-common": "^0.9.2",
     "async": "^2.6.1",
     "chai": "^4.2.0",
     "grunt": "^1.0.3",
@@ -59,24 +59,28 @@
     "lodash": "^4.17.11",
     "mocha": "^5.2.0",
     "moment": "^2.22.2",
-    "mongoose": "^5.3.1",
-    "mongoose-geojson-schemas": "^0.8.0",
-    "mongoose-rest-actions": "^0.18.0",
+    "mongoose": "^5.3.4",
+    "mongoose-geojson-schemas": "^0.8.1",
+    "mongoose-locale-schema": "^0.2.1",
+    "mongoose-rest-actions": "^0.18.2",
     "nodemon": "^1.18.4",
-    "sinon": "^6.3.4",
+    "sinon": "^7.0.0",
     "sinon-chai": "^3.2.0",
     "sinon-mongoose": "^2.2.1",
-    "supertest": "^3.3.0"
+    "supertest": "^3.3.0",
+    "randomcolor": "^0.5.3"
   },
   "peerDependencies": {
-    "@codetanzania/majifix-common": "^0.11.0",
-    "@codetanzania/majifix-jurisdiction": "^1.5.1",
-    "@lykmapipo/express-common": "^0.9.1",
+    "@codetanzania/majifix-common": "^0.11.1",
+    "@codetanzania/majifix-jurisdiction": "^1.5.2",
+    "@lykmapipo/express-common": "^0.9.2",
     "async": "^2.6.1",
     "lodash": "^4.17.11",
     "moment": "^2.22.2",
-    "mongoose-geojson-schemas": "^0.8.0",
-    "mongoose-rest-actions": "^0.18.0"
+    "mongoose-geojson-schemas": "^0.8.1",
+    "mongoose-locale-schema": "^0.2.1",
+    "mongoose-rest-actions": "^0.18.2",
+    "randomcolor": "^0.5.3"
   },
   "dependencies": {},
   "engines": {
