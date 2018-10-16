@@ -1,3 +1,7 @@
+# 1.7.4 / 16-10-2018
+- Force latest dependencies
+- Push dependencies to peerDependencies
+
 # 1.6.0 / 20-09-2018
 - Add Account#getPhones
 - force latest dependencies
