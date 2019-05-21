@@ -2,6 +2,7 @@
 
 /* dependencies */
 const path = require('path');
+const _ = require('lodash');
 const { expect } = require('chai');
 const { Jurisdiction } = require('@codetanzania/majifix-jurisdiction');
 const { Account } = require(path.join(__dirname, '..', '..'));
@@ -57,13 +58,14 @@ describe('Account', function () {
 
     it('should throw if not exists', function (done) {
 
-      const fake = Account.fake();
+      const fake = Account.fake().toObject();
 
       Account
-        .patch(fake._id, fake, function (error, updated) {
+        .patch(fake._id, _.omit(fake, '_id'), function (error,
+          updated) {
           expect(error).to.exist;
-          expect(error.status).to.exist;
-          expect(error.message).to.be.equal('Not Found');
+          // expect(error.status).to.exist;
+          expect(error.name).to.be.equal('DocumentNotFoundError');
           expect(updated).to.not.exist;
           done();
         });

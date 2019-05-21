@@ -6,7 +6,7 @@
   "scripts": {
     "test": "grunt test",
     "integration": "grunt integration",
-    "dev": "BASE_PATH=./examples nodemon ./examples/app.js"
+    "dev": "BASE_PATH=./examples node ./examples/app.js"
   },
   "repository": {
     "type": "git",
@@ -45,10 +45,6 @@
   },
   "devDependencies": {
     "@benmaruchu/faker": "^4.2.1",
-    "@codetanzania/majifix-common": "^0.12.4",
-    "@codetanzania/majifix-jurisdiction": "^1.5.5",
-    "@lykmapipo/express-common": "^0.17.3",
-    "async": "^3.0.0",
     "chai": "^4.2.0",
     "grunt": "^1.0.4",
     "grunt-apidoc": "^0.11.0",
@@ -56,33 +52,30 @@
     "grunt-contrib-watch": "^1.1.0",
     "grunt-mocha-test": "^0.13.3",
     "jshint-stylish": "^2.2.1",
-    "lodash": "^4.17.11",
     "mocha": "^6.1.4",
-    "moment": "^2.24.0",
     "mongoose": "^5.5.10",
-    "mongoose-geojson-schemas": "^0.10.5",
-    "mongoose-locale-schema": "^0.3.1",
-    "mongoose-rest-actions": "^0.28.1",
-    "nodemon": "^1.19.0",
     "sinon": "^7.3.2",
     "sinon-chai": "^3.3.0",
     "sinon-mongoose": "^2.3.0",
-    "supertest": "^4.0.2",
-    "randomcolor": "^0.5.4"
+    "supertest": "^4.0.2"
   },
   "peerDependencies": {
-    "@codetanzania/majifix-common": "^0.12.4",
-    "@codetanzania/majifix-jurisdiction": "^1.5.5",
-    "@lykmapipo/express-common": "^0.17.3",
-    "async": "^3.0.0",
-    "lodash": "^4.17.11",
-    "moment": "^2.24.0",
-    "mongoose-geojson-schemas": "^0.10.5",
-    "mongoose-locale-schema": "^0.3.1",
-    "mongoose-rest-actions": "^0.28.1",
-    "randomcolor": "^0.5.4"
+    "mongoose": ">=5.5.10"
   },
-  "dependencies": {},
+  "dependencies": {
+    "@codetanzania/majifix-common": ">=0.12.4",
+    "@codetanzania/majifix-jurisdiction": ">=1.5.5",
+    "@lykmapipo/common": ">=0.17.5",
+    "@lykmapipo/env": ">=0.7.7",
+    "@lykmapipo/express-common": ">=0.17.3",
+    "async": ">=3.0.0",
+    "lodash": ">=4.17.11",
+    "moment": ">=2.24.0",
+    "mongoose-geojson-schemas": ">=0.10.5",
+    "mongoose-locale-schema": ">=0.3.1",
+    "mongoose-rest-actions": ">=0.28.1",
+    "randomcolor": ">=0.5.4"
+  },
   "engines": {
     "node": ">=8.11.1",
     "npm": ">=5.6.0"
