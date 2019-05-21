@@ -38,8 +38,8 @@ describe('Account', function () {
       Account
         .del(account._id, function (error, deleted) {
           expect(error).to.exist;
-          expect(error.status).to.exist;
-          expect(error.message).to.be.equal('Not Found');
+          // expect(error.status).to.exist;
+          expect(error.name).to.be.equal('DocumentNotFoundError');
           expect(deleted).to.not.exist;
           done();
         });

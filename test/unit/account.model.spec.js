@@ -5,7 +5,8 @@
 const path = require('path');
 const faker = require('@benmaruchu/faker');
 const { expect } = require('chai');
-const { mock, spy } = require('sinon');
+const sinon = require('sinon');
+const { mock, spy } = sinon;
 const {
   randomPoint,
   randomPolygon,
@@ -223,8 +224,7 @@ describe('Account', function () {
       });
 
       afterEach(function () {
-        ensureLocation.restore();
-        getById.restore();
+        sinon.restore();
       });
 
       it('should be able to ensure location from jurisdiction',

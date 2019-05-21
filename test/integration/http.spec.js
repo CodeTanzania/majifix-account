@@ -39,7 +39,7 @@ describe('Account', function () {
       account.jurisdiction = jurisdiction;
 
       request(app)
-        .post(`/v${apiVersion}/accounts`)
+        .post(`/${apiVersion}/accounts`)
         .set('Accept', 'application/json')
         .set('Content-Type', 'application/json')
         .send(account)
@@ -65,7 +65,7 @@ describe('Account', function () {
     it('should handle GET /accounts', function (done) {
 
       request(app)
-        .get(`/v${apiVersion}/accounts`)
+        .get(`/${apiVersion}/accounts`)
         .set('Accept', 'application/json')
         .expect(200)
         .expect('Content-Type', /json/)
@@ -93,7 +93,7 @@ describe('Account', function () {
 
       request(app)
         .get(
-          `/v${apiVersion}/accounts?filter[number]=${account.number}`
+          `/${apiVersion}/accounts?filter[number]=${account.number}`
         )
         .set('Accept', 'application/json')
         .expect(200)
@@ -121,7 +121,7 @@ describe('Account', function () {
     it('should handle GET /accounts/:id', function (done) {
 
       request(app)
-        .get(`/v${apiVersion}/accounts/${account._id}`)
+        .get(`/${apiVersion}/accounts/${account._id}`)
         .set('Accept', 'application/json')
         .expect(200)
         .end(function (error, response) {
@@ -145,7 +145,7 @@ describe('Account', function () {
       const patch = { name: faker.finance.accountName() };
 
       request(app)
-        .patch(`/v${apiVersion}/accounts/${account._id}`)
+        .patch(`/${apiVersion}/accounts/${account._id}`)
         .set('Accept', 'application/json')
         .set('Content-Type', 'application/json')
         .send(patch)
@@ -174,7 +174,7 @@ describe('Account', function () {
       const put = { name: faker.finance.accountName() };
 
       request(app)
-        .put(`/v${apiVersion}/accounts/${account._id}`)
+        .put(`/${apiVersion}/accounts/${account._id}`)
         .set('Accept', 'application/json')
         .set('Content-Type', 'application/json')
         .send(put)
@@ -204,7 +204,7 @@ describe('Account', function () {
       const accessor = Account.fake().accessors[0].toObject();
 
       request(app)
-        .post(`/v${apiVersion}/accounts/${account._id}/accessors`)
+        .post(`/${apiVersion}/accounts/${account._id}/accessors`)
         .set('Accept', 'application/json')
         .set('Content-Type', 'application/json')
         .send(accessor)
@@ -236,7 +236,7 @@ describe('Account', function () {
 
       request(app)
         .get(
-          `/v${apiVersion}/accounts/${account._id}/accessors`
+          `/${apiVersion}/accounts/${account._id}/accessors`
         )
         .set('Accept', 'application/json')
         .expect(200)
@@ -266,7 +266,7 @@ describe('Account', function () {
 
       request(app)
         .patch(
-          `/v${apiVersion}/accounts/${account._id}/accessors/${phone}`
+          `/${apiVersion}/accounts/${account._id}/accessors/${phone}`
         )
         .set('Accept', 'application/json')
         .set('Content-Type', 'application/json')
@@ -308,7 +308,7 @@ describe('Account', function () {
 
       request(app)
         .put(
-          `/v${apiVersion}/accounts/${account._id}/accessors/${phone}`
+          `/${apiVersion}/accounts/${account._id}/accessors/${phone}`
         )
         .set('Accept', 'application/json')
         .set('Content-Type', 'application/json')
@@ -346,7 +346,7 @@ describe('Account', function () {
       const requestor = { phone: account.phone, account: account.number };
 
       request(app)
-        .post(`/v${apiVersion}/accounts/verify`)
+        .post(`/${apiVersion}/accounts/verify`)
         .set('Accept', 'application/json')
         .set('Content-Type', 'application/json')
         .send(requestor)
@@ -374,7 +374,7 @@ describe('Account', function () {
       const requestor = { phone: account.phone, identity: account.identity };
 
       request(app)
-        .post(`/v${apiVersion}/accounts/verify`)
+        .post(`/${apiVersion}/accounts/verify`)
         .set('Accept', 'application/json')
         .set('Content-Type', 'application/json')
         .send(requestor)
@@ -405,7 +405,7 @@ describe('Account', function () {
 
       request(app)
         .delete(
-          `/v${apiVersion}/accounts/${account._id}/accessors/${phone}`
+          `/${apiVersion}/accounts/${account._id}/accessors/${phone}`
         )
         .set('Accept', 'application/json')
         .expect(200)
@@ -437,7 +437,7 @@ describe('Account', function () {
 
         request(app)
           .get(
-            `/v${apiVersion}/jurisdictions/${account.jurisdiction._id}/accounts`
+            `/${apiVersion}/jurisdictions/${account.jurisdiction._id}/accounts`
           )
           .set('Accept', 'application/json')
           .expect(200)
@@ -463,7 +463,7 @@ describe('Account', function () {
     it('should handle HTTP DELETE on /accounts/:id', function (done) {
 
       request(app)
-        .delete(`/v${apiVersion}/accounts/${account._id}`)
+        .delete(`/${apiVersion}/accounts/${account._id}`)
         .set('Accept', 'application/json')
         .expect(200)
         .end(function (error, response) {

@@ -11,6 +11,7 @@ const _ = require('lodash');
 const async = require('async');
 const mongoose = require('mongoose');
 // mongoose.set('debug', true);
+const { start } = require('@lykmapipo/express-common');
 const { Jurisdiction } = require('@codetanzania/majifix-jurisdiction');
 const { Account, app, apiVersion, info } = require(path.join(__dirname, '..'));
 let samples = require('./samples')(20);
@@ -62,9 +63,9 @@ function boot() {
     });
 
     /* fire the app */
-    app.start(function (error, env) {
+    start(function (error, env) {
       console.log(
-        `visit http://0.0.0.0:${env.PORT}/v${apiVersion}/accounts`
+        `visit http://0.0.0.0:${env.PORT}/${apiVersion}/accounts`
       );
     });
 

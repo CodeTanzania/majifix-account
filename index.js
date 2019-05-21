@@ -24,7 +24,7 @@
 /* dependencies */
 const path = require('path');
 const _ = require('lodash');
-const app = require('@lykmapipo/express-common');
+const { app, mount } = require('@lykmapipo/express-common');
 
 
 /* declarations */
@@ -82,7 +82,7 @@ account.router = router;
 
 
 /* export router api version */
-account.apiVersion = router.apiVersion;
+account.apiVersion = router.version;
 
 
 /* export app */
@@ -92,7 +92,7 @@ Object.defineProperty(account, 'app', {
     //TODO bind oauth middlewares authenticate, token, authorize
 
     /* bind account router */
-    app.mount(router);
+    mount(router);
     return app;
   }
 
