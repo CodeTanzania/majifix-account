@@ -1,83 +1,53 @@
-'use strict';
-
 /* dependencies */
-const path = require('path');
-const { expect } = require('chai');
-const { Jurisdiction } = require('@codetanzania/majifix-jurisdiction');
-const { Account } = require(path.join(__dirname, '..', '..'));
+import { expect } from 'chai';
+import { Jurisdiction } from '@codetanzania/majifix-jurisdiction';
+import { clear, create } from '@lykmapipo/mongoose-test-helpers';
+import account from '../../src/index';
 
-describe('Account', function () {
+const { Account } = account;
 
-  let jurisdiction;
+describe('Account', () => {
+  let customerAccount;
+  const jurisdiction = Jurisdiction.fake();
 
-  before(function (done) {
-    Jurisdiction.deleteMany(done);
-  });
+  before(done => clear(Jurisdiction, Account, done));
 
-  before(function (done) {
-    jurisdiction = Jurisdiction.fake();
-    jurisdiction.post(function (error, created) {
-      jurisdiction = created;
-      done(error, created);
+  before(done => create(jurisdiction, done));
+
+  describe('static post', () => {
+    it('should be able to post', done => {
+      customerAccount = Account.fake();
+      customerAccount.jurisdiction = jurisdiction;
+
+      Account.post(customerAccount, (error, created) => {
+        expect(error).to.not.exist;
+        expect(created).to.exist;
+        expect(created._id).to.eql(customerAccount._id);
+        expect(created.jurisdiction._id).to.eql(
+          customerAccount.jurisdiction._id
+        );
+        expect(created.name).to.eql(customerAccount.name);
+        expect(created.number).to.eql(customerAccount.number);
+        done(error, created);
+      });
     });
   });
 
-  before(function (done) {
-    Account.deleteMany(done);
-  });
+  describe('instance post', () => {
+    it('should be able to post', done => {
+      customerAccount = Account.fake();
+      customerAccount.jurisdiction = jurisdiction;
 
-  describe('static post', function () {
-
-    let account;
-
-    it('should be able to post', function (done) {
-
-      account = Account.fake();
-      account.jurisdiction = jurisdiction;
-
-      Account
-        .post(account, function (error, created) {
-          expect(error).to.not.exist;
-          expect(created).to.exist;
-          expect(created._id).to.eql(account._id);
-          expect(created.jurisdiction._id)
-            .to.eql(account.jurisdiction._id);
-          expect(created.name).to.eql(account.name);
-          expect(created.number).to.eql(account.number);
-          done(error, created);
-        });
+      customerAccount.post((error, created) => {
+        expect(error).to.not.exist;
+        expect(created).to.exist;
+        expect(created._id).to.eql(customerAccount._id);
+        expect(created.name).to.eql(customerAccount.name);
+        expect(created.number).to.eql(customerAccount.number);
+        done(error, created);
+      });
     });
-
   });
 
-  describe('instance post', function () {
-
-    let account;
-
-    it('should be able to post', function (done) {
-
-      account = Account.fake();
-      account.jurisdiction = jurisdiction;
-
-      account
-        .post(function (error, created) {
-          expect(error).to.not.exist;
-          expect(created).to.exist;
-          expect(created._id).to.eql(account._id);
-          expect(created.name).to.eql(account.name);
-          expect(created.number).to.eql(account.number);
-          done(error, created);
-        });
-    });
-
-  });
-
-  after(function (done) {
-    Account.deleteMany(done);
-  });
-
-  after(function (done) {
-    Jurisdiction.deleteMany(done);
-  });
-
+  after(done => clear(Jurisdiction, Account, done));
 });

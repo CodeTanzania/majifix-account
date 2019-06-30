@@ -1,18 +1,8 @@
-'use strict';
-
-
 /* dependencies */
-const path = require('path');
-const { expect } = require('chai');
-const account = require(path.join(__dirname, '..', '..'))({
-  fetchAccount: function (identity, fetchedAt, done) {
-    done(null, {});
-  }
-});
-
+import { expect } from 'chai';
+import account from '../../src/index';
 
 describe('account', () => {
-
   it('should be exported', () => {
     expect(account).to.exist;
     expect(account).to.be.a('function');
@@ -21,9 +11,10 @@ describe('account', () => {
   });
 
   it('should be export Account', () => {
-    const { Account } = account;
+    const { Account } = account({
+      fetchAccount: (identity, fetchedAt, done) => done(null, {}),
+    });
     expect(Account).to.exist;
     expect(Account.fetchAccount).to.exist;
   });
-
 });

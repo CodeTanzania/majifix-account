@@ -1,24 +1,18 @@
-'use strict';
-
-
 /* dependencies */
-const path = require('path');
-const { expect } = require('chai');
-const mongoose = require('mongoose');
-const { Types } = mongoose.Schema;
+import { expect } from 'chai';
+import mongoose from 'mongoose';
 
 /* declarations */
-const { Jurisdiction } = require('@codetanzania/majifix-jurisdiction');
-const Account =
-  require(path.join(__dirname, '..', '..', 'lib', 'account.model'));
+import { Jurisdiction } from '@codetanzania/majifix-jurisdiction';
+import Account from '../../src/account.model';
 
+const { Types } = mongoose.Schema;
 
-describe('Account', function () {
+describe('Account', () => {
+  describe('Schema', () => {
+    // compiled schema
 
-  describe('Schema', function () { //compiled schema
-
-    it('should have jurisdiction field', function () {
-
+    it('should have jurisdiction field', () => {
       const jurisdiction = Account.schema.path('jurisdiction');
 
       expect(jurisdiction).to.exist;
@@ -31,11 +25,9 @@ describe('Account', function () {
       expect(jurisdiction.options.index).to.be.true;
       expect(jurisdiction.options.exists).to.be.true;
       expect(jurisdiction.options.autopopulate).to.exist;
-
     });
 
-    it('should have category field', function () {
-
+    it('should have category field', () => {
       const category = Account.schema.path('category');
 
       expect(category).to.exist;
@@ -48,12 +40,9 @@ describe('Account', function () {
       expect(category.options.index).to.be.true;
       expect(category.options.searchable).to.be.true;
       expect(category.options.fake).to.exist;
-
     });
 
-
-    it('should have number field', function () {
-
+    it('should have number field', () => {
       const number = Account.schema.path('number');
 
       expect(number).to.exist;
@@ -68,11 +57,9 @@ describe('Account', function () {
       expect(number.options.index).to.be.true;
       expect(number.options.searchable).to.be.true;
       expect(number.options.fake).to.exist;
-
     });
 
-    it('should have identity field', function () {
-
+    it('should have identity field', () => {
       const identity = Account.schema.path('identity');
 
       expect(identity).to.exist;
@@ -86,11 +73,9 @@ describe('Account', function () {
       expect(identity.options.index).to.be.true;
       expect(identity.options.searchable).to.be.true;
       expect(identity.options.fake).to.exist;
-
     });
 
-    it('should have name field', function () {
-
+    it('should have name field', () => {
       const name = Account.schema.path('name');
 
       expect(name).to.exist;
@@ -104,12 +89,9 @@ describe('Account', function () {
       expect(name.options.index).to.be.true;
       expect(name.options.searchable).to.be.true;
       expect(name.options.fake).to.exist;
-
     });
 
-
-    it('should have phone field', function () {
-
+    it('should have phone field', () => {
       const phone = Account.schema.path('phone');
 
       expect(phone).to.exist;
@@ -123,12 +105,9 @@ describe('Account', function () {
       expect(phone.options.index).to.be.true;
       expect(phone.options.searchable).to.be.true;
       expect(phone.options.fake).to.exist;
-
     });
 
-
-    it('should have email field', function () {
-
+    it('should have email field', () => {
       const email = Account.schema.path('email');
 
       expect(email).to.exist;
@@ -142,11 +121,9 @@ describe('Account', function () {
       expect(email.options.index).to.be.true;
       expect(email.options.searchable).to.be.true;
       expect(email.options.fake).to.exist;
-
     });
 
-    it('should have neighborhood field', function () {
-
+    it('should have neighborhood field', () => {
       const neighborhood = Account.schema.path('neighborhood');
 
       expect(neighborhood).to.exist;
@@ -159,11 +136,9 @@ describe('Account', function () {
       expect(neighborhood.options.index).to.be.true;
       expect(neighborhood.options.searchable).to.be.true;
       expect(neighborhood.options.fake).to.exist;
-
     });
 
-    it('should have address field', function () {
-
+    it('should have address field', () => {
       const address = Account.schema.path('address');
 
       expect(address).to.exist;
@@ -176,11 +151,9 @@ describe('Account', function () {
       expect(address.options.index).to.be.true;
       expect(address.options.searchable).to.be.true;
       expect(address.options.fake).to.exist;
-
     });
 
-    it('should have locale field', function () {
-
+    it('should have locale field', () => {
       const locale = Account.schema.path('locale');
 
       expect(locale).to.exist;
@@ -195,16 +168,13 @@ describe('Account', function () {
       expect(locale.options.searchable).to.be.true;
       expect(locale.options.fake).to.exist;
       expect(locale.options.default).to.be.equal(Account.DEFAULT_LOCALE);
-
     });
 
-    describe('location', function () {
-
-      it('should be an embedded subdocument', function () {
-
-        const location = Account.schema.tree.location;
-        const instance = Account.schema.paths.location.instance;
-        const tree = Account.schema.paths.location.schema.tree;
+    describe('location', () => {
+      it('should be an embedded subdocument', () => {
+        const { location } = Account.schema.tree;
+        const { instance } = Account.schema.paths.location;
+        const { tree } = Account.schema.paths.location.schema;
 
         expect(instance).to.be.equal('Embedded');
         expect(location).to.exist;
@@ -212,14 +182,12 @@ describe('Account', function () {
         expect(tree).to.exist;
         expect(tree.type).to.exist;
         expect(tree.coordinates).to.exist;
-
       });
 
-      it('should have GeoJSON type field', function () {
-
-        const schema = Account.schema.paths.location.schema;
-        const type = schema.tree.type;
-        const instance = schema.paths.type.instance;
+      it('should have GeoJSON type field', () => {
+        const { schema } = Account.schema.paths.location;
+        const { type } = schema.tree;
+        const { instance } = schema.paths.type;
 
         expect(instance).to.be.equal('String');
         expect(type).to.exist;
@@ -227,35 +195,26 @@ describe('Account', function () {
         expect(type.type).to.be.a('function');
         expect(type.type.name).to.be.equal('String');
         expect(type.default).to.exist;
-
       });
 
-
-      it.skip('should have GeoJSON coordinates field', function () {
-
-        const schema = Account.schema.paths.location.schema;
-        const coordinates = schema.tree.coordinates;
-        const instance = schema.paths.coordinates.instance;
+      it.skip('should have GeoJSON coordinates field', () => {
+        const { schema } = Account.schema.paths.location;
+        const { coordinates } = schema.tree;
+        const { instance } = schema.paths.coordinates;
 
         expect(instance).to.be.equal('Array');
         expect(coordinates).to.exist;
         expect(coordinates).to.be.an('object');
         expect(coordinates.type[0]).to.be.a('function');
-        expect(coordinates.type[0].name).to.be.equal(
-          'Number');
-
+        expect(coordinates.type[0].name).to.be.equal('Number');
       });
-
     });
 
-
-    describe('bills', function () {
-
-      it('should be an array of embedded subdocument', function () {
-
-        const bills = Account.schema.tree.bills;
-        const instance = Account.schema.paths.bills.instance;
-        const tree = Account.schema.tree.bills[0].tree;
+    describe('bills', () => {
+      it('should be an array of embedded subdocument', () => {
+        const { bills } = Account.schema.tree;
+        const { instance } = Account.schema.paths.bills;
+        const { tree } = Account.schema.tree.bills[0];
 
         expect(instance).to.be.equal('Array');
         expect(bills).to.exist;
@@ -265,15 +224,11 @@ describe('Account', function () {
         expect(tree.balance).to.exist;
         expect(tree.items).to.exist;
         expect(tree.notes).to.exist;
-
       });
 
-      it('should have number field', function () {
-
-        const number = Account.schema.tree.bills[0].tree.number;
-        const instance =
-          Account.schema.paths.bills.schema.paths.number
-          .instance;
+      it('should have number field', () => {
+        const { number } = Account.schema.tree.bills[0].tree;
+        const { instance } = Account.schema.paths.bills.schema.paths.number;
 
         expect(instance).to.be.equal('String');
         expect(number).to.exist;
@@ -282,21 +237,13 @@ describe('Account', function () {
         expect(number.type.name).to.be.equal('String');
         expect(number.trim).to.be.true;
         expect(number.uppercase).to.be.true;
-
       });
 
-      describe('period', function () {
-
-        it('should be an embedded subdocument', function () {
-
-          const period = Account.schema.tree.bills[0]
-            .tree.period;
-          const instance = Account.schema.paths.bills
-            .schema
-            .paths.period.instance;
-          const tree = Account.schema.tree.bills[0].tree
-            .period
-            .tree;
+      describe('period', () => {
+        it('should be an embedded subdocument', () => {
+          const { period } = Account.schema.tree.bills[0].tree;
+          const { instance } = Account.schema.paths.bills.schema.paths.period;
+          const { tree } = Account.schema.tree.bills[0].tree.period;
 
           expect(instance).to.be.equal('Embedded');
           expect(period).to.exist;
@@ -306,16 +253,13 @@ describe('Account', function () {
           expect(tree.startedAt).to.exist;
           expect(tree.endedAt).to.exist;
           expect(tree.duedAt).to.exist;
-
         });
 
-        it('should have name', function () {
-
-          const name = Account.schema.tree.bills[
-            0].tree.period.tree.name;
-          const instance = Account.schema.paths.bills
-            .schema.paths.period.schema.paths.name
-            .instance;
+        it('should have name', () => {
+          const { name } = Account.schema.tree.bills[0].tree.period.tree;
+          const {
+            instance,
+          } = Account.schema.paths.bills.schema.paths.period.schema.paths.name;
 
           expect(instance).to.be.equal('String');
           expect(name).to.exist;
@@ -323,89 +267,66 @@ describe('Account', function () {
           expect(name.trim).to.exist;
           expect(name.required).to.not.exist;
           expect(name.index).to.not.exist;
-
         });
 
-
-        it('should have bill date', function () {
-
-          const billedAt = Account.schema.tree.bills[
-            0].tree.period.tree.billedAt;
-          const instance = Account.schema.paths.bills
-            .schema.paths.period.schema.paths.billedAt
-            .instance;
+        it('should have bill date', () => {
+          const { billedAt } = Account.schema.tree.bills[0].tree.period.tree;
+          const {
+            instance,
+          } = Account.schema.paths.bills.schema.paths.period.schema.paths.billedAt;
 
           expect(instance).to.be.equal('Date');
           expect(billedAt).to.exist;
           expect(billedAt).to.be.an('object');
           expect(billedAt.required).to.not.exist;
           expect(billedAt.index).to.not.exist;
-
         });
 
-        it('should have start date', function () {
-
-          const startedAt = Account.schema.tree.bills[
-            0].tree.period.tree.startedAt;
-          const instance = Account.schema.paths.bills
-            .schema.paths.period.schema.paths.startedAt
-            .instance;
+        it('should have start date', () => {
+          const { startedAt } = Account.schema.tree.bills[0].tree.period.tree;
+          const {
+            instance,
+          } = Account.schema.paths.bills.schema.paths.period.schema.paths.startedAt;
 
           expect(instance).to.be.equal('Date');
           expect(startedAt).to.exist;
           expect(startedAt).to.be.an('object');
           expect(startedAt.required).to.not.exist;
           expect(startedAt.index).to.not.exist;
-
         });
 
-        it('should have end date', function () {
-
-          const endedAt = Account.schema.tree.bills[
-            0].tree.period.tree.endedAt;
-          const instance = Account.schema.paths.bills
-            .schema.paths.period.schema.paths.endedAt
-            .instance;
+        it('should have end date', () => {
+          const { endedAt } = Account.schema.tree.bills[0].tree.period.tree;
+          const {
+            instance,
+          } = Account.schema.paths.bills.schema.paths.period.schema.paths.endedAt;
 
           expect(instance).to.be.equal('Date');
           expect(endedAt).to.exist;
           expect(endedAt).to.be.an('object');
           expect(endedAt.required).to.not.exist;
           expect(endedAt.index).to.not.exist;
-
         });
 
-        it('should have due date', function () {
-
-          const duedAt = Account.schema.tree.bills[
-            0].tree.period.tree.duedAt;
-          const instance = Account.schema.paths.bills
-            .schema.paths.period.schema.paths.duedAt
-            .instance;
+        it('should have due date', () => {
+          const { duedAt } = Account.schema.tree.bills[0].tree.period.tree;
+          const {
+            instance,
+          } = Account.schema.paths.bills.schema.paths.period.schema.paths.duedAt;
 
           expect(instance).to.be.equal('Date');
           expect(duedAt).to.exist;
           expect(duedAt).to.be.an('object');
           expect(duedAt.required).to.not.exist;
           expect(duedAt.index).to.not.exist;
-
         });
-
       });
 
-      describe('balance', function () {
-
-        it('should be an embedded subdocument', function () {
-
-          const balance = Account.schema.tree.bills[0]
-            .tree
-            .balance;
-          const instance = Account.schema.paths.bills
-            .schema
-            .paths.balance.instance;
-          const tree = Account.schema.tree.bills[0].tree
-            .balance
-            .tree;
+      describe('balance', () => {
+        it('should be an embedded subdocument', () => {
+          const { balance } = Account.schema.tree.bills[0].tree;
+          const { instance } = Account.schema.paths.bills.schema.paths.balance;
+          const { tree } = Account.schema.tree.bills[0].tree.balance;
 
           expect(instance).to.be.equal('Embedded');
           expect(balance).to.exist;
@@ -415,126 +336,96 @@ describe('Account', function () {
           expect(tree.open).to.exist;
           expect(tree.charges).to.exist;
           expect(tree.close).to.exist;
-
         });
 
-        it('should have outstand balance', function () {
-
-          const outstand = Account.schema.tree.bills[
-            0].tree.balance.tree.outstand;
-          const instance = Account.schema.paths.bills
-            .schema.paths.balance.schema.paths.outstand
-            .instance;
+        it('should have outstand balance', () => {
+          const { outstand } = Account.schema.tree.bills[0].tree.balance.tree;
+          const {
+            instance,
+          } = Account.schema.paths.bills.schema.paths.balance.schema.paths.outstand;
 
           expect(instance).to.be.equal('Number');
           expect(outstand).to.exist;
           expect(outstand).to.be.an('object');
           expect(outstand.required).to.not.exist;
           expect(outstand.index).to.not.exist;
-
         });
 
-        it('should have open balance', function () {
-
-          const open = Account.schema.tree.bills[
-            0].tree.balance.tree.open;
-          const instance = Account.schema.paths.bills
-            .schema.paths.balance.schema.paths.open
-            .instance;
+        it('should have open balance', () => {
+          const { open } = Account.schema.tree.bills[0].tree.balance.tree;
+          const {
+            instance,
+          } = Account.schema.paths.bills.schema.paths.balance.schema.paths.open;
 
           expect(instance).to.be.equal('Number');
           expect(open).to.exist;
           expect(open).to.be.an('object');
           expect(open.required).to.not.exist;
           expect(open.index).to.not.exist;
-
         });
 
-        it('should have period charges', function () {
-
-          const charges = Account.schema.tree.bills[
-            0].tree.balance.tree.charges;
-          const instance = Account.schema.paths.bills
-            .schema.paths.balance.schema.paths.charges
-            .instance;
+        it('should have period charges', () => {
+          const { charges } = Account.schema.tree.bills[0].tree.balance.tree;
+          const {
+            instance,
+          } = Account.schema.paths.bills.schema.paths.balance.schema.paths.charges;
 
           expect(instance).to.be.equal('Number');
           expect(charges).to.exist;
           expect(charges).to.be.an('object');
           expect(charges.required).to.not.exist;
           expect(charges.index).to.not.exist;
-
         });
 
-        it('should have close balance', function () {
-
-          const close = Account.schema.tree.bills[
-            0].tree.balance.tree.close;
-          const instance = Account.schema.paths.bills
-            .schema.paths.balance.schema.paths.close
-            .instance;
+        it('should have close balance', () => {
+          const { close } = Account.schema.tree.bills[0].tree.balance.tree;
+          const {
+            instance,
+          } = Account.schema.paths.bills.schema.paths.balance.schema.paths.close;
 
           expect(instance).to.be.equal('Number');
           expect(close).to.exist;
           expect(close).to.be.an('object');
           expect(close.required).to.not.exist;
           expect(close.index).to.not.exist;
-
         });
 
-        it('should have debt balance', function () {
-
-          const debt = Account.schema.tree.bills[
-            0].tree.balance.tree.debt;
-          const instance = Account.schema.paths.bills
-            .schema.paths.balance.schema.paths.debt
-            .instance;
+        it('should have debt balance', () => {
+          const { debt } = Account.schema.tree.bills[0].tree.balance.tree;
+          const {
+            instance,
+          } = Account.schema.paths.bills.schema.paths.balance.schema.paths.debt;
 
           expect(instance).to.be.equal('Number');
           expect(debt).to.exist;
           expect(debt).to.be.an('object');
           expect(debt.required).to.not.exist;
           expect(debt.index).to.not.exist;
-
         });
-
       });
 
-      describe('items', function () {
+      describe('items', () => {
+        it('should an array of embedded subdocument', () => {
+          const { items } = Account.schema.tree.bills[0].tree;
+          const { instance } = Account.schema.paths.bills.schema.paths.items;
+          const { tree } = Account.schema.tree.bills[0].tree.items[0];
 
-        it('should an array of embedded subdocument',
-          function () {
+          expect(instance).to.be.equal('Array');
+          expect(items).to.exist;
+          expect(items[0]).to.be.an('object');
+          expect(tree).to.exist;
+          expect(tree.name).to.exist;
+          expect(tree.quantity).to.exist;
+          expect(tree.price).to.exist;
+          expect(tree.unit).to.exist;
+        });
 
-            const items = Account.schema.tree.bills[0].tree
-              .items;
-            const instance = Account.schema.paths.bills
-              .schema
-              .paths.items.instance;
-            const tree = Account.schema.tree.bills[0].tree
-              .items[0].tree;
-
-            expect(instance).to.be.equal('Array');
-            expect(items).to.exist;
-            expect(items[0]).to.be.an('object');
-            expect(tree).to.exist;
-            expect(tree.name).to.exist;
-            expect(tree.quantity).to.exist;
-            expect(tree.price).to.exist;
-            expect(tree.unit).to.exist;
-
-          });
-
-        describe('item', function () {
-
-          it('should have name field', function () {
-
-            const name = Account.schema.tree.bills[
-              0].tree.items[0].tree.name;
-            const instance = Account.schema.paths
-              .bills
-              .schema.paths.items.schema.paths
-              .name
-              .instance;
+        describe('item', () => {
+          it('should have name field', () => {
+            const { name } = Account.schema.tree.bills[0].tree.items[0].tree;
+            const {
+              instance,
+            } = Account.schema.paths.bills.schema.paths.items.schema.paths.name;
 
             expect(instance).to.be.equal('String');
             expect(name).to.exist;
@@ -542,55 +433,41 @@ describe('Account', function () {
             expect(name.trim).to.be.true;
             expect(name.required).to.not.exist;
             expect(name.index).to.not.exist;
-
           });
 
-
-          it('should have quantity field', function () {
-
-            const quantity = Account.schema.tree.bills[
-              0].tree.items[0].tree.quantity;
-            const instance = Account.schema.paths
-              .bills
-              .schema.paths.items.schema.paths
-              .quantity
-              .instance;
+          it('should have quantity field', () => {
+            const {
+              quantity,
+            } = Account.schema.tree.bills[0].tree.items[0].tree;
+            const {
+              instance,
+            } = Account.schema.paths.bills.schema.paths.items.schema.paths.quantity;
 
             expect(instance).to.be.equal('Number');
             expect(quantity).to.exist;
             expect(quantity).to.be.an('object');
             expect(quantity.required).to.not.exist;
             expect(quantity.index).to.not.exist;
-
           });
 
-          it('should have price field', function () {
-
-            const price = Account.schema.tree.bills[
-              0].tree.items[0].tree.price;
-            const instance = Account.schema.paths
-              .bills
-              .schema.paths.items.schema.paths
-              .price
-              .instance;
+          it('should have price field', () => {
+            const { price } = Account.schema.tree.bills[0].tree.items[0].tree;
+            const {
+              instance,
+            } = Account.schema.paths.bills.schema.paths.items.schema.paths.price;
 
             expect(instance).to.be.equal('Number');
             expect(price).to.exist;
             expect(price).to.be.an('object');
             expect(price.required).to.not.exist;
             expect(price.index).to.not.exist;
-
           });
 
-          it('should have unit field', function () {
-
-            const unit = Account.schema.tree.bills[
-              0].tree.items[0].tree.unit;
-            const instance = Account.schema.paths
-              .bills
-              .schema.paths.items.schema.paths
-              .unit
-              .instance;
+          it('should have unit field', () => {
+            const { unit } = Account.schema.tree.bills[0].tree.items[0].tree;
+            const {
+              instance,
+            } = Account.schema.paths.bills.schema.paths.items.schema.paths.unit;
 
             expect(instance).to.be.equal('String');
             expect(unit).to.exist;
@@ -598,34 +475,24 @@ describe('Account', function () {
             expect(unit.trim).to.be.true;
             expect(unit.required).to.not.exist;
             expect(unit.index).to.not.exist;
-
           });
 
-          it('should have time field', function () {
-
-            const time = Account.schema.tree.bills[
-              0].tree.items[0].tree.time;
-            const instance = Account.schema.paths
-              .bills
-              .schema.paths.items.schema.paths
-              .time
-              .instance;
+          it('should have time field', () => {
+            const { time } = Account.schema.tree.bills[0].tree.items[0].tree;
+            const {
+              instance,
+            } = Account.schema.paths.bills.schema.paths.items.schema.paths.time;
 
             expect(instance).to.be.equal('Date');
             expect(time).to.exist;
             expect(time).to.be.an('object');
-
           });
-
         });
       });
 
-      it('should have currency field', function () {
-
-        const currency = Account.schema.tree.bills[0].tree.currency;
-        const instance =
-          Account.schema.paths.bills.schema.paths.currency
-          .instance;
+      it('should have currency field', () => {
+        const { currency } = Account.schema.tree.bills[0].tree;
+        const { instance } = Account.schema.paths.bills.schema.paths.currency;
 
         expect(instance).to.be.equal('String');
         expect(currency).to.exist;
@@ -634,15 +501,11 @@ describe('Account', function () {
         expect(currency.type.name).to.be.equal('String');
         expect(currency.trim).to.be.true;
         expect(currency.uppercase).to.be.true;
-
       });
 
-      it('should have notes field', function () {
-
-        const notes = Account.schema.tree.bills[0].tree.notes;
-        const instance =
-          Account.schema.paths.bills.schema.paths.notes
-          .instance;
+      it('should have notes field', () => {
+        const { notes } = Account.schema.tree.bills[0].tree;
+        const { instance } = Account.schema.paths.bills.schema.paths.notes;
 
         expect(instance).to.be.equal('String');
         expect(notes).to.exist;
@@ -650,15 +513,11 @@ describe('Account', function () {
         expect(notes.type).to.be.a('function');
         expect(notes.type.name).to.be.equal('String');
         expect(notes.trim).to.be.true;
-
       });
-
     });
-
   });
 
-  it('should have fetchedAt field', function () {
-
+  it('should have fetchedAt field', () => {
     const fetchedAt = Account.schema.path('fetchedAt');
 
     expect(fetchedAt).to.exist;
@@ -670,7 +529,5 @@ describe('Account', function () {
     expect(fetchedAt.options.index).to.be.true;
     expect(fetchedAt.options.hide).to.be.true;
     expect(fetchedAt.options.fake).to.exist;
-
   });
-
 });

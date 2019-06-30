@@ -1,93 +1,76 @@
-'use strict';
-
-
 /* dependencies */
-const path = require('path');
-const faker = require('@benmaruchu/faker');
-const { expect } = require('chai');
-const sinon = require('sinon');
-const { mock, spy } = sinon;
-const {
+import faker from '@benmaruchu/faker';
+import { expect } from 'chai';
+import sinon from 'sinon';
+import {
   randomPoint,
   randomPolygon,
-  TYPE_POINT
-} = require('mongoose-geojson-schemas');
-const { Jurisdiction } = require('@codetanzania/majifix-jurisdiction');
+  TYPE_POINT,
+} from 'mongoose-geojson-schemas';
+import { Jurisdiction } from '@codetanzania/majifix-jurisdiction';
+import Account from '../../src/account.model';
 
+const { mock, spy } = sinon;
 
-/* declarations */
-const Account =
-  require(path.join(__dirname, '..', '..', 'lib', 'account.model'));
-
-
-describe('Account', function () {
-
-  describe('Instance', function () {
-
-    it('`ensureLocation` should be a function', function () {
+describe('Account', () => {
+  describe('Instance', () => {
+    it('`ensureLocation` should be a function', () => {
       const account = Account.fake();
       expect(account.ensureLocation).to.exist;
       expect(account.ensureLocation).to.be.a('function');
-      expect(account.ensureLocation.length)
-        .to.be.equal(0);
-      expect(account.ensureLocation.name)
-        .to.be.equal('ensureLocation');
+      expect(account.ensureLocation.length).to.be.equal(0);
+      expect(account.ensureLocation.name).to.be.equal('ensureLocation');
     });
 
-    it('should be able to ensure location from jurisdiction boundaries',
-      function () {
-        const jurisdiction = Jurisdiction.fake();
-        jurisdiction.boundaries = {
-          coordinates: [
-            randomPolygon().coordinates,
-            randomPolygon().coordinates
-          ]
-        };
+    it('should be able to ensure location from jurisdiction boundaries', () => {
+      const jurisdiction = Jurisdiction.fake();
+      jurisdiction.boundaries = {
+        coordinates: [randomPolygon().coordinates, randomPolygon().coordinates],
+      };
 
-        const account = Account.fake();
-        account.jurisdiction = jurisdiction;
+      const account = Account.fake();
+      account.jurisdiction = jurisdiction;
 
-        //ensure location
-        const location = account.ensureLocation();
-        expect(location).to.exist;
-        expect(location.type).to.exist;
-        expect(location.type).to.be.a('string');
-        expect(location.type).to.be.equal(TYPE_POINT);
-        expect(location.coordinates).to.exist;
-        expect(location.coordinates).to.be.an('array');
-        expect(location.coordinates).to.have.length(2);
-      });
+      // ensure location
+      const location = account.ensureLocation();
+      expect(location).to.exist;
+      expect(location.type).to.exist;
+      expect(location.type).to.be.a('string');
+      expect(location.type).to.be.equal(TYPE_POINT);
+      expect(location.coordinates).to.exist;
+      expect(location.coordinates).to.be.an('array');
+      expect(location.coordinates).to.have.length(2);
+    });
 
-    it('should be able to ensure location from jurisdiction location',
-      function () {
-        const jurisdiction = Jurisdiction.fake();
-        jurisdiction.location = randomPoint();
+    it('should be able to ensure location from jurisdiction location', () => {
+      const jurisdiction = Jurisdiction.fake();
+      jurisdiction.location = randomPoint();
 
-        const account = Account.fake();
-        account.jurisdiction = jurisdiction;
+      const account = Account.fake();
+      account.jurisdiction = jurisdiction;
 
-        //ensure location
-        const location = account.ensureLocation();
-        expect(location).to.exist;
-        expect(location.type).to.exist;
-        expect(location.type).to.be.a('string');
-        expect(location.type).to.be.equal(TYPE_POINT);
-        expect(location.coordinates).to.exist;
-        expect(location.coordinates).to.be.an('array');
-        expect(location.coordinates).to.have.length(2);
-      });
+      // ensure location
+      const location = account.ensureLocation();
+      expect(location).to.exist;
+      expect(location.type).to.exist;
+      expect(location.type).to.be.a('string');
+      expect(location.type).to.be.equal(TYPE_POINT);
+      expect(location.coordinates).to.exist;
+      expect(location.coordinates).to.be.an('array');
+      expect(location.coordinates).to.have.length(2);
+    });
 
-    it('`ensureUniqueAccessors` should be a function', function () {
+    it('`ensureUniqueAccessors` should be a function', () => {
       const account = Account.fake();
       expect(account.ensureUniqueAccessors).to.exist;
       expect(account.ensureUniqueAccessors).to.be.a('function');
-      expect(account.ensureUniqueAccessors.length)
-        .to.be.equal(0);
-      expect(account.ensureUniqueAccessors.name)
-        .to.be.equal('ensureUniqueAccessors');
+      expect(account.ensureUniqueAccessors.length).to.be.equal(0);
+      expect(account.ensureUniqueAccessors.name).to.be.equal(
+        'ensureUniqueAccessors'
+      );
     });
 
-    it('should be able to ensure unique accessors', function () {
+    it('should be able to ensure unique accessors', () => {
       const account = Account.fake();
       const exist = account.accessors.toObject();
 
@@ -96,10 +79,9 @@ describe('Account', function () {
 
       expect(account.accessors).to.exist;
       expect(account.accessors.toObject()).to.eql(exist);
-
     });
 
-    it('should be able to ensure unique accessors', function () {
+    it('should be able to ensure unique accessors', () => {
       const account = Account.fake();
       const exist = account.accessors.toObject();
 
@@ -108,20 +90,17 @@ describe('Account', function () {
 
       expect(account.accessors).to.exist;
       expect(account.accessors.toObject()).to.eql(exist);
-
     });
 
-    it('`upsertAccessor` should be a function', function () {
+    it('`upsertAccessor` should be a function', () => {
       const account = Account.fake();
       expect(account.upsertAccessor).to.exist;
       expect(account.upsertAccessor).to.be.a('function');
-      expect(account.upsertAccessor.length)
-        .to.be.equal(2);
-      expect(account.upsertAccessor.name)
-        .to.be.equal('upsertAccessor');
+      expect(account.upsertAccessor.length).to.be.equal(2);
+      expect(account.upsertAccessor.name).to.be.equal('upsertAccessor');
     });
 
-    it('should be able to update existing accessor', function () {
+    it('should be able to update existing accessor', () => {
       const account = Account.fake();
       account.accessors = [account.accessors[0]];
 
@@ -131,23 +110,22 @@ describe('Account', function () {
       const updates = {
         phone: faker.phone.phoneNumber(),
         name: faker.name.findName(),
-        email: faker.internet.email()
+        email: faker.internet.email(),
       };
       account.upsertAccessor(accessor.phone, updates);
 
       expect(account.accessors).to.exist;
       expect(account.accessors.toObject()).to.not.be.eql(exist);
-
     });
 
-    it('should be able to add new accessor', function () {
+    it('should be able to add new accessor', () => {
       const account = Account.fake();
       const exist = account.accessors.toObject();
 
       const updates = {
         phone: faker.phone.phoneNumber(),
         name: faker.name.findName(),
-        email: faker.internet.email()
+        email: faker.internet.email(),
       };
       account.upsertAccessor(undefined, updates);
       const current = account.accessors.toObject();
@@ -155,17 +133,16 @@ describe('Account', function () {
       expect(account.accessors).to.exist;
       expect(exist.length < current.length).to.be.true;
       expect(current).to.not.be.eql(exist);
-
     });
 
-    it('should be able to add new accessor', function () {
+    it('should be able to add new accessor', () => {
       const account = Account.fake();
       const exist = account.accessors.toObject();
 
       const updates = {
         phone: faker.phone.phoneNumber(),
         name: faker.name.findName(),
-        email: faker.internet.email()
+        email: faker.internet.email(),
       };
       account.upsertAccessor(updates.phone, updates);
       const current = account.accessors.toObject();
@@ -173,20 +150,17 @@ describe('Account', function () {
       expect(account.accessors).to.exist;
       expect(exist.length < current.length).to.be.true;
       expect(current).to.not.be.eql(exist);
-
     });
 
-    it('`removeAccessor` should be a function', function () {
+    it('`removeAccessor` should be a function', () => {
       const account = Account.fake();
       expect(account.removeAccessor).to.exist;
       expect(account.removeAccessor).to.be.a('function');
-      expect(account.removeAccessor.length)
-        .to.be.equal(1);
-      expect(account.removeAccessor.name)
-        .to.be.equal('removeAccessor');
+      expect(account.removeAccessor.length).to.be.equal(1);
+      expect(account.removeAccessor.name).to.be.equal('removeAccessor');
     });
 
-    it('should be able to remove existing accessor', function () {
+    it('should be able to remove existing accessor', () => {
       const account = Account.fake();
       const exist = account.accessors.toObject();
       const accessor = account.accessors[0];
@@ -197,16 +171,11 @@ describe('Account', function () {
       expect(account.accessors).to.exist;
       expect(current.length < exist.length).to.true;
       expect(current).to.not.be.eql(exist);
-
     });
-
   });
 
-
-  describe('Hooks', function () {
-
-    describe('beforePost', function () {
-
+  describe('Hooks', () => {
+    describe('beforePost', () => {
       let ensureLocation;
       let getById;
 
@@ -216,64 +185,52 @@ describe('Account', function () {
       const account = Account.fake();
       account.jurisdiction = jurisdiction;
 
-      beforeEach(function () {
-        getById =
-          mock(Jurisdiction).expects('getById').yields(null,
-            jurisdiction);
+      beforeEach(() => {
+        getById = mock(Jurisdiction)
+          .expects('getById')
+          .yields(null, jurisdiction);
         ensureLocation = spy(account, 'ensureLocation');
       });
 
-      afterEach(function () {
+      afterEach(() => {
         sinon.restore();
       });
 
-      it('should be able to ensure location from jurisdiction',
-        function (done) {
+      it('should be able to ensure location from jurisdiction', done => {
+        account.beforePost((error, updated) => {
+          // assert account
+          const { location } = updated;
+          expect(location).to.exist;
+          expect(location.type).to.exist;
+          expect(location.type).to.be.a('string');
+          expect(location.type).to.be.equal(TYPE_POINT);
+          expect(location.coordinates).to.exist;
+          expect(location.coordinates).to.be.an('array');
+          expect(location.coordinates).to.have.length(2);
 
-          account
-            .beforePost(function (error, updated) {
+          // assert methods call
+          expect(ensureLocation).to.have.been.called;
+          expect(ensureLocation).to.have.been.calledOnce;
 
-              //assert account
-              const { location } = updated;
-              expect(location).to.exist;
-              expect(location.type).to.exist;
-              expect(location.type).to.be.a('string');
-              expect(location.type).to.be.equal(TYPE_POINT);
-              expect(location.coordinates).to.exist;
-              expect(location.coordinates).to.be.an('array');
-              expect(location.coordinates).to.have.length(2);
+          expect(getById).to.have.been.called;
+          expect(getById).to.have.been.calledOnce;
+          expect(getById).to.have.been.calledWith(jurisdiction._id);
 
-              //assert methods call
-              expect(ensureLocation).to.have.been.called;
-              expect(ensureLocation).to.have.been.calledOnce;
-
-              expect(getById).to.have.been.called;
-              expect(getById).to.have.been.calledOnce;
-              expect(getById)
-                .to.have.been.calledWith(jurisdiction._id);
-
-              done();
-
-            });
-
+          done();
         });
-
+      });
     });
-
   });
 
-  describe('Statics', function () {
-
-    it('should expose model name as constant', function () {
+  describe('Statics', () => {
+    it('should expose model name as constant', () => {
       expect(Account.MODEL_NAME).to.exist;
       expect(Account.MODEL_NAME).to.be.equal('Account');
     });
 
-    it('should expose default locale `en` when not set', function () {
+    it('should expose default locale `en` when not set', () => {
       expect(Account.DEFAULT_LOCALE).to.exist;
       expect(Account.DEFAULT_LOCALE).to.equal('en');
     });
-
   });
-
 });

@@ -1,102 +1,67 @@
-'use strict';
-
 /* dependencies */
-const path = require('path');
-const _ = require('lodash');
-const async = require('async');
-const { expect } = require('chai');
-const { Jurisdiction } = require('@codetanzania/majifix-jurisdiction');
-const { Account } = require(path.join(__dirname, '..', '..'));
+import _ from 'lodash';
+import { expect } from 'chai';
+import { Jurisdiction } from '@codetanzania/majifix-jurisdiction';
+import { clear, create } from '@lykmapipo/mongoose-test-helpers';
+import account from '../../src/index';
 
+const { Account } = account;
 
-describe('Account GetPhones', function () {
+describe('Account GetPhones', () => {
+  let customerAccounts;
+  const jurisdiction = Jurisdiction.fake();
 
-  let jurisdiction;
-  let accounts;
+  before(done => clear(Jurisdiction, Account, done));
 
-  before(function (done) {
-    Account.deleteMany(done);
-  });
+  before(done => create(jurisdiction, done));
 
-  before(function (done) {
-    Jurisdiction.deleteMany(done);
-  });
+  // let accounts;
 
-  before(function (done) {
-    jurisdiction = Jurisdiction.fake();
-    jurisdiction.post(function (error, created) {
-      jurisdiction = created;
-      done(error, created);
-    });
-  });
-
-
-  before(function (done) {
-    accounts = Account.fake(32);
-    accounts = _.map(accounts, function (account, index) {
+  before(done => {
+    customerAccounts = Account.fake(32);
+    customerAccounts = _.map(customerAccounts, (data, index) => {
+      customerAccounts = data;
       if (index % 2 === 0) {
-        account.jurisdiction = jurisdiction;
+        customerAccounts.jurisdiction = jurisdiction;
       }
-      return account;
+      return customerAccounts;
     });
-
-    const fakes = _.map(accounts, function (account) {
-      return function (next) {
-        account.post(next);
-      };
-    });
-    async.parallel(fakes, function (error, created) {
-      accounts = created;
-      done(error, created);
-    });
+    create(...customerAccounts, done);
   });
 
-  it('should be able to get without options', function (done) {
-
-    Account.getPhones(function (error, results) {
+  it('should be able to get without options', done => {
+    Account.getPhones((error, results) => {
       expect(error).to.not.exist;
       expect(results).to.exist;
       expect(results).to.have.length(32);
       done(error, results);
     });
-
   });
 
-  it('should be able to get with options', function (done) {
-
+  it('should be able to get with options', done => {
     const criteria = { jurisdiction: { $in: [jurisdiction._id] } };
-    Account.getPhones(criteria, function (error, results) {
+    Account.getPhones(criteria, (error, results) => {
       expect(error).to.not.exist;
       expect(results).to.exist;
       expect(results).to.have.length(16);
       done(error, results);
     });
-
   });
 
-  it('should be able to get with options', function (done) {
-
+  it('should be able to get with options', done => {
     const criteria = {
       $or: [
         { jurisdiction: { $in: [jurisdiction._id] } },
-        { jurisdiction: null }
-      ]
+        { jurisdiction: null },
+      ],
     };
-    Account.getPhones(criteria, function (error, results) {
+    Account.getPhones(criteria, (error, results) => {
       expect(error).to.not.exist;
       expect(results).to.exist;
       expect(results).to.have.length(32);
       done(error, results);
     });
-
   });
 
-  after(function (done) {
-    Account.deleteMany(done);
-  });
-
-  after(function (done) {
-    Jurisdiction.deleteMany(done);
-  });
-
+  after(done => clear(Jurisdiction, Account, done));
 });

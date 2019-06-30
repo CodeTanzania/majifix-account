@@ -1,50 +1,39 @@
-'use strict';
-
 /* dependencies */
-const path = require('path');
-const _ = require('lodash');
-const request = require('supertest');
-const { expect } = require('chai');
-const faker = require('@benmaruchu/faker');
-const { Jurisdiction } = require('@codetanzania/majifix-jurisdiction');
+import _ from 'lodash';
+import request from 'supertest';
+import { expect } from 'chai';
+import faker from '@benmaruchu/faker';
+import { app, mount } from '@lykmapipo/express-common';
+import { Jurisdiction } from '@codetanzania/majifix-jurisdiction';
+import { clear, create } from '@lykmapipo/mongoose-test-helpers';
 
 /* declarations */
-const { Account, app, apiVersion } = require(path.join(__dirname, '..', '..'));
+import account from '../../src/index';
 
+const { Account, apiVersion, router } = account;
 
-describe('Account', function () {
+describe('Account', () => {
+  mount(router);
 
-  describe('Rest API', function () {
+  describe('Rest API', () => {
+    let customerAccount;
+    const jurisdiction = Jurisdiction.fake();
 
-    let jurisdiction;
+    before(done => clear(Jurisdiction, Account, done));
 
-    before(function (done) {
-      Jurisdiction.deleteMany(done);
-    });
+    before(done => create(jurisdiction, done));
 
-    before(function (done) {
-      Account.deleteMany(done);
-    });
-
-    before(function (done) {
-      jurisdiction = Jurisdiction.fake();
-      jurisdiction.post(done);
-    });
-
-    let account;
-
-    it('should handle POST /accounts', function (done) {
-
-      account = Account.fake();
-      account.jurisdiction = jurisdiction;
+    it('should handle POST /accounts', done => {
+      customerAccount = Account.fake();
+      customerAccount.jurisdiction = jurisdiction;
 
       request(app)
         .post(`/${apiVersion}/accounts`)
         .set('Accept', 'application/json')
         .set('Content-Type', 'application/json')
-        .send(account)
+        .send(customerAccount)
         .expect(201)
-        .end(function (error, response) {
+        .end((error, response) => {
           expect(error).to.not.exist;
           expect(response).to.exist;
 
@@ -54,26 +43,23 @@ describe('Account', function () {
           expect(created.number).to.exist;
           expect(created.name).to.exist;
 
-          account = created;
+          customerAccount = created;
 
           done(error, response);
-
         });
-
     });
 
-    it('should handle GET /accounts', function (done) {
-
+    it('should handle GET /accounts', done => {
       request(app)
         .get(`/${apiVersion}/accounts`)
         .set('Accept', 'application/json')
         .expect(200)
         .expect('Content-Type', /json/)
-        .end(function (error, response) {
+        .end((error, response) => {
           expect(error).to.not.exist;
           expect(response).to.exist;
 
-          //assert payload
+          // assert payload
           const result = response.body;
           expect(result.data).to.exist;
           expect(result.data).to.have.length.at.least(1);
@@ -84,25 +70,20 @@ describe('Account', function () {
           expect(result.pages).to.exist;
           expect(result.lastModified).to.exist;
           done(error, response);
-
         });
-
     });
 
-    it('should handle GET /accounts by filters', function (done) {
-
+    it('should handle GET /accounts by filters', done => {
       request(app)
-        .get(
-          `/${apiVersion}/accounts?filter[number]=${account.number}`
-        )
+        .get(`/${apiVersion}/accounts?filter[number]=${customerAccount.number}`)
         .set('Accept', 'application/json')
         .expect(200)
         .expect('Content-Type', /json/)
-        .end(function (error, response) {
+        .end((error, response) => {
           expect(error).to.not.exist;
           expect(response).to.exist;
 
-          //assert payload
+          // assert payload
           const result = response.body;
           expect(result.data).to.exist;
           expect(result.data).to.have.length.at.least(1);
@@ -113,237 +94,209 @@ describe('Account', function () {
           expect(result.pages).to.exist;
           expect(result.lastModified).to.exist;
           done(error, response);
-
         });
-
     });
 
-    it('should handle GET /accounts/:id', function (done) {
-
+    it('should handle GET /accounts/:id', done => {
       request(app)
-        .get(`/${apiVersion}/accounts/${account._id}`)
+        .get(`/${apiVersion}/accounts/${customerAccount._id}`)
         .set('Accept', 'application/json')
         .expect(200)
-        .end(function (error, response) {
+        .end((error, response) => {
           expect(error).to.not.exist;
           expect(response).to.exist;
 
           const found = response.body;
           expect(found._id).to.exist;
-          expect(found._id).to.be.equal(account._id);
-          expect(found.number).to.be.equal(account.number);
-          expect(found.name).to.be.equal(account.name);
+          expect(found._id).to.be.equal(customerAccount._id);
+          expect(found.number).to.be.equal(customerAccount.number);
+          expect(found.name).to.be.equal(customerAccount.name);
 
           done(error, response);
-
         });
-
     });
 
-    it('should handle PATCH /accounts/:id', function (done) {
-
+    it('should handle PATCH /accounts/:id', done => {
       const patch = { name: faker.finance.accountName() };
 
       request(app)
-        .patch(`/${apiVersion}/accounts/${account._id}`)
+        .patch(`/${apiVersion}/accounts/${customerAccount._id}`)
         .set('Accept', 'application/json')
         .set('Content-Type', 'application/json')
         .send(patch)
         .expect(200)
-        .end(function (error, response) {
+        .end((error, response) => {
           expect(error).to.not.exist;
           expect(response).to.exist;
 
           const patched = response.body;
 
           expect(patched._id).to.exist;
-          expect(patched._id).to.be.equal(account._id);
-          expect(patched.number).to.be.equal(account.number);
+          expect(patched._id).to.be.equal(customerAccount._id);
+          expect(patched.number).to.be.equal(customerAccount.number);
           expect(patched.name).to.be.equal(patch.name);
 
-          account = patched;
+          customerAccount = patched;
 
           done(error, response);
-
         });
-
     });
 
-    it('should handle PUT /accounts/:id', function (done) {
-
+    it('should handle PUT /accounts/:id', done => {
       const put = { name: faker.finance.accountName() };
 
       request(app)
-        .put(`/${apiVersion}/accounts/${account._id}`)
+        .put(`/${apiVersion}/accounts/${customerAccount._id}`)
         .set('Accept', 'application/json')
         .set('Content-Type', 'application/json')
         .send(put)
         .expect(200)
-        .end(function (error, response) {
-
+        .end((error, response) => {
           expect(error).to.not.exist;
           expect(response).to.exist;
 
           const puted = response.body;
 
           expect(puted._id).to.exist;
-          expect(puted._id).to.be.equal(account._id);
-          expect(puted.number).to.be.equal(account.number);
+          expect(puted._id).to.be.equal(customerAccount._id);
+          expect(puted.number).to.be.equal(customerAccount.number);
           expect(puted.name).to.be.equal(put.name);
 
-          account = puted;
+          customerAccount = puted;
 
           done(error, response);
-
         });
-
     });
 
-    it('should handle POST /accounts/:id/accessors', function (done) {
-
+    it('should handle POST /accounts/:id/accessors', done => {
       const accessor = Account.fake().accessors[0].toObject();
 
       request(app)
-        .post(`/${apiVersion}/accounts/${account._id}/accessors`)
+        .post(`/${apiVersion}/accounts/${customerAccount._id}/accessors`)
         .set('Accept', 'application/json')
         .set('Content-Type', 'application/json')
         .send(accessor)
         .expect(200)
-        .end(function (error, response) {
-
+        .end((error, response) => {
           expect(error).to.not.exist;
           expect(response).to.exist;
 
           const updates = response.body;
 
           expect(updates._id).to.exist;
-          expect(updates._id).to.be.equal(account._id);
-          expect(updates.number).to.be.equal(account.number);
-          expect(updates.name).to.be.equal(account.name);
+          expect(updates._id).to.be.equal(customerAccount._id);
+          expect(updates.number).to.be.equal(customerAccount.number);
+          expect(updates.name).to.be.equal(customerAccount.name);
 
-          expect(updates.accessors.length)
-            .to.be.above(account.accessors.length);
+          expect(updates.accessors.length).to.be.above(
+            customerAccount.accessors.length
+          );
 
-          account = updates;
+          customerAccount = updates;
 
           done(error, response);
-
         });
-
     });
 
-    it('should handle GET /accounts/:id/accessors', function (done) {
-
+    it('should handle GET /accounts/:id/accessors', done => {
       request(app)
-        .get(
-          `/${apiVersion}/accounts/${account._id}/accessors`
-        )
+        .get(`/${apiVersion}/accounts/${customerAccount._id}/accessors`)
         .set('Accept', 'application/json')
         .expect(200)
-        .end(function (error, response) {
+        .end((error, response) => {
           expect(error).to.not.exist;
           expect(response).to.exist;
 
-          //assert payload
+          // assert payload
           const result = response.body;
           expect(result._id).to.exist;
-          expect(result._id).to.be.equal(account._id);
-          expect(result.number).to.be.equal(account.number);
-          expect(result.name).to.be.equal(account.name);
+          expect(result._id).to.be.equal(customerAccount._id);
+          expect(result.number).to.be.equal(customerAccount.number);
+          expect(result.name).to.be.equal(customerAccount.name);
           expect(result.accessors).to.have.length.at.least(1);
           done(error, response);
-
         });
-
     });
 
-    it('should handle PATCH /accounts/:id/accessors/:phone', function (
-      done) {
-
-      const accessor = account.accessors[0];
-      const phone = accessor.phone;
+    it('should handle PATCH /accounts/:id/accessors/:phone', done => {
+      const accessor = customerAccount.accessors[0];
+      const { phone } = accessor;
       const patch = { phone: faker.phone.phoneNumber() };
 
       request(app)
         .patch(
-          `/${apiVersion}/accounts/${account._id}/accessors/${phone}`
+          `/${apiVersion}/accounts/${customerAccount._id}/accessors/${phone}`
         )
         .set('Accept', 'application/json')
         .set('Content-Type', 'application/json')
         .send(patch)
         .expect(200)
-        .end(function (error, response) {
-
+        .end((error, response) => {
           expect(error).to.not.exist;
           expect(response).to.exist;
 
           const patched = response.body;
 
           expect(patched._id).to.exist;
-          expect(patched._id).to.be.equal(account._id.toString());
-          expect(patched.number).to.be.equal(account.number);
-          expect(patched.name).to.be.equal(account.name);
+          expect(patched._id).to.be.equal(customerAccount._id.toString());
+          expect(patched.number).to.be.equal(customerAccount.number);
+          expect(patched.name).to.be.equal(customerAccount.name);
 
-          //assert accessor
+          // assert accessor
           const _accessor = _.find(patched.accessors, patch);
           expect(_accessor).to.exist;
           expect(_accessor.name).to.be.eql(accessor.name);
           expect(_accessor.email).to.be.eql(accessor.email);
           expect(_accessor.phone).to.be.eql(patch.phone);
 
-          account = patched;
+          customerAccount = patched;
 
           done(error, response);
-
         });
-
     });
 
-    it('should handle PUT /accounts/:id/accessors/:phone', function (
-      done) {
-
-      const accessor = account.accessors[0];
-      const phone = accessor.phone;
+    it('should handle PUT /accounts/:id/accessors/:phone', done => {
+      const accessor = customerAccount.accessors[0];
+      const { phone } = accessor;
       const put = { phone: faker.phone.phoneNumber() };
 
       request(app)
         .put(
-          `/${apiVersion}/accounts/${account._id}/accessors/${phone}`
+          `/${apiVersion}/accounts/${customerAccount._id}/accessors/${phone}`
         )
         .set('Accept', 'application/json')
         .set('Content-Type', 'application/json')
         .send(put)
         .expect(200)
-        .end(function (error, response) {
-
+        .end((error, response) => {
           expect(error).to.not.exist;
           expect(response).to.exist;
 
           const puted = response.body;
 
           expect(puted._id).to.exist;
-          expect(puted._id).to.be.equal(account._id.toString());
-          expect(puted.number).to.be.equal(account.number);
-          expect(puted.name).to.be.equal(account.name);
+          expect(puted._id).to.be.equal(customerAccount._id.toString());
+          expect(puted.number).to.be.equal(customerAccount.number);
+          expect(puted.name).to.be.equal(customerAccount.name);
 
-          //assert accessor
+          // assert accessor
           const _accessor = _.find(puted.accessors, put);
           expect(_accessor).to.exist;
           expect(_accessor.name).to.be.eql(accessor.name);
           expect(_accessor.email).to.be.eql(accessor.email);
           expect(_accessor.phone).to.be.eql(put.phone);
 
-          account = puted;
+          customerAccount = puted;
 
           done(error, response);
-
         });
-
     });
 
-    it('should handle POST /accounts/verify', function (done) {
-
-      const requestor = { phone: account.phone, account: account.number };
+    it('should handle POST /accounts/verify', done => {
+      const requestor = {
+        phone: customerAccount.phone,
+        account: customerAccount.number,
+      };
 
       request(app)
         .post(`/${apiVersion}/accounts/verify`)
@@ -351,27 +304,26 @@ describe('Account', function () {
         .set('Content-Type', 'application/json')
         .send(requestor)
         .expect(200)
-        .end(function (error, response) {
-
+        .end((error, response) => {
           expect(error).to.not.exist;
           expect(response).to.exist;
 
           const updates = response.body;
 
           expect(updates._id).to.exist;
-          expect(updates._id).to.be.equal(account._id);
-          expect(updates.number).to.be.equal(account.number);
-          expect(updates.name).to.be.equal(account.name);
+          expect(updates._id).to.be.equal(customerAccount._id);
+          expect(updates.number).to.be.equal(customerAccount.number);
+          expect(updates.name).to.be.equal(customerAccount.name);
 
           done(error, response);
-
         });
-
     });
 
-    it('should handle POST /accounts/verify', function (done) {
-
-      const requestor = { phone: account.phone, identity: account.identity };
+    it('should handle POST /accounts/verify', done => {
+      const requestor = {
+        phone: customerAccount.phone,
+        identity: customerAccount.identity,
+      };
 
       request(app)
         .post(`/${apiVersion}/accounts/verify`)
@@ -379,119 +331,98 @@ describe('Account', function () {
         .set('Content-Type', 'application/json')
         .send(requestor)
         .expect(200)
-        .end(function (error, response) {
-
+        .end((error, response) => {
           expect(error).to.not.exist;
           expect(response).to.exist;
 
           const updates = response.body;
 
           expect(updates._id).to.exist;
-          expect(updates._id).to.be.equal(account._id);
-          expect(updates.number).to.be.equal(account.number);
-          expect(updates.name).to.be.equal(account.name);
+          expect(updates._id).to.be.equal(customerAccount._id);
+          expect(updates.number).to.be.equal(customerAccount.number);
+          expect(updates.name).to.be.equal(customerAccount.name);
 
           done(error, response);
-
         });
-
     });
 
-    it('should handle DELETE /accounts/:id/accessors/:phone', function (
-      done) {
-
-      const accessor = account.accessors[0];
-      const phone = accessor.phone;
+    it('should handle DELETE /accounts/:id/accessors/:phone', done => {
+      const accessor = customerAccount.accessors[0];
+      const { phone } = accessor;
 
       request(app)
         .delete(
-          `/${apiVersion}/accounts/${account._id}/accessors/${phone}`
+          `/${apiVersion}/accounts/${customerAccount._id}/accessors/${phone}`
         )
         .set('Accept', 'application/json')
         .expect(200)
-        .end(function (error, response) {
+        .end((error, response) => {
           expect(error).to.not.exist;
           expect(response).to.exist;
 
           const deleted = response.body;
 
           expect(deleted._id).to.exist;
-          expect(deleted._id).to.be.equal(account._id);
-          expect(deleted.number).to.be.equal(account.number);
-          expect(deleted.name).to.be.equal(account.name);
+          expect(deleted._id).to.be.equal(customerAccount._id);
+          expect(deleted.number).to.be.equal(customerAccount.number);
+          expect(deleted.name).to.be.equal(customerAccount.name);
 
-          //assert accessors
-          const _accessor = _.find(deleted.accessors, { phone: phone });
+          // assert accessors
+          const _accessor = _.find(deleted.accessors, { phone });
           expect(_accessor).to.not.exist;
 
-          account = deleted;
+          customerAccount = deleted;
 
           done(error, response);
-
         });
-
     });
 
-    it('should handle HTTP GET on /jurisdictions/:id/accounts',
-      function (done) {
-
-        request(app)
-          .get(
-            `/${apiVersion}/jurisdictions/${account.jurisdiction._id}/accounts`
-          )
-          .set('Accept', 'application/json')
-          .expect(200)
-          .end(function (error, response) {
-            expect(error).to.not.exist;
-            expect(response).to.exist;
-
-            //assert payload
-            const result = response.body;
-            expect(result.data).to.exist;
-            expect(result.total).to.exist;
-            expect(result.limit).to.exist;
-            expect(result.skip).to.exist;
-            expect(result.page).to.exist;
-            expect(result.pages).to.exist;
-            expect(result.lastModified).to.exist;
-            done(error, response);
-
-          });
-
-      });
-
-    it('should handle HTTP DELETE on /accounts/:id', function (done) {
-
+    it('should handle HTTP GET on /jurisdictions/:id/accounts', done => {
       request(app)
-        .delete(`/${apiVersion}/accounts/${account._id}`)
+        .get(
+          `/${apiVersion}/jurisdictions/${
+            customerAccount.jurisdiction._id
+          }/accounts`
+        )
         .set('Accept', 'application/json')
         .expect(200)
-        .end(function (error, response) {
+        .end((error, response) => {
+          expect(error).to.not.exist;
+          expect(response).to.exist;
+
+          // assert payload
+          const result = response.body;
+          expect(result.data).to.exist;
+          expect(result.total).to.exist;
+          expect(result.limit).to.exist;
+          expect(result.skip).to.exist;
+          expect(result.page).to.exist;
+          expect(result.pages).to.exist;
+          expect(result.lastModified).to.exist;
+          done(error, response);
+        });
+    });
+
+    it('should handle HTTP DELETE on /accounts/:id', done => {
+      request(app)
+        .delete(`/${apiVersion}/accounts/${customerAccount._id}`)
+        .set('Accept', 'application/json')
+        .expect(200)
+        .end((error, response) => {
           expect(error).to.not.exist;
           expect(response).to.exist;
 
           const deleted = response.body;
 
           expect(deleted._id).to.exist;
-          expect(deleted._id).to.be.equal(account._id);
-          expect(deleted.number).to.be.equal(account.number);
-          expect(deleted.name).to.be.equal(account.name);
+          expect(deleted._id).to.be.equal(customerAccount._id);
+          expect(deleted.number).to.be.equal(customerAccount.number);
+          expect(deleted.name).to.be.equal(customerAccount.name);
 
           done(error, response);
-
         });
-
     });
 
-
-    after(function (done) {
-      Account.deleteMany(done);
-    });
-
-    after(function (done) {
-      Jurisdiction.deleteMany(done);
-    });
-
+    after(done => clear(Jurisdiction, Account, done));
   });
-
 });
