@@ -10,9 +10,9 @@
     "build": "rollup -c",
     "lint": "eslint --fix --ext .js src/ test/ rollup.config.js",
     "pretest": "npm run lint",
-    "test": "NODE_ENV=test nyc --reporter=html --reporter=text mocha --exit --timeout=8000 --require @babel/register test/**/*.spec.js",
-    "test:unit": "npm run pretest && NODE_ENV=test mocha --timeout=8000 --require @babel/register test/unit/**/*.spec.js",
-    "test:integration": "npm run pretest && NODE_ENV=test mocha --timeout=8000 --require @babel/register test/integration/**/*.spec.js",
+    "test": "NODE_ENV=test nyc --reporter=html --reporter=text mocha --exit --require @babel/register test/**/*.spec.js",
+    "test:unit": "npm run pretest && NODE_ENV=test mocha --require @babel/register test/unit/**/*.spec.js",
+    "test:integration": "npm run pretest && NODE_ENV=test mocha --require @babel/register test/integration/**/*.spec.js",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "docs": "doxdox 'lib/**/*.js' -p package.json -l markdown -o DOCUMENTATION.md",
     "cmt": "git add -A && git-cz",
@@ -33,14 +33,14 @@
     "client",
     "open311"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/CodeTanzania/majifix-account.git"
+  },
   "author": {
     "name": "lykmapipo",
     "email": "lallyelias87@gmail.com",
     "url": "https://github.com/lykmapipo"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/CodeTanzania/majifix-account.git"
   },
   "contributors": [
     {
@@ -69,11 +69,9 @@
     "@babel/node": "^7.5.5",
     "@babel/preset-env": "^7.5.5",
     "@babel/register": "^7.5.5",
-    "@benmaruchu/faker": "4.3.0",
     "@commitlint/cli": "^8.1.0",
     "@commitlint/config-conventional": "^8.1.0",
     "@commitlint/travis-cli": "^8.1.0",
-    "@lykmapipo/mongoose-test-helpers": "0.7.17",
     "chai": "^4.2.0",
     "commitizen": "^4.0.3",
     "coveralls": "^3.0.6",
@@ -92,13 +90,15 @@
     "lint-staged": "^9.2.3",
     "lodash.template": "^4.5.0",
     "mocha": "^6.2.0",
-    "mongoose": "5.6.9",
     "npm-check-updates": "^3.1.21",
     "nyc": "^14.1.1",
     "prettier": "^1.18.2",
     "rimraf": "^3.0.0",
     "rollup": "^1.20.1",
     "shelljs": "^0.8.3",
+    "@benmaruchu/faker": "4.3.0",
+    "@lykmapipo/mongoose-test-helpers": "0.7.17",
+    "mongoose": "5.6.9",
     "sinon": "7.4.1",
     "sinon-chai": "3.3.0",
     "sinon-mongoose": "2.3.0",
