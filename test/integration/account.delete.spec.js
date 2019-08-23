@@ -1,89 +1,67 @@
-'use strict';
+import { expect, clear } from '@lykmapipo/mongoose-test-helpers';
+import account from '../../src';
 
-/* dependencies */
-const path = require('path');
-const { expect } = require('chai');
-const { Account } = require(path.join(__dirname, '..', '..'));
+const { Account } = account;
 
-describe('Account', function () {
+describe('Account', () => {
+  let customerAccount;
+  before(done => clear(Account, done));
+  describe('static delete', () => {
+    before(done => {
+      customerAccount = Account.fake();
+      customerAccount.post((error, created) => {
+        customerAccount = created;
+        done(error, created);
+      });
+    });
 
-  before(function (done) {
-    Account.deleteMany(done);
+    it('should be able to delete', done => {
+      Account.del(customerAccount._id, (error, deleted) => {
+        expect(error).to.not.exist;
+        expect(deleted).to.exist;
+        expect(deleted._id).to.eql(customerAccount._id);
+        done(error, deleted);
+      });
+    });
+
+    it('should throw if not exists', done => {
+      Account.del(customerAccount._id, (error, deleted) => {
+        expect(error).to.exist;
+        // expect(error.status).to.exist;
+        expect(error.name).to.be.equal('DocumentNotFoundError');
+        expect(deleted).to.not.exist;
+        done();
+      });
+    });
   });
 
-  describe('static delete', function () {
-
-    let account;
-
-    before(function (done) {
-      const fake = Account.fake();
-      fake
-        .post(function (error, created) {
-          account = created;
-          done(error, created);
-        });
+  describe('instance delete', () => {
+    before(done => {
+      customerAccount = Account.fake();
+      customerAccount.post((error, created) => {
+        customerAccount = created;
+        done(error, created);
+      });
     });
 
-    it('should be able to delete', function (done) {
-      Account
-        .del(account._id, function (error, deleted) {
-          expect(error).to.not.exist;
-          expect(deleted).to.exist;
-          expect(deleted._id).to.eql(account._id);
-          done(error, deleted);
-        });
+    it('should be able to delete', done => {
+      customerAccount.del((error, deleted) => {
+        expect(error).to.not.exist;
+        expect(deleted).to.exist;
+        expect(deleted._id).to.eql(customerAccount._id);
+        done(error, deleted);
+      });
     });
 
-    it('should throw if not exists', function (done) {
-      Account
-        .del(account._id, function (error, deleted) {
-          expect(error).to.exist;
-          // expect(error.status).to.exist;
-          expect(error.name).to.be.equal('DocumentNotFoundError');
-          expect(deleted).to.not.exist;
-          done();
-        });
+    it('should throw if not exists', done => {
+      customerAccount.del((error, deleted) => {
+        expect(error).to.not.exist;
+        expect(deleted).to.exist;
+        expect(deleted._id).to.eql(customerAccount._id);
+        done();
+      });
     });
-
   });
 
-  describe('instance delete', function () {
-
-    let account;
-
-    before(function (done) {
-      const fake = Account.fake();
-      fake
-        .post(function (error, created) {
-          account = created;
-          done(error, created);
-        });
-    });
-
-    it('should be able to delete', function (done) {
-      account
-        .del(function (error, deleted) {
-          expect(error).to.not.exist;
-          expect(deleted).to.exist;
-          expect(deleted._id).to.eql(account._id);
-          done(error, deleted);
-        });
-    });
-
-    it('should throw if not exists', function (done) {
-      account
-        .del(function (error, deleted) {
-          expect(error).to.not.exist;
-          expect(deleted).to.exist;
-          expect(deleted._id).to.eql(account._id);
-          done();
-        });
-    });
-
-  });
-
-  after(function (done) {
-    Account.deleteMany(done);
-  });
-
+  after(done => clear(Account, done));
 });

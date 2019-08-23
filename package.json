@@ -2,15 +2,26 @@
   "name": "@codetanzania/majifix-account",
   "version": "1.7.5",
   "description": "A representation of an entity (i.e organization, individual, customer, or client) which receiving service(s) from a particular jurisdiction",
-  "main": "index.js",
+  "main": "lib/index.js",
+  "module": "es/index.js",
   "scripts": {
-    "test": "grunt test",
-    "integration": "grunt integration",
-    "dev": "BASE_PATH=./examples node ./examples/app.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/CodeTanzania/majifix-account.git"
+    "clean": "rimraf lib dist es umd logs",
+    "prebuild": "npm test && npm run clean",
+    "build": "rollup -c",
+    "lint": "eslint --fix --ext .js src/ test/ rollup.config.js",
+    "pretest": "npm run lint",
+    "test": "NODE_ENV=test nyc --reporter=html --reporter=text mocha --exit --timeout=8000 --require @babel/register test/**/*.spec.js",
+    "test:unit": "NODE_ENV=test npm run pretest && NODE_ENV=test mocha --exit --timeout=8000 --require @babel/register test/unit/**/*.spec.js",
+    "test:integration": "NODE_ENV=test npm run pretest && NODE_ENV=test mocha --exit --timeout=8000 --require @babel/register test/integration/**/*.spec.js",
+    "coverage": "nyc report --reporter=text-lcov | coveralls",
+    "docs": "doxdox 'lib/**/*.js' -p package.json -l markdown -o DOCUMENTATION.md",
+    "cmt": "git add -A && git-cz",
+    "changelog": "changelog",
+    "chore:deps": "ncu -u && npm install --save",
+    "lint:config": "eslint --print-config rollup.config.js",
+    "dev": "npm run seed && npm run start",
+    "start": "NODE_ENV=development BASE_PATH=./examples node ./examples/app.js",
+    "seed": "NODE_ENV=development BASE_PATH=./examples node ./examples/seed.js"
   },
   "keywords": [
     "majifix",
@@ -22,6 +33,15 @@
     "client",
     "open311"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/CodeTanzania/majifix-account.git"
+  },
+  "author": {
+    "name": "lykmapipo",
+    "email": "lallyelias87@gmail.com",
+    "url": "https://github.com/lykmapipo"
+  },
   "contributors": [
     {
       "name": "lykmapipo",
@@ -44,40 +64,92 @@
     "url": "https://majifix-account.herokuapp.com/v1/accounts"
   },
   "devDependencies": {
-    "@benmaruchu/faker": "^4.2.1",
+    "@babel/cli": "^7.5.5",
+    "@babel/core": "^7.5.5",
+    "@babel/node": "^7.5.5",
+    "@babel/preset-env": "^7.5.5",
+    "@babel/register": "^7.5.5",
+    "@benmaruchu/faker": "4.3.0",
+    "@commitlint/cli": "^8.1.0",
+    "@commitlint/config-conventional": "^8.1.0",
+    "@commitlint/travis-cli": "^8.1.0",
+    "@lykmapipo/mongoose-test-helpers": "0.7.17",
     "chai": "^4.2.0",
-    "grunt": "^1.0.4",
-    "grunt-apidoc": "^0.11.0",
-    "grunt-contrib-jshint": "^2.1.0",
-    "grunt-contrib-watch": "^1.1.0",
-    "grunt-mocha-test": "^0.13.3",
-    "jshint-stylish": "^2.2.1",
-    "mocha": "^6.1.4",
-    "mongoose": "^5.5.10",
-    "sinon": "^7.3.2",
-    "sinon-chai": "^3.3.0",
-    "sinon-mongoose": "^2.3.0",
-    "supertest": "^4.0.2"
+    "commitizen": "^4.0.3",
+    "coveralls": "^3.0.6",
+    "cz-conventional-changelog": "^3.0.2",
+    "doxdox": "^3.0.0",
+    "eslint": "^6.2.1",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-config-prettier": "^6.1.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-jsdoc": "^15.8.3",
+    "eslint-plugin-mocha": "^6.1.0",
+    "eslint-plugin-prettier": "^3.1.0",
+    "generate-changelog": "^1.8.0",
+    "handlebars": "^4.1.2",
+    "husky": "^3.0.4",
+    "lint-staged": "^9.2.3",
+    "lodash.template": "^4.5.0",
+    "mocha": "^6.2.0",
+    "mongoose": "5.6.9",
+    "npm-check-updates": "^3.1.21",
+    "nyc": "^14.1.1",
+    "prettier": "^1.18.2",
+    "rimraf": "^3.0.0",
+    "rollup": "^1.20.1",
+    "shelljs": "^0.8.3",
+    "sinon": "7.4.1",
+    "sinon-chai": "3.3.0",
+    "sinon-mongoose": "2.3.0",
+    "supertest": "4.0.2",
+    "winston": "^3.2.1"
   },
   "peerDependencies": {
-    "mongoose": ">=5.5.10"
+    "mongoose": ">=5.6.10"
   },
   "dependencies": {
-    "@codetanzania/majifix-common": ">=0.12.4",
-    "@codetanzania/majifix-jurisdiction": ">=1.5.5",
-    "@lykmapipo/common": ">=0.17.5",
-    "@lykmapipo/env": ">=0.7.7",
-    "@lykmapipo/express-common": ">=0.17.3",
-    "async": ">=3.0.0",
-    "lodash": ">=4.17.11",
+    "@codetanzania/majifix-common": ">=0.15.1",
+    "@codetanzania/majifix-jurisdiction": ">=1.7.2",
+    "@lykmapipo/common": ">=0.25.1",
+    "@lykmapipo/env": ">=0.12.1",
+    "@lykmapipo/express-common": ">=0.17.10",
+    "@lykmapipo/express-rest-actions": ">=0.6.7",
+    "@lykmapipo/mongoose-common": ">=0.25.10",
+    "@lykmapipo/mongoose-exportable": ">=0.3.7",
+    "@lykmapipo/phone": "^0.5.4",
+    "async": ">=3.1.0",
+    "express": ">=4.17.1",
+    "lodash": ">=4.17.15",
     "moment": ">=2.24.0",
-    "mongoose-geojson-schemas": ">=0.10.5",
-    "mongoose-locale-schema": ">=0.3.1",
-    "mongoose-rest-actions": ">=0.28.1",
-    "randomcolor": ">=0.5.4"
+    "mongoose-geojson-schemas": ">=0.10.9",
+    "mongoose-locale-schema": ">=0.4.0",
+    "mongoose-rest-actions": ">=0.28.8"
   },
   "engines": {
-    "node": ">=8.11.1",
-    "npm": ">=5.6.0"
+    "node": ">=12.4.0",
+    "npm": ">=6.9.0"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "lint-staged": {
+    "src/**/*.js": [
+      "npm run lint",
+      "git add -A"
+    ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
   }
 }

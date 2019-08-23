@@ -1,124 +1,88 @@
-'use strict';
+import _ from 'lodash';
+import { Jurisdiction } from '@codetanzania/majifix-jurisdiction';
+import { expect, clear, create } from '@lykmapipo/mongoose-test-helpers';
+import account from '../../src';
 
-/* dependencies */
-const path = require('path');
-const _ = require('lodash');
-const { expect } = require('chai');
-const { Jurisdiction } = require('@codetanzania/majifix-jurisdiction');
-const { Account } = require(path.join(__dirname, '..', '..'));
+const { Account } = account;
 
-describe('Account', function () {
+describe('Account', () => {
+  let customerAccount;
+  const jurisdiction = Jurisdiction.fake();
 
-  let jurisdiction;
+  before(done => clear(Jurisdiction, Account, done));
 
-  before(function (done) {
-    Jurisdiction.deleteMany(done);
-  });
+  before(done => create(jurisdiction, done));
 
-  before(function (done) {
-    jurisdiction = Jurisdiction.fake();
-    jurisdiction.post(function (error, created) {
-      jurisdiction = created;
-      done(error, created);
-    });
-  });
+  describe('static put', () => {
+    // let account;
 
-  before(function (done) {
-    Account.deleteMany(done);
-  });
+    before(done => {
+      customerAccount = Account.fake();
+      customerAccount.jurisdiction = jurisdiction;
 
-  describe('static put', function () {
-
-    let account;
-
-    before(function (done) {
-      account = Account.fake();
-      account.jurisdiction = jurisdiction;
-
-      account
-        .post(function (error, created) {
-          account = created;
-          done(error, created);
-        });
+      customerAccount.post((error, created) => {
+        customerAccount = created;
+        done(error, created);
+      });
     });
 
-    it('should be able to put', function (done) {
+    it('should be able to put', done => {
+      customerAccount = customerAccount.fakeOnly('name');
 
-      account = account.fakeOnly('name');
-
-      Account
-        .put(account._id, account, function (error, updated) {
-          expect(error).to.not.exist;
-          expect(updated).to.exist;
-          expect(updated._id).to.eql(account._id);
-          expect(updated.name).to.eql(account.name);
-          done(error, updated);
-        });
+      Account.put(customerAccount._id, customerAccount, (error, updated) => {
+        expect(error).to.not.exist;
+        expect(updated).to.exist;
+        expect(updated._id).to.eql(customerAccount._id);
+        expect(updated.name).to.eql(customerAccount.name);
+        done(error, updated);
+      });
     });
 
-    it('should throw if not exists', function (done) {
-
+    it('should throw if not exists', done => {
       const fake = Account.fake().toObject();
 
-      Account
-        .put(fake._id, _.omit(fake, '_id'), function (error,
-          updated) {
-          expect(error).to.exist;
-          // expect(error.status).to.exist;
-          expect(error.name).to.be.equal('DocumentNotFoundError');
-          expect(updated).to.not.exist;
-          done();
-        });
+      Account.put(fake._id, _.omit(fake, '_id'), (error, updated) => {
+        expect(error).to.exist;
+        // expect(error.status).to.exist;
+        expect(error.name).to.be.equal('DocumentNotFoundError');
+        expect(updated).to.not.exist;
+        done();
+      });
     });
-
   });
 
-  describe('instance put', function () {
+  describe('instance put', () => {
+    before(done => {
+      customerAccount = Account.fake();
+      customerAccount.jurisdiction = jurisdiction;
 
-    let account;
-
-    before(function (done) {
-      account = Account.fake();
-      account.jurisdiction = jurisdiction;
-
-      account
-        .post(function (error, created) {
-          account = created;
-          done(error, created);
-        });
+      customerAccount.post((error, created) => {
+        customerAccount = created;
+        done(error, created);
+      });
     });
 
-    it('should be able to put', function (done) {
-      account = account.fakeOnly('name');
+    it('should be able to put', done => {
+      customerAccount = customerAccount.fakeOnly('name');
 
-      account
-        .put(function (error, updated) {
-          expect(error).to.not.exist;
-          expect(updated).to.exist;
-          expect(updated._id).to.eql(account._id);
-          expect(updated.name).to.eql(account.name);
-          done(error, updated);
-        });
+      customerAccount.put((error, updated) => {
+        expect(error).to.not.exist;
+        expect(updated).to.exist;
+        expect(updated._id).to.eql(customerAccount._id);
+        expect(updated.name).to.eql(customerAccount.name);
+        done(error, updated);
+      });
     });
 
-    it('should not throw if not exists', function (done) {
-      account
-        .put(function (error, updated) {
-          expect(error).to.not.exist;
-          expect(updated).to.exist;
-          expect(updated._id).to.eql(account._id);
-          done();
-        });
+    it('should not throw if not exists', done => {
+      customerAccount.put((error, updated) => {
+        expect(error).to.not.exist;
+        expect(updated).to.exist;
+        expect(updated._id).to.eql(customerAccount._id);
+        done();
+      });
     });
-
   });
 
-  after(function (done) {
-    Account.deleteMany(done);
-  });
-
-  after(function (done) {
-    Jurisdiction.deleteMany(done);
-  });
-
+  after(done => clear(Jurisdiction, Account, done));
 });
