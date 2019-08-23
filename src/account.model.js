@@ -540,7 +540,7 @@ AccountSchema.pre('validate', function cb(next) {
  * @name ensureUniqueAccessors
  * @function ensureUniqueAccessors
  * @description clear duplicate accessors
- * @param {Function} done callback to invoke on success or error
+ * @returns {object} valid account instance
  * @since 0.1.0
  * @version 1.0.0
  * @instance
@@ -572,7 +572,9 @@ AccountSchema.methods.ensureUniqueAccessors = function ensureUniqueAccessors() {
  * @name upsertAccessor
  * @function upsertAccessor
  * @description update existing accessor
- * @param {Function} done callback to invoke on success or error
+ * @param {string} phone valid accessor phone number
+ * @param {object} updates valid accessor updates
+ * @returns {object} valid account instance
  * @since 0.1.0
  * @version 1.0.0
  * @instance
@@ -612,19 +614,20 @@ AccountSchema.methods.upsertAccessor = function upsertAccessor(phone, updates) {
  * @name removeAccessor
  * @function removeAccessor
  * @description update existing accessor
- * @param {Function} done callback to invoke on success or error
+ * @param {object} phone valid accessor phone number
+ * @returns {object} valid account instance
  * @since 0.1.0
  * @version 1.0.0
  * @instance
  */
-AccountSchema.methods.removeAccessor = function removeAccessor(data) {
+AccountSchema.methods.removeAccessor = function removeAccessor(phone) {
   // obtain unique accessors
   this.ensureUniqueAccessors();
   let accessors = [].concat(this.accessors);
 
   // remove required accessor
   accessors = _.filter(accessors, function cb(accessor) {
-    return accessor.phone !== data;
+    return accessor.phone !== phone;
   });
 
   // update accessors
@@ -638,7 +641,7 @@ AccountSchema.methods.removeAccessor = function removeAccessor(data) {
  * @name ensureLocation
  * @function ensureLocation
  * @description compute account location
- * @param {Function} done callback to invoke on success or error
+ * @returns {object} valid account instance
  * @since 0.1.0
  * @version 1.0.0
  * @instance
@@ -668,6 +671,7 @@ AccountSchema.methods.ensureLocation = function ensureLocation() {
  * @function beforePost
  * @description pre save account logics
  * @param {Function} done callback to invoke on success or error
+ * @returns {object|Error} valid account instance or error
  * @since 0.1.0
  * @version 1.0.0
  * @instance
@@ -678,7 +682,7 @@ AccountSchema.methods.beforePost = function beforePost(done) {
 
   // load fresh jurisdiction
   if (jurisdictionId) {
-    Jurisdiction.getById(
+    return Jurisdiction.getById(
       jurisdictionId,
       function cb(error, jurisdiction) {
         if (!error && jurisdiction) {
@@ -692,47 +696,50 @@ AccountSchema.methods.beforePost = function beforePost(done) {
           this.ensureUniqueAccessors();
         }
 
-        done(error, this);
+        return done(error, this);
       }.bind(this)
     );
   }
 
   // continue
-  else {
-    // ensure location
-    this.ensureLocation();
 
-    // ensure unique accessors
-    this.ensureUniqueAccessors();
+  // ensure location
+  this.ensureLocation();
 
-    done(null, this);
-  }
+  // ensure unique accessors
+  this.ensureUniqueAccessors();
+
+  return done(null, this);
 };
 
 /**
  * @name beforePatch
  * @function beforePatch
  * @description pre patch account logics
+ * @param {object} updates patches to be applied to account instance
  * @param {Function} done callback to invoke on success or error
+ * @returns {object} valid account instance
  * @since 0.1.0
  * @version 1.0.0
  * @instance
  */
 AccountSchema.methods.beforePatch = function beforePatch(updates, done) {
-  this.beforePost(done);
+  return this.beforePost(done);
 };
 
 /**
  * @name beforePut
  * @function beforePut
  * @description pre put account logics
+ * @param {object} updates patches to be applied to account instance
  * @param {Function} done callback to invoke on success or error
+ * @returns {object} valid account instance
  * @since 0.1.0
  * @version 1.0.0
  * @instance
  */
 AccountSchema.methods.beforePut = function beforePut(updates, done) {
-  this.beforePost(done);
+  return this.beforePost(done);
 };
 
 /**
@@ -766,6 +773,8 @@ AccountSchema.statics.MODEL_NAME = ACCOUNT_MODEL_NAME;
  * @name afterGet
  * @function afterGet
  * @description after get query logics
+ * @param {object} mquery valid mquery
+ * @param {object} result valid get results
  * @param {Function} done callback to invoke on success or error
  * @since 0.1.0
  * @version 1.0.0
@@ -807,7 +816,7 @@ AccountSchema.statics.afterGet = function afterGet(mquery, result, done) {
  * @description verify if the requestor can access account
  * @param {object} requestor valid requestor details
  * @param {Function} done a callback to invoke on success or error
- * @returns {Account|Error}
+ * @returns {Account|Error} valid account instance or error
  * @since 0.1.0
  * @version 1.0.0
  * @static
@@ -922,10 +931,10 @@ AccountSchema.statics.verify = function verify(requestor, done) {
  * @name fetch
  * @function fetch
  * @description pull account from the provided source
- * @param {string} account valid account number or identity
+ * @param {string} identity valid account number or identity
  * @param {Date} fetchedAt last fetch date of account from it source
  * @param {Function} done a callback to invoke on success or error
- * @returns {object|Error}
+ * @returns {object|Error} valid account instance or error
  * @since 0.1.0
  * @version 1.0.0
  * @static
@@ -948,7 +957,7 @@ AccountSchema.statics.fetch = function fetch(identity, fetchedAt, done) {
 
   // do fetch account from provider
   if (hasArguments && canFetch) {
-    Account.fetchAccount(identity, fetchedAt, function afterFetch(
+    return Account.fetchAccount(identity, fetchedAt, function afterFetch(
       error,
       fetched
     ) {
@@ -962,19 +971,17 @@ AccountSchema.statics.fetch = function fetch(identity, fetchedAt, done) {
   }
 
   // dont fetch: return
-  else {
-    cb(null, {});
-  }
+
+  return cb(null, {});
 };
 
 /**
  * @name fetchAndUpsert
  * @function fetchAndUpsert
  * @description pull account from the provided source and upsert
- * @param {string} account valid account number or identity
- * @param {Date} fetchedAt last fetch date of account from it source
+ * @param {string} identity valid account number or identity
  * @param {Function} done a callback to invoke on success or error
- * @returns {object|Error}
+ * @returns {object|Error} valid account instance or error
  * @since 0.1.0
  * @version 1.0.0
  * @static
@@ -988,7 +995,7 @@ AccountSchema.statics.fetchAndUpsert = function fetchAndUpsert(identity, done) {
     .subtract(1, 'years')
     .toDate();
 
-  async.waterfall(
+  return async.waterfall(
     [
       // 1.
       function findExisting(next) {
@@ -1098,7 +1105,7 @@ AccountSchema.statics.fetchAndUpsert = function fetchAndUpsert(identity, done) {
  * @description pull distinct account phones
  * @param {object} [criteria] valid query criteria
  * @param {Function} done a callback to invoke on success or error
- * @returns {string[]|Error}
+ * @returns {string[]|Error} set of phone number or error
  * @since 0.1.0
  * @version 1.0.0
  * @static
@@ -1111,7 +1118,7 @@ AccountSchema.statics.getPhones = function getPhones(criteria, done) {
   const _criteria = _.isFunction(criteria) ? {} : _.merge({}, criteria); // eslint-disable-line no-underscore-dangle
   const _done = _.isFunction(criteria) ? criteria : done; // eslint-disable-line no-underscore-dangle
 
-  Account.find(_criteria)
+  return Account.find(_criteria)
     .distinct('phone')
     .exec(function onGetPhones(error, phones) {
       let data = phones;

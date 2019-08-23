@@ -288,27 +288,6 @@
  *   }
  */
 
-/* dependencies */
-import _ from 'lodash';
-import async from 'async';
-import { getString } from '@lykmapipo/env';
-import { Router } from '@lykmapipo/express-common';
-import Account from './account.model';
-
-/* local constants */
-const API_VERSION = getString('API_VERSION', '1.0.0');
-const PATH_VERIFY = '/accounts/verify';
-const PATH_LIST = '/accounts';
-const PATH_SINGLE = '/accounts/:id';
-const PATH_ACCESSORS = '/accounts/:id/accessors';
-const PATH_ACCESSORS_SINGLE = '/accounts/:id/accessors/:phone';
-const PATH_JURISDICTION = '/jurisdictions/:jurisdiction/accounts';
-
-/* declarations */
-const router = new Router({
-  version: API_VERSION,
-});
-
 /**
  * @api {get} /accounts List Accounts
  * @apiGroup Account
@@ -325,23 +304,6 @@ const router = new Router({
  * @apiUse AuthorizationHeaderError
  * @apiUse AuthorizationHeaderErrorExample
  */
-router.get(PATH_LIST, function getAccounts(request, response, next) {
-  // obtain request options
-  const options = _.merge({}, request.mquery);
-
-  Account.get(options, function onGetAccounts(error, results) {
-    // forward error
-    if (error) {
-      next(error);
-    }
-
-    // handle response
-    else {
-      response.status(200);
-      response.json(results);
-    }
-  });
-});
 
 /**
  * @api {post} /accounts Create New Account
@@ -359,23 +321,6 @@ router.get(PATH_LIST, function getAccounts(request, response, next) {
  * @apiUse AuthorizationHeaderError
  * @apiUse AuthorizationHeaderErrorExample
  */
-router.post(PATH_LIST, function postAccount(request, response, next) {
-  // obtain request body
-  const body = _.merge({}, request.body);
-
-  Account.post(body, function onPostAccount(error, created) {
-    // forward error
-    if (error) {
-      next(error);
-    }
-
-    // handle response
-    else {
-      response.status(201);
-      response.json(created);
-    }
-  });
-});
 
 /**
  * @api {get} /accounts/:id Get Existing Account
@@ -392,26 +337,6 @@ router.post(PATH_LIST, function postAccount(request, response, next) {
  * @apiUse AuthorizationHeaderError
  * @apiUse AuthorizationHeaderErrorExample
  */
-router.get(PATH_SINGLE, function getAccount(request, response, next) {
-  // obtain request options
-  const options = _.merge({}, request.mquery);
-
-  // obtain account id
-  options._id = request.params.id; // eslint-disable-line no-underscore-dangle
-
-  Account.getById(options, function onGetAccount(error, found) {
-    // forward error
-    if (error) {
-      next(error);
-    }
-
-    // handle response
-    else {
-      response.status(200);
-      response.json(found);
-    }
-  });
-});
 
 /**
  * @api {patch} /accounts/:id Patch Existing Account
@@ -429,26 +354,6 @@ router.get(PATH_SINGLE, function getAccount(request, response, next) {
  * @apiUse AuthorizationHeaderError
  * @apiUse AuthorizationHeaderErrorExample
  */
-router.patch(PATH_SINGLE, function patchAccount(request, response, next) {
-  // obtain account id
-  const _id = request.params.id; // eslint-disable-line no-underscore-dangle
-
-  // obtain request body
-  const patches = _.merge({}, request.body);
-
-  Account.patch(_id, patches, function onPatchAccount(error, patched) {
-    // forward error
-    if (error) {
-      next(error);
-    }
-
-    // handle response
-    else {
-      response.status(200);
-      response.json(patched);
-    }
-  });
-});
 
 /**
  * @api {put} /accounts/:id Put Existing Account
@@ -466,26 +371,6 @@ router.patch(PATH_SINGLE, function patchAccount(request, response, next) {
  * @apiUse AuthorizationHeaderError
  * @apiUse AuthorizationHeaderErrorExample
  */
-router.put(PATH_SINGLE, function putAccount(request, response, next) {
-  // obtain account id
-  const _id = request.params.id; // eslint-disable-line no-underscore-dangle
-
-  // obtain request body
-  const updates = _.merge({}, request.body);
-
-  Account.put(_id, updates, function onPutAccount(error, updated) {
-    // forward error
-    if (error) {
-      next(error);
-    }
-
-    // handle response
-    else {
-      response.status(200);
-      response.json(updated);
-    }
-  });
-});
 
 /**
  * @api {delete} /accounts/:id Delete Account
@@ -503,23 +388,6 @@ router.put(PATH_SINGLE, function putAccount(request, response, next) {
  * @apiUse AuthorizationHeaderError
  * @apiUse AuthorizationHeaderErrorExample
  */
-router.delete(PATH_SINGLE, function deleteAccount(request, response, next) {
-  // obtain account id
-  const _id = request.params.id; // eslint-disable-line no-underscore-dangle
-
-  Account.del(_id, function onDeleteAccount(error, deleted) {
-    // forward error
-    if (error) {
-      next(error);
-    }
-
-    // handle response
-    else {
-      response.status(200);
-      response.json(deleted);
-    }
-  });
-});
 
 /**
  * @api {get} /jurisdictions/:jurisdiction/accounts List Jurisdiction Accounts
@@ -537,25 +405,6 @@ router.delete(PATH_SINGLE, function deleteAccount(request, response, next) {
  * @apiUse AuthorizationHeaderError
  * @apiUse AuthorizationHeaderErrorExample
  */
-router.get(PATH_JURISDICTION, function getAccounts(request, response, next) {
-  // obtain request options
-  const { jurisdiction } = request.params;
-  const filter = jurisdiction ? { filter: { jurisdiction } } : {};
-  const options = _.merge({}, filter, request.mquery);
-
-  Account.get(options, function onGetAccounts(error, found) {
-    // forward error
-    if (error) {
-      next(error);
-    }
-
-    // handle response
-    else {
-      response.status(200);
-      response.json(found);
-    }
-  });
-});
 
 /**
  * @api {post} /accounts/verify Verify Account Access
@@ -573,23 +422,6 @@ router.get(PATH_JURISDICTION, function getAccounts(request, response, next) {
  * @apiUse AuthorizationHeaderError
  * @apiUse AuthorizationHeaderErrorExample
  */
-router.post(PATH_VERIFY, function verifyAccess(request, response, next) {
-  // obtain request body
-  const body = _.merge({}, request.body);
-
-  Account.verify(body, function onVerified(error, account) {
-    // forward error
-    if (error) {
-      next(error);
-    }
-
-    // handle response
-    else {
-      response.status(200);
-      response.json(account);
-    }
-  });
-});
 
 /**
  * @api {get} /accounts/:id/accessors Get Account Accessor
@@ -607,31 +439,6 @@ router.post(PATH_VERIFY, function verifyAccess(request, response, next) {
  * @apiUse AuthorizationHeaderError
  * @apiUse AuthorizationHeaderErrorExample
  */
-router.get(PATH_ACCESSORS, function getAccountAccessors(
-  request,
-  response,
-  next
-) {
-  // obtain request options
-  const options = _.merge({}, request.mquery);
-
-  // obtain account id
-  options._id = request.params.id; // eslint-disable-line no-underscore-dangle
-
-  // lockup account
-  Account.getById(options, function onGetAccout(error, account) {
-    // forward error
-    if (error) {
-      next(error);
-    }
-
-    // handle response
-    else {
-      response.status(200);
-      response.json(account);
-    }
-  });
-});
 
 /**
  * @api {post} /accounts/:id/accessors Create Account Accessor
@@ -649,47 +456,6 @@ router.get(PATH_ACCESSORS, function getAccountAccessors(
  * @apiUse AuthorizationHeaderError
  * @apiUse AuthorizationHeaderErrorExample
  */
-router.post(PATH_ACCESSORS, function postAccountAccessors(
-  request,
-  response,
-  cb
-) {
-  // obtain request options
-  const options = _.merge({}, request.mquery);
-
-  // obtain account id
-  options._id = request.params.id; // eslint-disable-line no-underscore-dangle
-
-  // obtain accessor
-  const accessor = request.body;
-
-  // obtain accessor phone
-  const { phone } = accessor;
-
-  async.waterfall(
-    [
-      function getAccountById(next) {
-        Account.getById(options, next);
-      },
-
-      function upsertAccessors(account, next) {
-        account.upsertAccessor(phone, accessor).put(next);
-      },
-    ],
-    function onUpsertAccessor(error, account) {
-      // forward error
-      if (error) {
-        cb(error);
-      }
-
-      // handle response
-      else {
-        response.status(200);
-        response.json(account);
-      }
-    }
-  );
-});
 
 /**
  * @api {patch} /accounts/:id/accessors/:phone Patch Account Accessor
@@ -707,47 +473,6 @@ router.post(PATH_ACCESSORS, function postAccountAccessors(
  * @apiUse AuthorizationHeaderError
  * @apiUse AuthorizationHeaderErrorExample
  */
-router.patch(PATH_ACCESSORS_SINGLE, function patchAccountAccountAccessors(
-  request,
-  response,
-  cb
-) {
-  // obtain request options
-  const options = _.merge({}, request.mquery);
-
-  // obtain account id
-  options._id = request.params.id; // eslint-disable-line no-underscore-dangle
-
-  // obtain accessor
-  const accessor = request.body;
-
-  // obtain accessor phone
-  const { phone } = request.params;
-
-  async.waterfall(
-    [
-      function getAccountById(next) {
-        Account.getById(options, next);
-      },
-
-      function upsertAccessors(account, next) {
-        account.upsertAccessor(phone, accessor).put(next);
-      },
-    ],
-    function onUpsertAccessor(error, account) {
-      // forward error
-      if (error) {
-        cb(error);
-      }
-
-      // handle response
-      else {
-        response.status(200);
-        response.json(account);
-      }
-    }
-  );
-});
 
 /**
  * @api {put} /accounts/:id/accessors/:phone Put Account Accessor
@@ -765,47 +490,6 @@ router.patch(PATH_ACCESSORS_SINGLE, function patchAccountAccountAccessors(
  * @apiUse AuthorizationHeaderError
  * @apiUse AuthorizationHeaderErrorExample
  */
-router.put(PATH_ACCESSORS_SINGLE, function putAccountAccountAccessors(
-  request,
-  response,
-  cb
-) {
-  // obtain request options
-  const options = _.merge({}, request.mquery);
-
-  // obtain account id
-  options._id = request.params.id; // eslint-disable-line no-underscore-dangle
-
-  // obtain accessor
-  const accessor = request.body;
-
-  // obtain accessor phone
-  const { phone } = request.params;
-
-  async.waterfall(
-    [
-      function getAccountById(next) {
-        Account.getById(options, next);
-      },
-
-      function upsertAccessors(account, next) {
-        account.upsertAccessor(phone, accessor).put(next);
-      },
-    ],
-    function onUpsertAccessor(error, account) {
-      // forward error
-      if (error) {
-        cb(error);
-      }
-
-      // handle response
-      else {
-        response.status(200);
-        response.json(account);
-      }
-    }
-  );
-});
 
 /**
  * @api {delete} /accounts/:id/accessors/:phone Delete Account Accessor
@@ -823,44 +507,3 @@ router.put(PATH_ACCESSORS_SINGLE, function putAccountAccountAccessors(
  * @apiUse AuthorizationHeaderError
  * @apiUse AuthorizationHeaderErrorExample
  */
-router.delete(PATH_ACCESSORS_SINGLE, function removeAccountAccountAccessors(
-  request,
-  response,
-  cb
-) {
-  // obtain request options
-  const options = _.merge({}, request.mquery);
-
-  // obtain account id
-  options._id = request.params.id; // eslint-disable-line no-underscore-dangle
-
-  // obtain accessor phone
-  const { phone } = request.params;
-
-  async.waterfall(
-    [
-      function getAccountById(next) {
-        Account.getById(options, next);
-      },
-
-      function removeAccessors(account, next) {
-        account.removeAccessor(phone).put(next);
-      },
-    ],
-    function onRemoveAccessor(error, account) {
-      // forward error
-      if (error) {
-        cb(error);
-      }
-
-      // handle response
-      else {
-        response.status(200);
-        response.json(account);
-      }
-    }
-  );
-});
-
-/* expose router */
-export default router;

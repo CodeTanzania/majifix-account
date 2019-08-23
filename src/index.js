@@ -21,7 +21,7 @@
 import { pkg } from '@lykmapipo/common';
 import _ from 'lodash';
 import Account from './account.model';
-import router from './http.router';
+import router from './account.http.router';
 
 /* declarations */
 const info = pkg(
