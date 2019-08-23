@@ -1,3 +1,60 @@
+#### 1.8.0 (2019-08-23)
+
+##### Chores
+
+* **deps:**
+  *  force latest version & audit fix ([6e1ffcf0](https://github.com/CodeTanzania/majifix-account/commit/6e1ffcf0f13e41b70fcacc5bf0c1a88aea535439))
+  *  force latest version & audit fix ([f1985784](https://github.com/CodeTanzania/majifix-account/commit/f198578404931b7b353f3296df5e103de2e644ce))
+  *  force latest version & audit fix ([e0559006](https://github.com/CodeTanzania/majifix-account/commit/e0559006e4dcab04f387b82dbf75cf48a714995b))
+  *  force latest version & audit fix ([1ddd77c7](https://github.com/CodeTanzania/majifix-account/commit/1ddd77c79f8eb2fc75d09dfb7a78a46faccb3f61))
+  *  force latest version & audit fix ([10fc9662](https://github.com/CodeTanzania/majifix-account/commit/10fc966233c071e6971fae1c9cdbb0bc253d27bb))
+  *  add lint-staged ([3a819fd2](https://github.com/CodeTanzania/majifix-account/commit/3a819fd2582ce52575a28a66790212165bc969b1))
+* **examples:**  improve example http server ([0d77b331](https://github.com/CodeTanzania/majifix-account/commit/0d77b331d4d8d1aec266bc2382a5fb9a7cdaeadf))
+*  ensure exit & timeout mocha option on test scripts ([27f169d8](https://github.com/CodeTanzania/majifix-account/commit/27f169d808212a23f18f6bf3621520a8a9f88039))
+*  add linter and ignore files ([c3320edd](https://github.com/CodeTanzania/majifix-account/commit/c3320edd7bf8d216c48a8f384b95707c1993d24c))
+*  organize package.json structure ([fc85c5cc](https://github.com/CodeTanzania/majifix-account/commit/fc85c5ccd5258b6621b60754888d43cef72b3d21))
+*  add deps and scripts ([c56c6286](https://github.com/CodeTanzania/majifix-account/commit/c56c6286870d4cae53097ebb2fdcf6f1f6639982))
+*  add rollup config file ([7af524d0](https://github.com/CodeTanzania/majifix-account/commit/7af524d04f6a0fe8126cd697bb25f4a7162fae0b))
+*  add .prettierrc file ([62eefe71](https://github.com/CodeTanzania/majifix-account/commit/62eefe71c3a8dabda4635e3b5078aa32503e3e45))
+*  remove .jshintrc ([fae791b5](https://github.com/CodeTanzania/majifix-account/commit/fae791b51b47ae69b5a0d402b4a5e75bca8061a0))
+*  add .eslintrc file ([6db29740](https://github.com/CodeTanzania/majifix-account/commit/6db297408f660dff0ab14ae4baace32a829f9cc7))
+*  add .babelrc file ([8f5c0976](https://github.com/CodeTanzania/majifix-account/commit/8f5c09769a9caa822064d3bbf9eae9a054287b55))
+*  delete unwanted files ([5cf812aa](https://github.com/CodeTanzania/majifix-account/commit/5cf812aaee28833722dc8a0019daa70f510dff95))
+* **configs:**
+  *  update git files ([ada494f4](https://github.com/CodeTanzania/majifix-account/commit/ada494f4f969f16c3cd33b0535c038f5d5f54204))
+  *  update eslint configs ([e5f3a273](https://github.com/CodeTanzania/majifix-account/commit/e5f3a273af1f6022771e7d9f0053b1815108acfa))
+  *  update babel configs ([e298c620](https://github.com/CodeTanzania/majifix-account/commit/e298c620e1bdc015961522dcae1c0c80a390ba35))
+* **test:**  implement to es ([30a693e0](https://github.com/CodeTanzania/majifix-account/commit/30a693e0480bed0cc53d38d4a9eb45edf2b6ef31))
+* **src:**  implement to es ([6c18f726](https://github.com/CodeTanzania/majifix-account/commit/6c18f726c3084c59239435831123bfb498853b4d))
+
+##### Documentation Changes
+
+*  remove api docs ([0cfefb39](https://github.com/CodeTanzania/majifix-account/commit/0cfefb39db31456ae22a4d3a1cf1ae11223e2e05))
+*  remove year from licence & readme ([94442cc9](https://github.com/CodeTanzania/majifix-account/commit/94442cc98bf32fa55ba61256108a5fdc475ca2e5))
+*  set majifix-account on contribors guide ([18d6bbeb](https://github.com/CodeTanzania/majifix-account/commit/18d6bbebfef9cde030c70f53618d9071ba9fcc18))
+*  update contributor guide and code of conduct ([c1e6c3a4](https://github.com/CodeTanzania/majifix-account/commit/c1e6c3a45323c98b343a8d0b2c0a9f8114ef0764))
+
+##### Refactors
+
+*  export accountRouter than just router ([fc16845c](https://github.com/CodeTanzania/majifix-account/commit/fc16845c82cc6894011cdd7a81e6956a485730ca))
+* **model:**
+  *  use mongoose helpers ([f586e306](https://github.com/CodeTanzania/majifix-account/commit/f586e3069416ea4d5482c2307e79919b10b11d43))
+  *  use createSubSchema on bill schema ([437f4692](https://github.com/CodeTanzania/majifix-account/commit/437f46926a7682dff5ddffbb7912ea287e8ac3d2))
+  *  use createSubSchema on period schema ([f6a6e3b6](https://github.com/CodeTanzania/majifix-account/commit/f6a6e3b63b9849db9438f34c248837351fb66de4))
+  *  use createSubSchema on item schema ([a9b5298a](https://github.com/CodeTanzania/majifix-account/commit/a9b5298aabb54664f4aa0a46dbe64b8917433aee))
+  *  use createSubSchema on subitem schema ([0175915a](https://github.com/CodeTanzania/majifix-account/commit/0175915afa99d612f829e5ea9e90c1ee365688ba))
+  *  use createSubSchema on balance schema ([55fc6ce5](https://github.com/CodeTanzania/majifix-account/commit/55fc6ce5d06805780164974c6a91c4089c4ce02d))
+  *  use createSubSchema on accessor schema ([3b829a57](https://github.com/CodeTanzania/majifix-account/commit/3b829a57c2d31698e2ba4ed603e9aebd7d807291))
+
+##### Code Style Changes
+
+*  fix lint errors ([851abc56](https://github.com/CodeTanzania/majifix-account/commit/851abc5626c3906e847a389a084704ec328d8bcc))
+
+##### Tests
+
+* **integration:**  refactor and improve ([02bffdfb](https://github.com/CodeTanzania/majifix-account/commit/02bffdfb75ed172dfb7477f7ad9c2f9005a237d3))
+* **unit:**  refactor and fix ([f8007a03](https://github.com/CodeTanzania/majifix-account/commit/f8007a03a4c76fc4250e0b80b2d69c84cefcb25b))
+
 #### 1.7.5 (2019-05-21)
 
 ##### Chores
