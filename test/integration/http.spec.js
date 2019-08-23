@@ -380,9 +380,7 @@ describe('Account', () => {
     it('should handle HTTP GET on /jurisdictions/:id/accounts', done => {
       request(app)
         .get(
-          `/${apiVersion}/jurisdictions/${
-            customerAccount.jurisdiction._id
-          }/accounts`
+          `/${apiVersion}/jurisdictions/${customerAccount.jurisdiction._id}/accounts`
         )
         .set('Accept', 'application/json')
         .expect(200)

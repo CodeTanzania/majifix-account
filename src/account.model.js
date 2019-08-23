@@ -572,7 +572,7 @@ AccountSchema.methods.ensureUniqueAccessors = function ensureUniqueAccessors() {
  * @name upsertAccessor
  * @function upsertAccessor
  * @description update existing accessor
- * @param {function} done callback to invoke on success or error
+ * @param {Function} done callback to invoke on success or error
  * @since 0.1.0
  * @version 1.0.0
  * @instance
@@ -612,7 +612,7 @@ AccountSchema.methods.upsertAccessor = function upsertAccessor(phone, updates) {
  * @name removeAccessor
  * @function removeAccessor
  * @description update existing accessor
- * @param {function} done callback to invoke on success or error
+ * @param {Function} done callback to invoke on success or error
  * @since 0.1.0
  * @version 1.0.0
  * @instance
@@ -638,7 +638,7 @@ AccountSchema.methods.removeAccessor = function removeAccessor(data) {
  * @name ensureLocation
  * @function ensureLocation
  * @description compute account location
- * @param {function} done callback to invoke on success or error
+ * @param {Function} done callback to invoke on success or error
  * @since 0.1.0
  * @version 1.0.0
  * @instance
@@ -667,7 +667,7 @@ AccountSchema.methods.ensureLocation = function ensureLocation() {
  * @name beforePost
  * @function beforePost
  * @description pre save account logics
- * @param {function} done callback to invoke on success or error
+ * @param {Function} done callback to invoke on success or error
  * @since 0.1.0
  * @version 1.0.0
  * @instance
@@ -713,7 +713,7 @@ AccountSchema.methods.beforePost = function beforePost(done) {
  * @name beforePatch
  * @function beforePatch
  * @description pre patch account logics
- * @param {function} done callback to invoke on success or error
+ * @param {Function} done callback to invoke on success or error
  * @since 0.1.0
  * @version 1.0.0
  * @instance
@@ -726,7 +726,7 @@ AccountSchema.methods.beforePatch = function beforePatch(updates, done) {
  * @name beforePut
  * @function beforePut
  * @description pre put account logics
- * @param {function} done callback to invoke on success or error
+ * @param {Function} done callback to invoke on success or error
  * @since 0.1.0
  * @version 1.0.0
  * @instance
@@ -739,7 +739,7 @@ AccountSchema.methods.beforePut = function beforePut(updates, done) {
  * @name afterPost
  * @function afterPost
  * @description post save account logics
- * @param  {function} done callback to invoke on success or error
+ * @param  {Function} done callback to invoke on success or error
  * @since 0.1.0
  * @version 1.0.0
  * @instance
@@ -766,7 +766,7 @@ AccountSchema.statics.MODEL_NAME = ACCOUNT_MODEL_NAME;
  * @name afterGet
  * @function afterGet
  * @description after get query logics
- * @param {function} done callback to invoke on success or error
+ * @param {Function} done callback to invoke on success or error
  * @since 0.1.0
  * @version 1.0.0
  * @static
@@ -806,8 +806,8 @@ AccountSchema.statics.afterGet = function afterGet(mquery, result, done) {
  * @function verify
  * @description verify if the requestor can access account
  * @param {object} requestor valid requestor details
- * @param {function} done a callback to invoke on success or error
- * @return {Account|Error}
+ * @param {Function} done a callback to invoke on success or error
+ * @returns {Account|Error}
  * @since 0.1.0
  * @version 1.0.0
  * @static
@@ -924,8 +924,8 @@ AccountSchema.statics.verify = function verify(requestor, done) {
  * @description pull account from the provided source
  * @param {string} account valid account number or identity
  * @param {Date} fetchedAt last fetch date of account from it source
- * @param {function} done a callback to invoke on success or error
- * @return {Object|Error}
+ * @param {Function} done a callback to invoke on success or error
+ * @returns {object|Error}
  * @since 0.1.0
  * @version 1.0.0
  * @static
@@ -973,8 +973,8 @@ AccountSchema.statics.fetch = function fetch(identity, fetchedAt, done) {
  * @description pull account from the provided source and upsert
  * @param {string} account valid account number or identity
  * @param {Date} fetchedAt last fetch date of account from it source
- * @param {function} done a callback to invoke on success or error
- * @return {Object|Error}
+ * @param {Function} done a callback to invoke on success or error
+ * @returns {object|Error}
  * @since 0.1.0
  * @version 1.0.0
  * @static
@@ -1096,9 +1096,9 @@ AccountSchema.statics.fetchAndUpsert = function fetchAndUpsert(identity, done) {
  * @name getPhones
  * @function getPhones
  * @description pull distinct account phones
- * @param {Object} [criteria] valid query criteria
- * @param {function} done a callback to invoke on success or error
- * @return {String[]|Error}
+ * @param {object} [criteria] valid query criteria
+ * @param {Function} done a callback to invoke on success or error
+ * @returns {string[]|Error}
  * @since 0.1.0
  * @version 1.0.0
  * @static
