@@ -21,7 +21,7 @@
 import { pkg } from '@lykmapipo/common';
 import _ from 'lodash';
 import Account from './account.model';
-import router from './account.http.router';
+import accountRouter from './account.http.router';
 
 /* declarations */
 const info = pkg(
@@ -52,7 +52,7 @@ const account = integration => {
 };
 
 // extract api version
-const apiVersion = router.version;
+const apiVersion = accountRouter.version;
 
 // export info
 account.info = info;
@@ -61,7 +61,7 @@ account.info = info;
 account.apiVersion = apiVersion;
 
 // export router
-account.router = router;
+account.accountRouter = accountRouter;
 
 // export Account
 account.Account = Account;

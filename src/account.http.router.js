@@ -4,7 +4,7 @@ import { getString } from '@lykmapipo/env';
 import { Router } from '@lykmapipo/express-common';
 import Account from './account.model';
 
-/* local constants */
+/* constants */
 const API_VERSION = getString('API_VERSION', '1.0.0');
 const PATH_VERIFY = '/accounts/verify';
 const PATH_LIST = '/accounts';
