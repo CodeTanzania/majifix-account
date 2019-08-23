@@ -8,10 +8,14 @@ const _ = require('lodash');
 const async = require('async');
 const mongoose = require('mongoose');
 // mongoose.set('debug', true);
-const { start } = require('@lykmapipo/express-common');
+const { get, mount, start } = require('@lykmapipo/express-common');
 const { Jurisdiction } = require('@codetanzania/majifix-jurisdiction');
 
-const { Account, app, apiVersion, info } = require(path.join(__dirname, '..'));
+const { Account, accountRouter, apiVersion, info } = require(path.join(
+  __dirname,
+  '..'
+));
+
 let samples = require('./samples')(20);
 
 /* connect to mongoose */
@@ -53,10 +57,13 @@ function boot() {
     ],
     function(error, results) {
       /* expose module info */
-      app.get('/', function(request, response) {
+      get('/', function(request, response) {
         response.status(200);
         response.json(info);
       });
+
+      // mount routers
+      mount(accountRouter);
 
       /* fire the app */
       start(function(error, env) {
