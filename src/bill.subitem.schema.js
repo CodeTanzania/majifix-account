@@ -1,7 +1,6 @@
 import { createSubSchema } from '@lykmapipo/mongoose-common';
 
 /**
- * @module majifix-account
  * @name SubItem
  * @description bill(or invoice) sub-item(or deriving item). Its a
  * collection of item used to derive a bill item.
