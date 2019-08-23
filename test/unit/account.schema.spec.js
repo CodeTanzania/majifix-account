@@ -1,37 +1,33 @@
-/* dependencies */
-import { expect } from 'chai';
-import mongoose from 'mongoose';
-
-/* declarations */
+import { expect } from '@lykmapipo/mongoose-test-helpers';
+import { getString } from '@lykmapipo/env';
+import { SchemaTypes } from '@lykmapipo/mongoose-common';
 import { Jurisdiction } from '@codetanzania/majifix-jurisdiction';
 import Account from '../../src/account.model';
 
-const { Types } = mongoose.Schema;
+const DEFAULT_LOCALE = getString('DEFAULT_LOCALE', 'en');
 
 describe('Account', () => {
   describe('Schema', () => {
-    // compiled schema
-
     it('should have jurisdiction field', () => {
       const jurisdiction = Account.schema.path('jurisdiction');
 
       expect(jurisdiction).to.exist;
-      expect(jurisdiction).to.be.an.instanceof(Types.ObjectId);
+      expect(jurisdiction).to.be.an.instanceof(SchemaTypes.ObjectId);
       expect(jurisdiction.instance).to.be.equal('ObjectID');
       expect(jurisdiction).to.be.an('object');
       expect(jurisdiction.options.type).to.be.a('function');
       expect(jurisdiction.options.type.name).to.be.equal('ObjectId');
       expect(jurisdiction.options.ref).to.be.equal(Jurisdiction.MODEL_NAME);
       expect(jurisdiction.options.index).to.be.true;
-      expect(jurisdiction.options.exists).to.be.true;
-      expect(jurisdiction.options.autopopulate).to.exist;
+      expect(jurisdiction.options.exists).to.exist.and.be.an('object');
+      expect(jurisdiction.options.autopopulate).to.exist.and.be.an('object');
     });
 
     it('should have category field', () => {
       const category = Account.schema.path('category');
 
       expect(category).to.exist;
-      expect(category).to.be.an.instanceof(Types.String);
+      expect(category).to.be.an.instanceof(SchemaTypes.String);
       expect(category.instance).to.be.equal('String');
       expect(category).to.be.an('object');
       expect(category.options.type).to.be.a('function');
@@ -46,7 +42,7 @@ describe('Account', () => {
       const number = Account.schema.path('number');
 
       expect(number).to.exist;
-      expect(number).to.be.an.instanceof(Types.String);
+      expect(number).to.be.an.instanceof(SchemaTypes.String);
       expect(number.instance).to.be.equal('String');
       expect(number).to.be.an('object');
       expect(number.options.type).to.be.a('function');
@@ -63,7 +59,7 @@ describe('Account', () => {
       const identity = Account.schema.path('identity');
 
       expect(identity).to.exist;
-      expect(identity).to.be.an.instanceof(Types.String);
+      expect(identity).to.be.an.instanceof(SchemaTypes.String);
       expect(identity.instance).to.be.equal('String');
       expect(identity).to.be.an('object');
       expect(identity.options.type).to.be.a('function');
@@ -79,7 +75,7 @@ describe('Account', () => {
       const name = Account.schema.path('name');
 
       expect(name).to.exist;
-      expect(name).to.be.an.instanceof(Types.String);
+      expect(name).to.be.an.instanceof(SchemaTypes.String);
       expect(name.instance).to.be.equal('String');
       expect(name).to.be.an('object');
       expect(name.options.type).to.be.a('function');
@@ -95,7 +91,7 @@ describe('Account', () => {
       const phone = Account.schema.path('phone');
 
       expect(phone).to.exist;
-      expect(phone).to.be.an.instanceof(Types.String);
+      expect(phone).to.be.an.instanceof(SchemaTypes.String);
       expect(phone.instance).to.be.equal('String');
       expect(phone).to.be.an('object');
       expect(phone.options.type).to.be.a('function');
@@ -111,7 +107,7 @@ describe('Account', () => {
       const email = Account.schema.path('email');
 
       expect(email).to.exist;
-      expect(email).to.be.an.instanceof(Types.String);
+      expect(email).to.be.an.instanceof(SchemaTypes.String);
       expect(email.instance).to.be.equal('String');
       expect(email).to.be.an('object');
       expect(email.options.type).to.be.a('function');
@@ -127,7 +123,7 @@ describe('Account', () => {
       const neighborhood = Account.schema.path('neighborhood');
 
       expect(neighborhood).to.exist;
-      expect(neighborhood).to.be.an.instanceof(Types.String);
+      expect(neighborhood).to.be.an.instanceof(SchemaTypes.String);
       expect(neighborhood.instance).to.be.equal('String');
       expect(neighborhood).to.be.an('object');
       expect(neighborhood.options.type).to.be.a('function');
@@ -142,7 +138,7 @@ describe('Account', () => {
       const address = Account.schema.path('address');
 
       expect(address).to.exist;
-      expect(address).to.be.an.instanceof(Types.String);
+      expect(address).to.be.an.instanceof(SchemaTypes.String);
       expect(address.instance).to.be.equal('String');
       expect(address).to.be.an('object');
       expect(address.options.type).to.be.a('function');
@@ -157,7 +153,7 @@ describe('Account', () => {
       const locale = Account.schema.path('locale');
 
       expect(locale).to.exist;
-      expect(locale).to.be.an.instanceof(Types.String);
+      expect(locale).to.be.an.instanceof(SchemaTypes.String);
       expect(locale.instance).to.be.equal('String');
       expect(locale).to.be.an('object');
       expect(locale.options.type).to.be.a('function');
@@ -167,7 +163,7 @@ describe('Account', () => {
       expect(locale.options.index).to.be.true;
       expect(locale.options.searchable).to.be.true;
       expect(locale.options.fake).to.exist;
-      expect(locale.options.default).to.be.equal(Account.DEFAULT_LOCALE);
+      expect(locale.options.default).to.be.equal(DEFAULT_LOCALE);
     });
 
     describe('location', () => {
@@ -521,7 +517,7 @@ describe('Account', () => {
     const fetchedAt = Account.schema.path('fetchedAt');
 
     expect(fetchedAt).to.exist;
-    expect(fetchedAt).to.be.an.instanceof(Types.Date);
+    expect(fetchedAt).to.be.an.instanceof(SchemaTypes.Date);
     expect(fetchedAt.instance).to.be.equal('Date');
     expect(fetchedAt).to.be.an('object');
     expect(fetchedAt.options.type).to.be.a('function');

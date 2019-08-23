@@ -1,7 +1,4 @@
-/* dependencies */
-import { expect } from 'chai';
-
-/* declarations */
+import { expect } from '@lykmapipo/mongoose-test-helpers';
 import Account from '../../src/account.model';
 
 describe('Account', () => {

@@ -1,6 +1,5 @@
-/* dependencies */
-import { expect } from 'chai';
-import account from '../../src/index';
+import { expect } from '@lykmapipo/mongoose-test-helpers';
+import account from '../../src';
 
 describe('account', () => {
   it('should be exported', () => {

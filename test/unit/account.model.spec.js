@@ -1,7 +1,4 @@
-/* dependencies */
-import faker from '@benmaruchu/faker';
-import { expect } from 'chai';
-import sinon from 'sinon';
+import { expect, faker, sinon } from '@lykmapipo/mongoose-test-helpers';
 import {
   randomPoint,
   randomPolygon,
@@ -9,8 +6,6 @@ import {
 } from 'mongoose-geojson-schemas';
 import { Jurisdiction } from '@codetanzania/majifix-jurisdiction';
 import Account from '../../src/account.model';
-
-const { mock, spy } = sinon;
 
 describe('Account', () => {
   describe('Instance', () => {
@@ -177,7 +172,6 @@ describe('Account', () => {
   describe('Hooks', () => {
     describe('beforePost', () => {
       let ensureLocation;
-      let getById;
 
       const jurisdiction = Jurisdiction.fake();
       jurisdiction.location = randomPoint();
@@ -186,10 +180,7 @@ describe('Account', () => {
       account.jurisdiction = jurisdiction;
 
       beforeEach(() => {
-        getById = mock(Jurisdiction)
-          .expects('getById')
-          .yields(null, jurisdiction);
-        ensureLocation = spy(account, 'ensureLocation');
+        ensureLocation = sinon.spy(account, 'ensureLocation');
       });
 
       afterEach(() => {
@@ -212,10 +203,6 @@ describe('Account', () => {
           expect(ensureLocation).to.have.been.called;
           expect(ensureLocation).to.have.been.calledOnce;
 
-          expect(getById).to.have.been.called;
-          expect(getById).to.have.been.calledOnce;
-          expect(getById).to.have.been.calledWith(jurisdiction._id);
-
           done();
         });
       });
@@ -228,9 +215,31 @@ describe('Account', () => {
       expect(Account.MODEL_NAME).to.be.equal('Account');
     });
 
-    it('should expose default locale `en` when not set', () => {
-      expect(Account.DEFAULT_LOCALE).to.exist;
-      expect(Account.DEFAULT_LOCALE).to.equal('en');
+    it('should expose autopulate as options', () => {
+      expect(Account.OPTION_AUTOPOPULATE).to.exist;
+      expect(Account.OPTION_AUTOPOPULATE).to.be.eql({
+        select: {
+          number: 1,
+          identity: 1,
+          name: 1,
+          phone: 1,
+          email: 1,
+          locale: 1,
+        },
+        maxDepth: 1,
+      });
+    });
+
+    it('should expose field select option', () => {
+      expect(Account.OPTION_SELECT).to.exist;
+      expect(Account.OPTION_SELECT).to.be.eql({
+        number: 1,
+        identity: 1,
+        name: 1,
+        phone: 1,
+        email: 1,
+        locale: 1,
+      });
     });
   });
 });
