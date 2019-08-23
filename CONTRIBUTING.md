@@ -11,19 +11,19 @@ These are mostly guidelines, not rules. Use your best judgment, and feel free to
 
 ## Code of Conduct
 
-This project has adopted a Code of Conduct that we expect project participants to adhere to. Please read [the full text](https://github.com/CodeTanzania/majifix-service-group/blob/master/CODE_OF_CONDUCT.md) so that you can understand what actions will and will not be tolerated.
+This project has adopted a Code of Conduct that we expect project participants to adhere to. Please read [the full text](https://github.com/CodeTanzania/majifix-account/blob/master/CODE_OF_CONDUCT.md) so that you can understand what actions will and will not be tolerated.
 
 
 ## Open Development
 
-All work happens directly on [GitHub](https://github.com/CodeTanzania/majifix-service-group). Both core team members and external contributors send pull requests which go through the same review process.
+All work happens directly on [GitHub](https://github.com/CodeTanzania/majifix-account). Both core team members and external contributors send pull requests which go through the same review process.
 
 
 ## Branch Organization
 
-We will do our best to keep the [`master` branch](https://github.com/CodeTanzania/majifix-service-group/tree/master) in good shape, with tests passing at all times. 
+We will do our best to keep the [`master` branch](https://github.com/CodeTanzania/majifix-account/tree/master) in good shape, with tests passing at all times. 
 
-If you send a pull request, please do it against the [`develop` branch](https://github.com/CodeTanzania/majifix-service-group/tree/develop).
+If you send a pull request, please do it against the [`develop` branch](https://github.com/CodeTanzania/majifix-account/tree/develop).
 
 
 ## Semantic Versioning
@@ -33,12 +33,12 @@ This project follows [semantic versioning](http://semver.org/). We release patch
 
 ## Where to Find Known Issues
 
-We are using [GitHub Issues](https://github.com/CodeTanzania/majifix-service-group/issues) for all issues. Before filing a new task, try to make sure your problem doesn't already exist.
+We are using [GitHub Issues](https://github.com/CodeTanzania/majifix-account/issues) for all issues. Before filing a new task, try to make sure your problem doesn't already exist.
 
 
 ## Proposing a Change
 
-If you intend to change the public API, or make any non-trivial changes to the implementation, we recommend [filing an issue](https://github.com/CodeTanzania/majifix-service-group/issues/new). This lets us reach an agreement on your proposal before you put significant effort into it.
+If you intend to change the public API, or make any non-trivial changes to the implementation, we recommend [filing an issue](https://github.com/CodeTanzania/majifix-account/issues/new). This lets us reach an agreement on your proposal before you put significant effort into it.
 
 If you're only fixing a bug, it's fine to submit a pull request right away but we still recommend to file an issue detailing what you're fixing. This is helpful in case we don't accept that specific fix but want to keep track of the issue.
 
