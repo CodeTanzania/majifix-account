@@ -20,6 +20,7 @@
 /* dependencies */
 import { pkg } from '@lykmapipo/common';
 import _ from 'lodash';
+import { apiVersion as httpApiVersion } from '@lykmapipo/env';
 import Account from './account.model';
 import accountRouter from './account.http.router';
 
@@ -51,14 +52,11 @@ const account = integration => {
   return account;
 };
 
-// extract api version
-const apiVersion = accountRouter.version;
-
 // export info
 account.info = info;
 
 // export apiVersion
-account.apiVersion = apiVersion;
+account.apiVersion = httpApiVersion();
 
 // export router
 account.accountRouter = accountRouter;

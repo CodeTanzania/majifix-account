@@ -1,7 +1,5 @@
-/* dependencies */
-import { expect } from 'chai';
-import { clear } from '@lykmapipo/mongoose-test-helpers';
-import account from '../../src/index';
+import { expect, clear } from '@lykmapipo/mongoose-test-helpers';
+import account from '../../src';
 
 const { Account } = account;
 

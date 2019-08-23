@@ -1,10 +1,7 @@
-/* dependencies */
 import _ from 'lodash';
-import faker from '@benmaruchu/faker';
-import { expect } from 'chai';
+import { expect, faker, clear, create } from '@lykmapipo/mongoose-test-helpers';
 import { Jurisdiction } from '@codetanzania/majifix-jurisdiction';
-import { clear, create } from '@lykmapipo/mongoose-test-helpers';
-import account from '../../src/index';
+import account from '../../src';
 
 const { Account } = account;
 

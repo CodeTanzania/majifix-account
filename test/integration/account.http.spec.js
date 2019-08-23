@@ -1,19 +1,14 @@
-/* dependencies */
 import _ from 'lodash';
 import request from 'supertest';
-import { expect } from 'chai';
-import faker from '@benmaruchu/faker';
+import { expect, faker, clear, create } from '@lykmapipo/mongoose-test-helpers';
 import { app, mount } from '@lykmapipo/express-common';
 import { Jurisdiction } from '@codetanzania/majifix-jurisdiction';
-import { clear, create } from '@lykmapipo/mongoose-test-helpers';
-
-/* declarations */
 import account from '../../src/index';
 
-const { Account, apiVersion, router } = account;
+const { Account, apiVersion, accountRouter } = account;
 
 describe('Account', () => {
-  mount(router);
+  mount(accountRouter);
 
   describe('Rest API', () => {
     let customerAccount;

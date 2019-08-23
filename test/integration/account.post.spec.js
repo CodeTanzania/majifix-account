@@ -1,8 +1,6 @@
-/* dependencies */
-import { expect } from 'chai';
 import { Jurisdiction } from '@codetanzania/majifix-jurisdiction';
-import { clear, create } from '@lykmapipo/mongoose-test-helpers';
-import account from '../../src/index';
+import { expect, clear, create } from '@lykmapipo/mongoose-test-helpers';
+import account from '../../src';
 
 const { Account } = account;
 
