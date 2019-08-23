@@ -1,5 +1,12 @@
+import { getString, getStringSet } from '@lykmapipo/env';
+import { createSubSchema } from '@lykmapipo/mongoose-common';
+
+/* constants */
+const DEFAULT_LOCALE = getString('DEFAULT_LOCALE', 'en');
+const LOCALES = getStringSet('LOCALES', [DEFAULT_LOCALE]);
+const SUB_SCHEMA_OPTIONS = { timestamps: true };
+
 /**
- * @module majifix-account
  * @name Accessor
  * @description list of parties(individual etc) that are allowed to
  * access account.
@@ -9,36 +16,7 @@
  * @version 1.0.0
  * @public
  */
-
-/**
- * @todo add i10n label to fields
- */
-
-/* dependencies */
-import _ from 'lodash';
-import mongoose from 'mongoose';
-
-import { getString, getStrings } from '@lykmapipo/env';
-import { schema } from '@codetanzania/majifix-common';
-
-const { Schema } = mongoose;
-
-/* local constants */
-const DEFAULT_LOCALE = getString('DEFAULT_LOCALE', 'en');
-const LOCALES = getStrings('LOCALES', [DEFAULT_LOCALE]);
-const { SUB_DOC_SCHEMA_OPTIONS } = schema;
-const SUB_DOCUMENT_OPTIONS = _.merge({}, SUB_DOC_SCHEMA_OPTIONS, {
-  timestamps: true,
-});
-
-/**
- * @name Accessor
- * @type {Schema}
- * @since 0.1.0
- * @version 1.0.0
- * @private
- */
-const Accessor = new Schema(
+const Accessor = createSubSchema(
   {
     /**
      * @name name
@@ -164,7 +142,7 @@ const Accessor = new Schema(
       },
     },
   },
-  SUB_DOCUMENT_OPTIONS
+  SUB_SCHEMA_OPTIONS
 );
 
 /* export accessor schema */
