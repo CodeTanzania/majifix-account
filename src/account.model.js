@@ -1,51 +1,44 @@
-/**
- * @module majifix-account
- * @name Account
- * @description A representation of an entity
- * (i.e organization, individual, customer, or client) which
- * receiving service(s) from a particular jurisdiction.
- *
- * @see {@link https://github.com/CodeTanzania/majifix-jurisdiction}
- * @see {@link https://en.wikipedia.org/wiki/Customer}
- * @author Benson Maruchu <benmaruchu@gmail.com>
- * @author lally elias <lallyelias87@gmail.com>
- * @since 0.1.0
- * @version 1.0.0
- * @public
- */
-
-// TODO add push notification(apns, fcm) details
-// TODO add device details
-// TODO implement majifix-alerts and depend on it
-// TODO fetch multi jurisdiction level(or hierarchy)
-// TODO add dependencies to messages(for email, sms, ivr etc)
-// TODO send alerts(messages) in background
-// TODO restrict account delete with 403 Forbidden
-// TODO payment history
-// TODO add i10n label to fields
-
-/* dependencies */
 import _ from 'lodash';
 import async from 'async';
 import moment from 'moment';
-import mongoose from 'mongoose';
 import actions from 'mongoose-rest-actions';
+import exportable from '@lykmapipo/mongoose-exportable';
 import { Point } from 'mongoose-geojson-schemas';
 import { getString } from '@lykmapipo/env';
+import { toE164 } from '@lykmapipo/phone';
 import {
-  phone as phoneUtils,
-  schema,
-  models,
+  createSchema,
+  model,
+  ObjectId,
+  Mixed,
+} from '@lykmapipo/mongoose-common';
+import {
+  POPULATION_MAX_DEPTH,
+  MODEL_NAME_ACCOUNT,
+  COLLECTION_NAME_ACCOUNT,
 } from '@codetanzania/majifix-common';
 import { Jurisdiction } from '@codetanzania/majifix-jurisdiction';
-
-/** declarations */
 import Bill from './bill.schema';
 import Accessor from './accessor.schema';
 
-const { Schema } = mongoose;
-const { ObjectId, Mixed } = Schema.Types;
-const { toE164 } = phoneUtils;
+/* constants */
+const DEFAULT_LOCALE = getString('DEFAULT_LOCALE', 'en');
+const OPTION_SELECT = {
+  number: 1,
+  identity: 1,
+  name: 1,
+  phone: 1,
+  email: 1,
+  locale: 1,
+};
+const OPTION_AUTOPOPULATE = {
+  select: OPTION_SELECT,
+  maxDepth: POPULATION_MAX_DEPTH,
+};
+const SCHEMA_OPTIONS = { collection: COLLECTION_NAME_ACCOUNT };
+const INDEX_UNIQUE = { jurisdiction: 1, number: 1, identity: 1 };
+
+/* helpers */
 const isEmpty = v => {
   if (_.isNumber(v)) {
     return false;
@@ -59,19 +52,21 @@ const isEmpty = v => {
   return _.isEmpty(v);
 };
 
-/* local constants */
-const DEFAULT_LOCALE = getString('DEFAULT_LOCALE', 'en');
-const { JURISDICTION_MODEL_NAME, ACCOUNT_MODEL_NAME } = models;
-const { SCHEMA_OPTIONS } = schema;
-
 /**
- * @name AccountSchema
- * @type {Schema}
+ * @name Account
+ * @description A representation of an entity
+ * (i.e organization, individual, customer, or client) which
+ * receiving service(s) from a particular jurisdiction.
+ *
+ * @see {@link https://github.com/CodeTanzania/majifix-jurisdiction}
+ * @see {@link https://en.wikipedia.org/wiki/Customer}
+ * @author Benson Maruchu <benmaruchu@gmail.com>
+ * @author lally elias <lallyelias87@gmail.com>
  * @since 0.1.0
  * @version 1.0.0
- * @private
+ * @public
  */
-const AccountSchema = new Schema(
+const AccountSchema = createSchema(
   {
     /**
      * @name jurisdiction
@@ -95,8 +90,8 @@ const AccountSchema = new Schema(
      */
     jurisdiction: {
       type: ObjectId,
-      ref: JURISDICTION_MODEL_NAME,
-      exists: true,
+      ref: Jurisdiction.MODEL_NAME,
+      exists: { refresh: true, select: Jurisdiction.OPTION_SELECT },
       autopopulate: Jurisdiction.OPTION_AUTOPOPULATE,
       index: true,
     },
@@ -391,7 +386,8 @@ const AccountSchema = new Schema(
      * @type {object}
      * @property {object} location - geo json point
      * @property {string} location.type - Point
-     * @property {number[]} location.coordinates - longitude, latitude pair of the geo point
+     * @property {number[]} location.coordinates - longitude, latitude pair
+     * of the geo point
      *
      * @since 0.1.0
      * @version 1.0.0
@@ -487,7 +483,9 @@ const AccountSchema = new Schema(
       fake: true,
     },
   },
-  SCHEMA_OPTIONS
+  SCHEMA_OPTIONS,
+  actions,
+  exportable
 );
 
 /*
@@ -496,11 +494,17 @@ const AccountSchema = new Schema(
  *------------------------------------------------------------------------------
  */
 
-// ensure `unique` compound index on jurisdiction and number
-// to fix unique indexes on number in case they are used in more than
-// one jurisdiction with different administration
-const uniqueIndex = { jurisdiction: 1, number: 1, identity: true };
-AccountSchema.index(uniqueIndex, { unique: true });
+/**
+ * @name index
+ * @description ensure unique compound index on number, identity
+ * and jurisdiction to force unique account definition
+ *
+ * @author lally elias <lallyelias87@gmail.com>
+ * @since 0.1.0
+ * @version 0.1.0
+ * @private
+ */
+AccountSchema.index(INDEX_UNIQUE, { unique: true });
 
 /*
  *------------------------------------------------------------------------------
@@ -677,32 +681,6 @@ AccountSchema.methods.ensureLocation = function ensureLocation() {
  * @instance
  */
 AccountSchema.methods.beforePost = function beforePost(done) {
-  // obtain jurisdiction id
-  const jurisdictionId = _.get(this, 'jurisdiction._id') || this.jurisdiction;
-
-  // load fresh jurisdiction
-  if (jurisdictionId) {
-    return Jurisdiction.getById(
-      jurisdictionId,
-      function cb(error, jurisdiction) {
-        if (!error && jurisdiction) {
-          // set fresh jurisdiction
-          this.jurisdiction = jurisdiction;
-
-          // ensure location
-          this.ensureLocation();
-
-          // ensure unique accessors
-          this.ensureUniqueAccessors();
-        }
-
-        return done(error, this);
-      }.bind(this)
-    );
-  }
-
-  // continue
-
   // ensure location
   this.ensureLocation();
 
@@ -752,8 +730,6 @@ AccountSchema.methods.beforePut = function beforePut(updates, done) {
  * @instance
  */
 AccountSchema.methods.afterPost = function afterPost(done) {
-  /* @todo 1. update account from sync endpoint in background */
-  /* @todo 2. sync account to public api(cloud instance) in background */
   done();
 };
 
@@ -764,10 +740,9 @@ AccountSchema.methods.afterPost = function afterPost(done) {
  */
 
 /* static constants */
-AccountSchema.statics.DEFAULT_LOCALE = DEFAULT_LOCALE;
-AccountSchema.statics.MODEL_NAME = ACCOUNT_MODEL_NAME;
-
-/* static methods */
+AccountSchema.statics.MODEL_NAME = MODEL_NAME_ACCOUNT;
+AccountSchema.statics.OPTION_SELECT = OPTION_SELECT;
+AccountSchema.statics.OPTION_AUTOPOPULATE = OPTION_AUTOPOPULATE;
 
 /**
  * @name afterGet
@@ -784,6 +759,7 @@ AccountSchema.statics.afterGet = function afterGet(mquery, result, done) {
   // ref
   const Account = this;
   const results = result;
+
   // check for filter
   const { filter } = _.merge({}, { filter: {} }, mquery);
   const identity = _.toUpper(filter.number || filter.identity);
@@ -1129,14 +1105,5 @@ AccountSchema.statics.getPhones = function getPhones(criteria, done) {
     });
 };
 
-/*
- *------------------------------------------------------------------------------
- * Plugins
- *------------------------------------------------------------------------------
- */
-
-/* use mongoose rest actions */
-AccountSchema.plugin(actions);
-
 /* export account model */
-export default mongoose.model(ACCOUNT_MODEL_NAME, AccountSchema);
+export default model(MODEL_NAME_ACCOUNT, AccountSchema);
