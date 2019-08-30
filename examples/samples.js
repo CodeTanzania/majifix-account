@@ -1,5 +1,5 @@
 const _ = require('lodash');
-const faker = require('@benmaruchu/faker');
+const faker = require('@benmaruchu/faker'); // eslint-disable-line import/no-extraneous-dependencies
 const moment = require('moment');
 const { randomPoint } = require('mongoose-geojson-schemas');
 
@@ -19,7 +19,7 @@ const sample = n => {
     address: faker.address.streetAddress(),
     locale: 'en',
     location: randomPoint(),
-    accessors: _.map(phones, function(phone, index) {
+    accessors: _.map(phones, (phone, index) => {
       return {
         name: faker.name.findName(),
         phone,
@@ -27,7 +27,7 @@ const sample = n => {
         verifiedAt: index > 0 ? new Date() : undefined,
       };
     }),
-    bills: _.map(periods, function(period) {
+    bills: _.map(periods, period => {
       return {
         number: faker.random.number(99999, 999999),
         items: [
@@ -105,6 +105,6 @@ const sample = n => {
 };
 
 module.exports = (size = 10) => {
-  size = size > 0 ? size : 10;
-  return _.times(size, sample);
+  const number = size > 0 ? size : 10;
+  return _.times(number, sample);
 };
