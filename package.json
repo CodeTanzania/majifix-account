@@ -24,14 +24,15 @@
     "seed": "NODE_ENV=development BASE_PATH=./examples node ./examples/seed.js"
   },
   "keywords": [
-    "majifix",
     "codetanzania",
     "majifix",
     "majifix-module",
+    "open311",
     "account",
     "customer",
     "client",
-    "open311"
+    "citizen",
+    "feedback"
   ],
   "repository": {
     "type": "git",
