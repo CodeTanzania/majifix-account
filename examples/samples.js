@@ -1,6 +1,5 @@
-/* dependencies */
 const _ = require('lodash');
-const faker = require('@benmaruchu/faker');
+const faker = require('@benmaruchu/faker'); // eslint-disable-line import/no-extraneous-dependencies
 const moment = require('moment');
 const { randomPoint } = require('mongoose-geojson-schemas');
 
@@ -8,10 +7,7 @@ const today = moment(new Date());
 const periods = _.range(1, 4);
 const phones = ['255719818179', '255714095061', '255756995069'];
 
-/**
- *
- */
-function sample(n) {
+const sample = n => {
   return {
     number: n > 0 ? faker.random.number(99999, 999999) : '55555',
     identity: n > 0 ? faker.random.number(11111, 44444) : '44444',
@@ -23,7 +19,7 @@ function sample(n) {
     address: faker.address.streetAddress(),
     locale: 'en',
     location: randomPoint(),
-    accessors: _.map(phones, function(phone, index) {
+    accessors: _.map(phones, (phone, index) => {
       return {
         name: faker.name.findName(),
         phone,
@@ -31,7 +27,7 @@ function sample(n) {
         verifiedAt: index > 0 ? new Date() : undefined,
       };
     }),
-    bills: _.map(periods, function(period) {
+    bills: _.map(periods, period => {
       return {
         number: faker.random.number(99999, 999999),
         items: [
@@ -106,9 +102,9 @@ function sample(n) {
     }),
     active: true,
   };
-}
+};
 
-module.exports = function(size = 10) {
-  size = size > 0 ? size : 10;
-  return _.times(size, sample);
+module.exports = (size = 10) => {
+  const number = size > 0 ? size : 10;
+  return _.times(number, sample);
 };

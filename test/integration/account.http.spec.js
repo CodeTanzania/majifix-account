@@ -3,7 +3,7 @@ import request from 'supertest';
 import { expect, faker, clear, create } from '@lykmapipo/mongoose-test-helpers';
 import { app, mount } from '@lykmapipo/express-common';
 import { Jurisdiction } from '@codetanzania/majifix-jurisdiction';
-import account from '../../src/index';
+import account from '../../src';
 
 const { Account, apiVersion, accountRouter } = account;
 

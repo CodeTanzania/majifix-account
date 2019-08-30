@@ -1,76 +1,35 @@
-/* ensure mongo uri */
-process.env.MONGODB_URI =
-  process.env.MONGODB_URI || 'mongodb://localhost/majifix-account';
-
-/* dependencies */
-const path = require('path');
-const _ = require('lodash');
-const async = require('async');
-const mongoose = require('mongoose');
-// mongoose.set('debug', true);
 const { get, mount, start } = require('@lykmapipo/express-common');
-const { Jurisdiction } = require('@codetanzania/majifix-jurisdiction');
+const { connect, jsonSchema } = require('@lykmapipo/mongoose-common');
+const { accountRouter, info, apiVersion } = require('../lib');
 
-const { Account, accountRouter, apiVersion, info } = require(path.join(
-  __dirname,
-  '..'
-));
+const startHttpServer = () => {
+  get('/', (request, response) => {
+    response.status(200);
+    response.json(info);
+  });
 
-let samples = require('./samples')(20);
+  get(`/${apiVersion}/schemas`, (request, response) => {
+    const schema = jsonSchema();
+    response.status(200);
+    response.json(schema);
+  });
 
-/* connect to mongoose */
-mongoose.connect(process.env.MONGODB_URI);
+  // mount routers
+  mount(accountRouter);
 
-/**
- *
- */
-function boot() {
-  async.waterfall(
-    [
-      function clear(next) {
-        Account.remove(function(/* error, results */) {
-          next();
-        });
-      },
-
-      function clearJurisdiction(next) {
-        Jurisdiction.remove(function(/* error, results */) {
-          next();
-        });
-      },
-
-      function seedJurisdiction(next) {
-        const jurisdiction = Jurisdiction.fake();
-        jurisdiction.post(next);
-      },
-
-      function seedAccounts(jurisdiction, next) {
-        /* fake accounts */
-        samples = _.map(samples, function(sample, index) {
-          if (index % 2 === 0) {
-            sample.jurisdiction = jurisdiction;
-          }
-          return sample;
-        });
-        Account.create(samples, next);
-      },
-    ],
-    function(error, results) {
-      /* expose module info */
-      get('/', function(request, response) {
-        response.status(200);
-        response.json(info);
-      });
-
-      // mount routers
-      mount(accountRouter);
-
-      /* fire the app */
-      start(function(error, env) {
-        console.log(`visit http://0.0.0.0:${env.PORT}/${apiVersion}/accounts`);
-      });
+  // fire http serve
+  start((error, env) => {
+    if (error) {
+      throw error;
     }
-  );
-}
+    console.log(`visit http://0.0.0.0:${env.PORT}/${apiVersion}/accounts`);
+  });
+};
 
-boot();
+// connect and start http server
+connect(error => {
+  if (error) {
+    throw error;
+  }
+  startHttpServer();
+});
