@@ -1,4 +1,3 @@
-/* dependencies */
 const _ = require('lodash');
 const faker = require('@benmaruchu/faker');
 const moment = require('moment');
@@ -8,10 +7,7 @@ const today = moment(new Date());
 const periods = _.range(1, 4);
 const phones = ['255719818179', '255714095061', '255756995069'];
 
-/**
- *
- */
-function sample(n) {
+const sample = n => {
   return {
     number: n > 0 ? faker.random.number(99999, 999999) : '55555',
     identity: n > 0 ? faker.random.number(11111, 44444) : '44444',
@@ -106,9 +102,9 @@ function sample(n) {
     }),
     active: true,
   };
-}
+};
 
-module.exports = function(size = 10) {
+module.exports = (size = 10) => {
   size = size > 0 ? size : 10;
   return _.times(size, sample);
 };
