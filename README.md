@@ -36,16 +36,14 @@ npm install @codetanzania/majifix-account --save
 ## Usage
 
 ```js
-const mongoose = require('mongoose');
-const { app } = require('@codetanzania/majifix-account');
+import { connect } from '@lykmapipo/mongoose-common';
+import { Account, start } from '@codetanzania/majifix-account';
 
-//connect to mongodb
-mongoose.connect(process.env.MONGODB_URI);
+// connect to mongodb
+connect(process.env.MONGODB_URI, error => { ... });
 
-//fire the app
-app.start(function(error, env) {
-  ...
-});
+// fire http server
+start(error => { ... });
 ```
 
 ## Testing
