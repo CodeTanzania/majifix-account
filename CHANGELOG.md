@@ -1,3 +1,33 @@
+#### 1.9.0 (2019-08-30)
+
+##### Chores
+
+*  improve package keywords ([7f806843](https://github.com/CodeTanzania/majifix-account/commit/7f8068431f56a818064da8482c5882af1e974acb))
+* **deps:**
+  *  remove unused ([4589115d](https://github.com/CodeTanzania/majifix-account/commit/4589115d6e414801c3ee3700aacfe17f085a1f50))
+  *  force latest version & audit fix ([4eda339e](https://github.com/CodeTanzania/majifix-account/commit/4eda339eff344e47d7a70d280b3047136ae68217))
+  *  force latest version & audit fix ([5a861aa9](https://github.com/CodeTanzania/majifix-account/commit/5a861aa94a0a0d43e588433d7e90ccfd5878cca9))
+* **configs:**  update eslint configs ([08ccb7ab](https://github.com/CodeTanzania/majifix-account/commit/08ccb7ab13993eb147058bf141ff1ed799b90523))
+* **examples:**  improve sample app & seed ([023f8902](https://github.com/CodeTanzania/majifix-account/commit/023f8902170d168f469e6be18ff8dd008318bd33))
+
+##### Documentation Changes
+
+*  update usage docs ([197edd17](https://github.com/CodeTanzania/majifix-account/commit/197edd17c61d7467fe68f1a85456c075e0bd6383))
+*  improve requirements version ([efcda90e](https://github.com/CodeTanzania/majifix-account/commit/efcda90ea10fb573924e2d1928c30eaa883dc9a6))
+*  add statuses badge ([2ed25aef](https://github.com/CodeTanzania/majifix-account/commit/2ed25aefd2f23b37a44ca72bed443cc71f7cffe4))
+
+##### Refactors
+
+*  improve main exports ([53650515](https://github.com/CodeTanzania/majifix-account/commit/536505150cb15765387d18b8e78a9929f01902fb))
+
+##### Code Style Changes
+
+* **examples:**  fix lint error ([522c9556](https://github.com/CodeTanzania/majifix-account/commit/522c95568d02eb36c6bbf085952d1ad30e7437cb))
+
+##### Tests
+
+*  improve imports ([8fc3b9d2](https://github.com/CodeTanzania/majifix-account/commit/8fc3b9d2a31c82f98c917e689a6efbee52e007b6))
+
 #### 1.8.0 (2019-08-23)
 
 ##### Chores

@@ -1,6 +1,7 @@
-import { pkg } from '@lykmapipo/common';
 import _ from 'lodash';
+import { pkg } from '@lykmapipo/common';
 import { getString, getStringSet, apiVersion } from '@lykmapipo/env';
+import { Router, start } from '@lykmapipo/express-common';
 import async from 'async';
 import moment from 'moment';
 import actions from 'mongoose-rest-actions';
@@ -10,7 +11,6 @@ import { toE164 } from '@lykmapipo/phone';
 import { createSubSchema, createSchema, ObjectId, Mixed, model } from '@lykmapipo/mongoose-common';
 import { MODEL_NAME_ACCOUNT, POPULATION_MAX_DEPTH, COLLECTION_NAME_ACCOUNT } from '@codetanzania/majifix-common';
 import { Jurisdiction } from '@codetanzania/majifix-jurisdiction';
-import { Router } from '@lykmapipo/express-common';
 
 /**
  * @name Period
@@ -2365,17 +2365,22 @@ router.delete(PATH_ACCESSORS_SINGLE, function removeAccountAccountAccessors(
  * @version 0.1.0
  * @example
  *
- * const { app } = require('@codetanzania/majifix-account');
- *
- * ...
- *
- * app.start();
+ * const { Account, start } = require('@codetanzania/majifix-account');
+ * start(error => { ... });
  *
  */
 
-/* declarations */
+/**
+ * @name info
+ * @description package information
+ * @type {object}
+ *
+ * @author lally elias <lallyelias87@gmail.com>
+ * @since 1.0.0
+ * @version 0.1.0
+ */
 const info = pkg(
-  '../package.json',
+  `${__dirname}/package.json`,
   'name',
   'description',
   'version',
@@ -2389,28 +2394,67 @@ const info = pkg(
 
 /* export function */
 const account = integration => {
-  // ensure integration integration
-
+  // ensure integration
   if (integration) {
     const { fetchAccount } = integration;
     if (_.isFunction(fetchAccount)) {
       Account.fetchAccount = fetchAccount;
     }
   }
-
   return account;
 };
 
-// export info
+/**
+ * @name info
+ * @description package information
+ * @type {object}
+ *
+ * @author lally elias <lallyelias87@gmail.com>
+ * @since 1.0.0
+ * @version 0.1.0
+ */
 account.info = info;
 
-// export apiVersion
+/**
+ * @name apiVersion
+ * @description http router api version
+ * @type {string}
+ *
+ * @author lally elias <lallyelias87@gmail.com>
+ * @since 0.1.0
+ * @version 0.1.0
+ */
 account.apiVersion = apiVersion();
 
-// export router
+/**
+ * @name accountRouter
+ * @description account http router
+ *
+ * @author lally elias <lallyelias87@gmail.com>
+ * @since 0.1.0
+ * @version 0.1.0
+ */
 account.accountRouter = router;
 
-// export Account
+/**
+ * @name Account
+ * @description Account model
+ *
+ * @author lally elias <lallyelias87@gmail.com>
+ * @since 0.1.0
+ * @version 0.1.0
+ */
 account.Account = Account;
+
+/**
+ * @function start
+ * @name start
+ * @description start http server
+ *
+ * @author lally elias <lallyelias87@gmail.com>
+ * @since 0.1.0
+ * @version 0.1.0
+ */
+account.start = start;
 
 export default account;
