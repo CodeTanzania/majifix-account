@@ -1,8 +1,15 @@
 # majifix-account
 
 [![Build Status](https://travis-ci.org/CodeTanzania/majifix-account.svg?branch=develop)](https://travis-ci.org/CodeTanzania/majifix-account)
-[![Dependencies Status](https://david-dm.org/CodeTanzania/majifix-account/status.svg?style=flat-square)](https://david-dm.org/CodeTanzania/majifix-account)
-[![Deploy to Heroku](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy?template=https://github.com/CodeTanzania/majifix-account/tree/develop)
+[![Dependencies Status](https://david-dm.org/CodeTanzania/majifix-account.svg)](https://david-dm.org/CodeTanzania/majifix-account)
+[![Coverage Status](https://coveralls.io/repos/github/CodeTanzania/majifix-account/badge.svg?branch=develop)](https://coveralls.io/github/CodeTanzania/majifix-account?branch=develop)
+[![GitHub License](https://img.shields.io/github/license/CodeTanzania/majifix-account)](https://github.com/CodeTanzania/majifix-account/blob/develop/LICENSE)
+[![Deploy to Heroku](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy?template=https://github.com/CodeTanzania/majifix-account/tree/develop) 
+
+[![Commitizen Friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
+[![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
+[![Code Style](https://badgen.net/badge/code%20style/airbnb/ff5a5f?icon=airbnb)](https://github.com/airbnb/javascript)
+[![npm version](https://img.shields.io/npm/v/@codetanzania/majifix-account)](https://www.npmjs.com/package/@codetanzania/majifix-account)
 
 A representation of an entity (i.e organization, individual, customer, or client) which receiving service(s) from a particular [jurisdiction](https://github.com/CodeTanzania/majifix-jurisdiction).
 
