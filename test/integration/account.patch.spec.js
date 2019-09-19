@@ -5,7 +5,7 @@ import account from '../../src';
 
 const { Account } = account;
 
-describe('Account', () => {
+describe('Account static patch', () => {
   let customerAccount;
   const jurisdiction = Jurisdiction.fake();
 
@@ -13,74 +13,81 @@ describe('Account', () => {
 
   before(done => create(jurisdiction, done));
 
-  describe('static patch', () => {
-    before(done => {
-      customerAccount = Account.fake();
-      customerAccount.jurisdiction = jurisdiction;
+  before(done => {
+    customerAccount = Account.fake();
+    customerAccount.jurisdiction = jurisdiction;
 
-      customerAccount.post((error, created) => {
-        customerAccount = created;
-        done(error, created);
-      });
-    });
-
-    it('should be able to patch', done => {
-      customerAccount = customerAccount.fakeOnly('name');
-
-      Account.patch(customerAccount._id, customerAccount, (error, updated) => {
-        expect(error).to.not.exist;
-        expect(updated).to.exist;
-        expect(updated._id).to.eql(customerAccount._id);
-        expect(updated.name).to.eql(customerAccount.name);
-        done(error, updated);
-      });
-    });
-
-    it('should throw if not exists', done => {
-      const fake = Account.fake().toObject();
-
-      Account.patch(fake._id, _.omit(fake, '_id'), (error, updated) => {
-        expect(error).to.exist;
-        // expect(error.status).to.exist;
-        expect(error.name).to.be.equal('DocumentNotFoundError');
-        expect(updated).to.not.exist;
-        done();
-      });
+    customerAccount.post((error, created) => {
+      customerAccount = created;
+      done(error, created);
     });
   });
 
-  describe('instance patch', () => {
-    before(done => {
-      customerAccount = Account.fake();
-      customerAccount.jurisdiction = jurisdiction;
+  it('should be able to patch', done => {
+    customerAccount = customerAccount.fakeOnly('name');
 
-      customerAccount.post((error, created) => {
-        customerAccount = created;
-        done(error, created);
-      });
+    Account.patch(customerAccount._id, customerAccount, (error, updated) => {
+      expect(error).to.not.exist;
+      expect(updated).to.exist;
+      expect(updated._id).to.eql(customerAccount._id);
+      expect(updated.name).to.eql(customerAccount.name);
+      done(error, updated);
     });
+  });
 
-    it('should be able to patch', done => {
-      customerAccount = customerAccount.fakeOnly('name');
+  it('should throw if not exists', done => {
+    const fake = Account.fake().toObject();
 
-      customerAccount.patch((error, updated) => {
-        expect(error).to.not.exist;
-        expect(updated).to.exist;
-        expect(updated._id).to.eql(customerAccount._id);
-        expect(updated.name).to.eql(customerAccount.name);
-        done(error, updated);
-      });
+    Account.patch(fake._id, _.omit(fake, '_id'), (error, updated) => {
+      expect(error).to.exist;
+      // expect(error.status).to.exist;
+      expect(error.name).to.be.equal('DocumentNotFoundError');
+      expect(updated).to.not.exist;
+      done();
     });
+  });
 
-    it('should not throw if not exists', done => {
-      customerAccount = Account.fake();
+  after(done => clear(Jurisdiction, Account, done));
+});
 
-      customerAccount.patch((error, updated) => {
-        expect(error).to.not.exist;
-        expect(updated).to.exist;
-        expect(updated._id).to.eql(customerAccount._id);
-        done();
-      });
+describe('Account instance patch', () => {
+  let customerAccount;
+  const jurisdiction = Jurisdiction.fake();
+
+  before(done => clear(Jurisdiction, Account, done));
+
+  before(done => create(jurisdiction, done));
+
+  before(done => {
+    customerAccount = Account.fake();
+    customerAccount.jurisdiction = jurisdiction;
+
+    customerAccount.post((error, created) => {
+      customerAccount = created;
+      done(error, created);
+    });
+  });
+
+  it('should be able to patch', done => {
+    customerAccount = customerAccount.fakeOnly('name');
+
+    customerAccount.patch((error, updated) => {
+      expect(error).to.not.exist;
+      expect(updated).to.exist;
+      expect(updated._id).to.eql(customerAccount._id);
+      expect(updated.name).to.eql(customerAccount.name);
+      done(error, updated);
+    });
+  });
+
+  it('should not throw if not exists', done => {
+    customerAccount = Account.fake();
+
+    customerAccount.patch((error, updated) => {
+      expect(error).to.not.exist;
+      expect(updated).to.exist;
+      expect(updated._id).to.eql(customerAccount._id);
+      done();
     });
   });
 

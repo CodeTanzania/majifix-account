@@ -5,7 +5,7 @@ import account from '../../src';
 
 const { Account } = account;
 
-describe('Account', () => {
+describe('Account verify', () => {
   let customerAccount;
   const jurisdiction = Jurisdiction.fake();
 
@@ -13,136 +13,134 @@ describe('Account', () => {
 
   before(done => create(jurisdiction, done));
 
-  describe('verify', () => {
-    before(done => {
-      customerAccount = Account.fake();
-      customerAccount.jurisdiction = jurisdiction;
+  before(done => {
+    customerAccount = Account.fake();
+    customerAccount.jurisdiction = jurisdiction;
 
-      customerAccount.post((error, created) => {
-        customerAccount = created;
-        done(error, created);
-      });
+    customerAccount.post((error, created) => {
+      customerAccount = created;
+      done(error, created);
     });
+  });
 
-    it('should be able to verify access by account', done => {
-      const accessor = {
-        account: customerAccount.number,
-        phone: customerAccount.phone,
-      };
+  it('should be able to verify access by account', done => {
+    const accessor = {
+      account: customerAccount.number,
+      phone: customerAccount.phone,
+    };
 
-      Account.verify(accessor, (error, verified) => {
-        expect(error).to.not.exist;
-        expect(verified).to.exist;
-        expect(verified._id).to.eql(customerAccount._id);
-        expect(verified.number).to.eql(customerAccount.number);
-        done(error, verified);
-      });
+    Account.verify(accessor, (error, verified) => {
+      expect(error).to.not.exist;
+      expect(verified).to.exist;
+      expect(verified._id).to.eql(customerAccount._id);
+      expect(verified.number).to.eql(customerAccount.number);
+      done(error, verified);
     });
+  });
 
-    it('should be able to verify access by identity', done => {
-      const accessor = {
-        identity: customerAccount.identity,
-        phone: customerAccount.phone,
-      };
+  it('should be able to verify access by identity', done => {
+    const accessor = {
+      identity: customerAccount.identity,
+      phone: customerAccount.phone,
+    };
 
-      Account.verify(accessor, (error, verified) => {
-        expect(error).to.not.exist;
-        expect(verified).to.exist;
-        expect(verified._id).to.eql(customerAccount._id);
-        expect(verified.number).to.eql(customerAccount.number);
-        expect(verified.identity).to.eql(customerAccount.identity);
-        done(error, verified);
-      });
+    Account.verify(accessor, (error, verified) => {
+      expect(error).to.not.exist;
+      expect(verified).to.exist;
+      expect(verified._id).to.eql(customerAccount._id);
+      expect(verified.number).to.eql(customerAccount.number);
+      expect(verified.identity).to.eql(customerAccount.identity);
+      done(error, verified);
     });
+  });
 
-    it('should be able to verify access by account', done => {
-      const accessor = {
-        account: customerAccount.number,
-        phone: customerAccount.accessors[0].phone,
-      };
+  it('should be able to verify access by account', done => {
+    const accessor = {
+      account: customerAccount.number,
+      phone: customerAccount.accessors[0].phone,
+    };
 
-      Account.verify(accessor, (error, verified) => {
-        expect(error).to.not.exist;
-        expect(verified).to.exist;
-        expect(verified._id).to.eql(customerAccount._id);
-        expect(verified.number).to.eql(customerAccount.number);
-        done(error, verified);
-      });
+    Account.verify(accessor, (error, verified) => {
+      expect(error).to.not.exist;
+      expect(verified).to.exist;
+      expect(verified._id).to.eql(customerAccount._id);
+      expect(verified.number).to.eql(customerAccount.number);
+      done(error, verified);
     });
+  });
 
-    it('should be able to verify access by identity', done => {
-      const accessor = {
-        identity: customerAccount.identity,
-        phone: customerAccount.accessors[0].phone,
-      };
+  it('should be able to verify access by identity', done => {
+    const accessor = {
+      identity: customerAccount.identity,
+      phone: customerAccount.accessors[0].phone,
+    };
 
-      Account.verify(accessor, (error, verified) => {
-        expect(error).to.not.exist;
-        expect(verified).to.exist;
-        expect(verified._id).to.eql(customerAccount._id);
-        expect(verified.number).to.eql(customerAccount.number);
-        expect(verified.identity).to.eql(customerAccount.identity);
-        done(error, verified);
-      });
+    Account.verify(accessor, (error, verified) => {
+      expect(error).to.not.exist;
+      expect(verified).to.exist;
+      expect(verified._id).to.eql(customerAccount._id);
+      expect(verified.number).to.eql(customerAccount.number);
+      expect(verified.identity).to.eql(customerAccount.identity);
+      done(error, verified);
     });
+  });
 
-    it('should be able to verify shallow access by account', done => {
-      const accessor = {
-        account: customerAccount.number,
-        phone: faker.phone.phoneNumber(),
-        shallow: true,
-      };
+  it('should be able to verify shallow access by account', done => {
+    const accessor = {
+      account: customerAccount.number,
+      phone: faker.phone.phoneNumber(),
+      shallow: true,
+    };
 
-      Account.verify(accessor, (error, verified) => {
-        expect(error).to.not.exist;
-        expect(verified).to.exist;
-        expect(verified._id).to.eql(customerAccount._id);
-        expect(verified.number).to.eql(customerAccount.number);
+    Account.verify(accessor, (error, verified) => {
+      expect(error).to.not.exist;
+      expect(verified).to.exist;
+      expect(verified._id).to.eql(customerAccount._id);
+      expect(verified.number).to.eql(customerAccount.number);
 
-        const _accessor = _.find(verified.accessors, { phone: accessor.phone });
-        expect(_accessor).to.exist;
-        expect(_accessor.verifiedAt).to.not.exist;
-        expect(_accessor.phone).to.be.equal(accessor.phone);
+      const _accessor = _.find(verified.accessors, { phone: accessor.phone });
+      expect(_accessor).to.exist;
+      expect(_accessor.verifiedAt).to.not.exist;
+      expect(_accessor.phone).to.be.equal(accessor.phone);
 
-        done(error, verified);
-      });
+      done(error, verified);
     });
+  });
 
-    it('should be able to verify shallow access by identity', done => {
-      const accessor = {
-        identity: customerAccount.identity,
-        phone: faker.phone.phoneNumber(),
-        shallow: true,
-      };
+  it('should be able to verify shallow access by identity', done => {
+    const accessor = {
+      identity: customerAccount.identity,
+      phone: faker.phone.phoneNumber(),
+      shallow: true,
+    };
 
-      Account.verify(accessor, (error, verified) => {
-        expect(error).to.not.exist;
-        expect(verified).to.exist;
-        expect(verified._id).to.eql(customerAccount._id);
-        expect(verified.number).to.eql(customerAccount.number);
-        expect(verified.identity).to.eql(customerAccount.identity);
+    Account.verify(accessor, (error, verified) => {
+      expect(error).to.not.exist;
+      expect(verified).to.exist;
+      expect(verified._id).to.eql(customerAccount._id);
+      expect(verified.number).to.eql(customerAccount.number);
+      expect(verified.identity).to.eql(customerAccount.identity);
 
-        const _accessor = _.find(verified.accessors, { phone: accessor.phone });
-        expect(_accessor).to.exist;
-        expect(_accessor.verifiedAt).to.not.exist;
-        expect(_accessor.phone).to.be.equal(accessor.phone);
+      const _accessor = _.find(verified.accessors, { phone: accessor.phone });
+      expect(_accessor).to.exist;
+      expect(_accessor.verifiedAt).to.not.exist;
+      expect(_accessor.phone).to.be.equal(accessor.phone);
 
-        done(error, verified);
-      });
+      done(error, verified);
     });
+  });
 
-    it('should be able to restrict access', done => {
-      const accessor = {
-        account: customerAccount.number,
-        phone: faker.phone.phoneNumber(),
-      };
+  it('should be able to restrict access', done => {
+    const accessor = {
+      account: customerAccount.number,
+      phone: faker.phone.phoneNumber(),
+    };
 
-      Account.verify(accessor, (error, verified) => {
-        expect(error).to.exist;
-        expect(error.status).to.be.eql(202);
-        expect(verified).to.not.exist;
-        done();
-      });
+    Account.verify(accessor, (error, verified) => {
+      expect(error).to.exist;
+      expect(error.status).to.be.eql(202);
+      expect(verified).to.not.exist;
+      done();
     });
   });
 

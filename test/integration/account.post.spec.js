@@ -4,46 +4,53 @@ import account from '../../src';
 
 const { Account } = account;
 
-describe('Account', () => {
+describe('Account static post', () => {
   let customerAccount;
+
   const jurisdiction = Jurisdiction.fake();
 
   before(done => clear(Jurisdiction, Account, done));
 
   before(done => create(jurisdiction, done));
 
-  describe('static post', () => {
-    it('should be able to post', done => {
-      customerAccount = Account.fake();
-      customerAccount.jurisdiction = jurisdiction;
+  it('should be able to post', done => {
+    customerAccount = Account.fake();
+    customerAccount.jurisdiction = jurisdiction;
 
-      Account.post(customerAccount, (error, created) => {
-        expect(error).to.not.exist;
-        expect(created).to.exist;
-        expect(created._id).to.eql(customerAccount._id);
-        expect(created.jurisdiction._id).to.eql(
-          customerAccount.jurisdiction._id
-        );
-        expect(created.name).to.eql(customerAccount.name);
-        expect(created.number).to.eql(customerAccount.number);
-        done(error, created);
-      });
+    Account.post(customerAccount, (error, created) => {
+      expect(error).to.not.exist;
+      expect(created).to.exist;
+      expect(created._id).to.eql(customerAccount._id);
+      expect(created.jurisdiction._id).to.eql(customerAccount.jurisdiction._id);
+      expect(created.name).to.eql(customerAccount.name);
+      expect(created.number).to.eql(customerAccount.number);
+      done(error, created);
     });
   });
 
-  describe('instance post', () => {
-    it('should be able to post', done => {
-      customerAccount = Account.fake();
-      customerAccount.jurisdiction = jurisdiction;
+  after(done => clear(Jurisdiction, Account, done));
+});
 
-      customerAccount.post((error, created) => {
-        expect(error).to.not.exist;
-        expect(created).to.exist;
-        expect(created._id).to.eql(customerAccount._id);
-        expect(created.name).to.eql(customerAccount.name);
-        expect(created.number).to.eql(customerAccount.number);
-        done(error, created);
-      });
+describe('Account instance post', () => {
+  let customerAccount;
+
+  const jurisdiction = Jurisdiction.fake();
+
+  before(done => clear(Jurisdiction, Account, done));
+
+  before(done => create(jurisdiction, done));
+
+  it('should be able to post', done => {
+    customerAccount = Account.fake();
+    customerAccount.jurisdiction = jurisdiction;
+
+    customerAccount.post((error, created) => {
+      expect(error).to.not.exist;
+      expect(created).to.exist;
+      expect(created._id).to.eql(customerAccount._id);
+      expect(created.name).to.eql(customerAccount.name);
+      expect(created.number).to.eql(customerAccount.number);
+      done(error, created);
     });
   });
 
