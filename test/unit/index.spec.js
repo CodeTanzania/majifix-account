@@ -1,14 +1,14 @@
 import { expect } from '@lykmapipo/mongoose-test-helpers';
 import account from '../../src';
 
-describe('Account should be exported', () => {
+it('Account should be exported', () => {
   expect(account).to.exist;
   expect(account).to.be.a('function');
   expect(account.name).to.be.equal('account');
   expect(account.length).to.be.equal(1);
 });
 
-describe('Account should be export Account', () => {
+it('Account should be export Account', () => {
   const { Account } = account({
     fetchAccount: (identity, fetchedAt, done) => done(null, {}),
   });

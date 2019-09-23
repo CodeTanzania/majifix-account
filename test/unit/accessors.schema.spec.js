@@ -4,14 +4,14 @@ import Account from '../../src/account.model';
 
 describe('Account Accessor Schema', () => {
   it('should be an array of embedded subdocuments', () => {
-    const accessors = Account.path('Account.accessors');
+    const accessors = Account.path('accessors');
 
     expect(accessors).to.exist;
     expect(accessors).to.be.instanceof(SchemaTypes.Array);
   });
 
   it('should have name field', () => {
-    const name = Account.path('Account.accessors.name');
+    const name = Account.path('accessors.name');
 
     expect(name).to.exist;
     expect(name).to.be.an.instanceof(SchemaTypes.String);
@@ -25,7 +25,7 @@ describe('Account Accessor Schema', () => {
   });
 
   it('should have phone field', () => {
-    const phone = Account.path('Account.accessors.phone');
+    const phone = Account.path('accessors.phone');
 
     expect(phone).to.exist;
     expect(phone).to.be.an.instanceof(SchemaTypes.String);
@@ -39,7 +39,7 @@ describe('Account Accessor Schema', () => {
   });
 
   it('should have email field', () => {
-    const email = Account.path('Account.accessors.email');
+    const email = Account.path('accessors.email');
 
     expect(email).to.exist;
     expect(email).to.be.an.instanceof(SchemaTypes.String);
@@ -54,7 +54,7 @@ describe('Account Accessor Schema', () => {
   });
 
   it('should have locale field', () => {
-    const locale = Account.path('Account.accessors.locale');
+    const locale = Account.path('accessors.locale');
 
     expect(locale).to.exist;
     expect(locale).to.be.an.instanceof(SchemaTypes.String);
@@ -70,7 +70,7 @@ describe('Account Accessor Schema', () => {
   });
 
   it('should have verifiedAt field', () => {
-    const verifiedAt = Account.path('Account.accessors.verifiedAt');
+    const verifiedAt = Account.path('accessors.verifiedAt');
 
     expect(verifiedAt).to.exist;
     expect(verifiedAt).to.be.an.instanceof(SchemaTypes.Date);
